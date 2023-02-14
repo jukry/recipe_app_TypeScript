@@ -3,7 +3,7 @@ import livereload from "connect-livereload"
 
 const app = express()
 
-app.get("/", (req, res) => res.send("Hello ssWorld"))
+app.get("/", (req, res) => res.send("From Server: Hello World"))
 
 const port = process.env.port || 8082
 
