@@ -109,6 +109,10 @@ header {
     background-color: var(--clr-primary);
     display: flex;
     flex-direction: column;
+    transition: all 0.175s ease 0s;
+}
+.food-item:hover {
+    transform: scale(1.02);
 }
 .recipe-info {
     padding: 0.75em 1.25em;
