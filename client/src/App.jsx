@@ -1,7 +1,7 @@
 import { useState } from "react"
 import "./App.css"
 import Navbar from "./Components/Navbar"
-import Result from "./Components/Result"
+import Results from "./Components/Results"
 import Search from "./Components/Search"
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
         <main className="container">
             <Navbar />
             <Search />
-            <Result />
+            <Results />
         </main>
     )
 }

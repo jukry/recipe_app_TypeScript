@@ -1,5 +1,6 @@
 const recipes = [
     {
+        id: 1,
         name: "Nachoja kulhossa",
         description: "Maukas testiresepti illanviettoon",
         ingredients: {
@@ -26,6 +27,7 @@ const recipes = [
         images: ["./public/istockphoto-474048190-612x612.jpg"],
     },
     {
+        id: 2,
         name: "Pastaa lautasella",
         description:
             "Vietä italialainen teemailta mielikuvitusystäviesi kanssa",
@@ -55,6 +57,7 @@ const recipes = [
         images: ["./public/pexels-engin-akyurt-1437267.jpg"],
     },
     {
+        id: 3,
         name: "Pizzaa uunista",
         description: "Tästä pizzasta et löydä yllätyskarvoja",
         ingredients: {
@@ -83,3 +86,5 @@ const recipes = [
         images: ["./public/pexels-sydney-troxell-708587.jpg"],
     },
 ]
+
+export default recipes
