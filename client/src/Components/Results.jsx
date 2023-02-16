@@ -1,15 +1,13 @@
-import recipes from "../assets/recipe-data"
 import Fooditem from "./Fooditem"
 
-export default function Results() {
-    const foodItem = recipes.map((item) => {
+export default function Results(props) {
+    const recipeData = props.props
+    console.log(recipeData)
+
+    const foodItem = recipeData.map((item) => {
         return <Fooditem props={item} key={item.id} />
         // MUUTA PROPS NIIN ETTEI VÄLITETÄ KUIN TARPEELLISET TIEDOT?
     })
 
-    return (
-        <section className="results-container">
-            <div className="results">{foodItem}</div>
-        </section>
-    )
+    return <div className="results">{foodItem}</div>
 }

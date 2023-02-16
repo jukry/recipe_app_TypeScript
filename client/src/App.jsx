@@ -9,7 +9,6 @@ function App() {
         <main className="container">
             <Navbar />
             <Search />
-            <Results />
         </main>
     )
 }
