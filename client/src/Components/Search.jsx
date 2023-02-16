@@ -7,8 +7,13 @@ export default function Search() {
     const [search, setSearch] = useState("")
 
     useEffect(() => {
-        getRecipes()
-    }, [])
+        console.count("UseEffect")
+        setRecipesArr(() => {
+            return recipes.filter((item) => {
+                return item.name.toLowerCase().includes(search.toLowerCase())
+            })
+        })
+    }, [search])
 
     /* APIA VARTEN 
     async function getRecipes() {
