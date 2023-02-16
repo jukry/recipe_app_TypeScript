@@ -18,25 +18,35 @@ export default function Search() {
     } */
 
     function getRecipes() {
-        return setRecipesArr(recipes)
+        setRecipesArr(recipes)
     }
+
+    function handleChange(event) {
+        setSearch(event.target.value)
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        setRecipesArr(() => {
+            return recipes.filter((item) => {
+                return item.name.toLowerCase().includes(search.toLowerCase())
+            })
+        })
+    }
+
     return (
         <section className="results-container">
             <div className="search-container">
                 <h1>Etsi reseptiä nimellä (tai ainesosalla?)</h1>
                 <div className="input-wrapper">
                     <span className="search-icon">&#x1F50E;&#xFE0E;</span>
-                    <form
-                        onSubmit={(e) => {
-                            e.preventDefault() // estää sivun uudelleenlataamisen
-                            getRecipes()
-                        }}
-                    >
+                    <form onSubmit={handleSubmit}>
                         <input
-                            onChange={(e) => setSearch(e.target.value)}
+                            onChange={handleChange}
                             type="text"
                             placeholder="Hae reseptiä"
                             className="recipe-search"
+                            value={search}
                         />
                     </form>
                 </div>
