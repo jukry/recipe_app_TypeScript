@@ -3,4 +3,12 @@
 ## Overview
 
 Recipe app for my personal use and to showcase my skills.
-Starting with the frontend side, making my way to the backend(which I still need to learn).
+
+Starting with the frontend, making my way to the backend(which I still need to learn).
+
+### TODO
+
+-   Routing to recipe
+-   Add a recipe
+-   Sign up and login
+-   Backend
