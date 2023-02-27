@@ -1,11 +1,4 @@
-:root {
-    --ff-primary: "Open Sans", sans-serif;
-
-    --clr-body: gainsboro;
-    --clr-primary: white;
-    --clr-accent: red;
-    --clr-text: black;
-}
+@import "constants.css";
 * {
     margin: 0;
     padding: 0;
