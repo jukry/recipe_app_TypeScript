@@ -1,0 +1,29 @@
+@import "../constants.css";
+
+.recipe-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+.recipe-hero {
+    margin: 0 auto;
+    text-align: center;
+}
+.recipe-hero > img {
+    height: 500px;
+}
+.recipe-data {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 2em;
+}
+.ingredients {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(50px, 300px));
+}
+.ingr-line {
+    display: flex;
+    gap: 1em;
+    border-bottom: 1px solid var(--clr-accent);
+    word-break: break-word;
+}
