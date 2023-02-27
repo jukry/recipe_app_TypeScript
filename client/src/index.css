@@ -12,6 +12,9 @@
     font-family: var(--ff-primary);
     box-sizing: border-box;
 }
+html {
+    overflow-y: scroll;
+}
 body {
     background-color: var(--clr-body);
 }
@@ -91,8 +94,7 @@ form {
 }
 .results {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    justify-content: space-between;
+    grid-template-columns: repeat(auto-fill, minmax(300px, auto));
     gap: 1em;
     margin-bottom: 1em;
 }
@@ -113,6 +115,8 @@ form {
     display: flex;
     flex-direction: column;
     transition: all 0.175s ease 0s;
+    text-decoration: none;
+    color: var(--clr-text);
 }
 .food-item:hover {
     transform: scale(1.02);

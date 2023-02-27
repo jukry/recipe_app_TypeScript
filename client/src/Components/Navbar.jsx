@@ -9,7 +9,7 @@ export default function Navbar() {
             <nav className="top-nav">
                 <ul>
                     <li>
-                        <a href="#">Reseptit</a>
+                        <a href="/">Reseptit</a>
                     </li>
                     <li>
                         <a href="#">Kirjaudu</a>
