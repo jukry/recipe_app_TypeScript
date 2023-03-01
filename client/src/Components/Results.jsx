@@ -10,7 +10,11 @@ export default function Results(props) {
 
     return (
         <div className="results">
-            {recipeData.length == 0 ? "Ei mitään" : foodItem}
+            {recipeData.length == 0 ? (
+                <h2>Reseptejä ei löytynyt hakusanalla</h2>
+            ) : (
+                foodItem
+            )}
         </div>
     )
 }

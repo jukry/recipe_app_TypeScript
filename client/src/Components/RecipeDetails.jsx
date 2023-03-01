@@ -16,6 +16,7 @@ export default function RecipeDetails() {
             </div>
             <div className="recipe-data">
                 <div className="instructions">
+                    <h3>Valmistusohje</h3>
                     <ol>
                         {instructions.map((item, i) => {
                             return <li key={i}>{item}</li>
@@ -23,10 +24,11 @@ export default function RecipeDetails() {
                     </ol>
                 </div>
                 <div className="ingredients">
+                    <h3>Ainesosat</h3>
                     {ingredients.map(([amount, ingredient], i) => {
                         return (
-                            <div className="ingr-line">
-                                <p>{amount}</p>
+                            <div className="ingr-line" key={i}>
+                                <p className="ingr-amount">{amount}</p>
                                 <p>{ingredient}</p>
                             </div>
                         )
