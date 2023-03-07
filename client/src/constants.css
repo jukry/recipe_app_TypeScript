@@ -1,8 +1,9 @@
 :root {
     --ff-primary: "Open Sans", sans-serif;
 
-    --clr-body: #fafafa;
-    --clr-primary: white;
-    --clr-accent: red;
-    --clr-text: black;
+    --clr-body: hsl(160, 100%, 12%);
+    --clr-primary: hsl(35, 69%, 88%);
+    --clr-accent: hsl(160, 100%, 12%);
+    --clr-text: white;
+    --clr-accent-neutral: hsl(159, 23%, 36%);
 }

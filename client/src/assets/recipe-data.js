@@ -49,7 +49,7 @@ const recipes = [
     {
         id: 3,
         name: "Pizzaa uunista",
-        description: "Tästä pizzasta et löydä yllätyskarvoja",
+        description: "Tätä parempaa pizzaa et löydä",
         ingredients: [
             ["200g", "Pizzapohja"],
             ["1dl", "Tomaattikastike"],
@@ -96,7 +96,7 @@ const recipes = [
     {
         id: 5,
         name: "Pizzaa uunista",
-        description: "Tästä pizzasta et löydä yllätyskarvoja",
+        description: "Tätä parempaa pizzaa et löydä",
         ingredients: [
             ["200g", "Pizzapohja"],
             ["1dl", "Tomaattikastike"],
@@ -138,7 +138,7 @@ const recipes = [
     {
         id: 7,
         name: "Pizzaa uunista",
-        description: "Tästä pizzasta et löydä yllätyskarvoja",
+        description: "Tätä parempaa pizzaa et löydä",
         ingredients: [
             ["200g", "Pizzapohja"],
             ["1dl", "Tomaattikastike"],
