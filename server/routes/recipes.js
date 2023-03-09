@@ -32,4 +32,16 @@ recipesRouter.post("/", async (req, res) => {
     }
 })
 
+recipesRouter.delete("/:id", async (req, res) => {
+    const { id } = req.params
+    try {
+        await Recipe.findById(id).remove()
+        console.log(`Document ${id} removed`)
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(404)
+    }
+    res.sendStatus(200)
+})
+
 export default recipesRouter
