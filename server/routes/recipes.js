@@ -2,9 +2,15 @@ import express from "express"
 const recipesRouter = express.Router()
 import Recipe from "../models/Recipe.js"
 
+// get all recipes
 recipesRouter.get("/", async (req, res) => {
-    res.send("HELLO")
-    res.status(200)
+    const recipes = await Recipe.find()
+    res.status(200).json(recipes)
+})
+// get random recipe
+recipesRouter.get("/random", async (req, res) => {
+    const randomRecipe = await Recipe.aggregate([{ $sample: { size: 1 } }])
+    res.status(200).json(randomRecipe)
 })
 
 recipesRouter.post("/", async (req, res) => {
