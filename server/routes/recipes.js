@@ -5,7 +5,16 @@ import Recipe from "../models/Recipe.js"
 // get all recipes
 recipesRouter.get("/", async (req, res) => {
     const recipes = await Recipe.find()
-    res.status(200).json(recipes)
+    res.status(200).json(
+        recipes.map((item) => {
+            return [
+                item.name,
+                item.description,
+                item.ingredients,
+                item.instructions,
+            ]
+        })
+    )
 })
 // get random recipe
 recipesRouter.get("/random", async (req, res) => {
@@ -15,13 +24,10 @@ recipesRouter.get("/random", async (req, res) => {
 
 recipesRouter.post("/", async (req, res) => {
     const recipe = req.body
-    console.log("RESEPTI", recipe)
     try {
-        console.log("TRY POST")
         const resu = await Recipe.create(recipe)
         res.send(resu)
     } catch (err) {
-        console.log("ERROR POST")
         res.status(500).send(err)
     }
 })
