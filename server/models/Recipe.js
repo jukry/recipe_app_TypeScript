@@ -1,10 +1,6 @@
 import { Schema, model } from "mongoose"
 
 const recipe = new Schema({
-    //Schema. value voi olla myös objekti johon voidaan määritellä muita pareja
-    id: {
-        type: Number,
-    },
     name: {
         type: String,
         required: true,
@@ -18,17 +14,16 @@ const recipe = new Schema({
         default: () => Date.now(),
         immutable: true,
     },
-    ingredients: [
-        {
-            amount: String,
-            ingredient: String,
-            type: { type: String },
-            required: false,
-        },
-    ],
+    ingredients: {
+        amount: String,
+        ingredient: String,
+        type: Array,
+        required: true,
+    },
+
     instructions: {
         type: [String],
-        required: false,
+        required: true,
     },
     images: {
         type: [String],
