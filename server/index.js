@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 })
 
 // /recipes prefix ettei tarvitse recipes.js puolella määritellä
-app.use("/recipes", recipesRouter)
+app.use("/api/recipes", recipesRouter)
 
 // database connection
 const db = connectDB()
