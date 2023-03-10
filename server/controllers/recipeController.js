@@ -1,22 +1,32 @@
 import Recipe from "../models/Recipe.js"
 
 const getAllRecipes = async (req, res) => {
-    const recipes = await Recipe.find()
-    res.status(200).json(
-        recipes.map((item) => {
-            return [
-                item.name,
-                item.description,
-                item.ingredients,
-                item.instructions,
-            ]
-        })
-    )
+    try {
+        const recipes = await Recipe.find()
+        res.status(200).json(
+            recipes.map((item) => {
+                return [
+                    item.name,
+                    item.description,
+                    item.ingredients,
+                    item.instructions,
+                ]
+            })
+        )
+    } catch (error) {
+        console.log(error)
+        res.send(404)
+    }
 }
 
 const getRandomRecipe = async (req, res) => {
-    const randomRecipe = await Recipe.aggregate([{ $sample: { size: 1 } }])
-    res.status(200).json(randomRecipe)
+    try {
+        const randomRecipe = await Recipe.aggregate([{ $sample: { size: 1 } }])
+        res.status(200).json(randomRecipe)
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(404)
+    }
 }
 
 const getRecipeById = async (req, res) => {
