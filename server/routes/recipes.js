@@ -1,7 +1,5 @@
 import express from "express"
-import recipes from "../../client/src/assets/recipe-data.js"
 const recipesRouter = express.Router()
-import Recipe from "../models/Recipe.js"
 import {
     getAllRecipes,
     getRandomRecipe,
