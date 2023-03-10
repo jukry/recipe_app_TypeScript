@@ -9,22 +9,17 @@ import {
     updateRecipe,
 } from "../controllers/recipeController.js"
 
-// get all recipes
-recipesRouter.get("/", getAllRecipes)
+// route for get all recipes and create recipe
+recipesRouter.route("/").get(getAllRecipes).post(createRecipe)
 
 // get random recipe
 recipesRouter.get("/random", getRandomRecipe)
 
-//get recipe by id
-recipesRouter.get("/:id", getRecipeById)
-
-// create a new recipe
-recipesRouter.post("/", createRecipe)
-
-// delete a recipe by id
-recipesRouter.delete("/:id", deleteRecipe)
-
-// update request by id
-recipesRouter.put("/:id", updateRecipe)
+// route for id based request
+recipesRouter
+    .route("/:id")
+    .get(getRecipeById)
+    .delete(deleteRecipe)
+    .put(updateRecipe)
 
 export default recipesRouter
