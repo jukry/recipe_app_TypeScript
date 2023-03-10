@@ -16,12 +16,14 @@ recipesRouter.get("/", async (req, res) => {
         })
     )
 })
+
 // get random recipe
 recipesRouter.get("/random", async (req, res) => {
     const randomRecipe = await Recipe.aggregate([{ $sample: { size: 1 } }])
     res.status(200).json(randomRecipe)
 })
 
+// create a new recipe
 recipesRouter.post("/", async (req, res) => {
     const recipe = req.body
     try {
@@ -32,10 +34,11 @@ recipesRouter.post("/", async (req, res) => {
     }
 })
 
+// delete a recipe by id
 recipesRouter.delete("/:id", async (req, res) => {
     const { id } = req.params
     try {
-        await Recipe.findById(id).remove()
+        await Recipe.findById(id).deleteOne()
         console.log(`Document ${id} removed`)
     } catch (error) {
         console.log(error)
