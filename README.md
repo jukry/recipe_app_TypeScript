@@ -8,6 +8,13 @@ Starting with the frontend, making my way to the backend(which I still need to l
 
 ### TODO
 
--   Add a recipe
--   Sign up and login
+-   Frontend
+
+    -   Accessibility
+    -   Add a recipe and edit a recipe
+    -   UI Design
+
 -   Backend
+
+    -   Login auth
+    -   API auth
