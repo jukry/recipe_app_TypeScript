@@ -35,7 +35,7 @@ const getRecipeById = async (req, res) => {
         const recipeById = await Recipe.findById(id)
         res.status(200).send(recipeById)
     } catch (error) {
-        res.sendStatus(404)
+        res.status(404).json({ message: "No such recipe" })
     }
 }
 
@@ -45,7 +45,7 @@ const createRecipe = async (req, res) => {
         const resu = await Recipe.create(recipe)
         res.send(resu)
     } catch (err) {
-        res.status(500).send(err)
+        res.sendStatus(500)
     }
 }
 
