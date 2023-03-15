@@ -5,8 +5,11 @@ import Results from "./Components/Results"
 import Search from "./Components/Search"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import RecipeDetails from "./Components/RecipeDetails"
+import UseFetch from "./Components/UseFetch"
 
 function App() {
+    const { backendData } = UseFetch("http://localhost:5000/api/recipes")
+    console.log(backendData)
     return (
         <BrowserRouter>
             <main className="container">
