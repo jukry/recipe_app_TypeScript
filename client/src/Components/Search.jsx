@@ -2,9 +2,11 @@ import Results from "./Results"
 import { useState, useEffect } from "react"
 import recipes from "../assets/recipe-data"
 
-export default function Search() {
+export default function Search(props) {
     const [recipesArr, setRecipesArr] = useState([])
     const [search, setSearch] = useState("")
+    const message = props.props
+    console.log("MESSAGE in search", message)
 
     useEffect(() => {
         console.count("UseEffect")

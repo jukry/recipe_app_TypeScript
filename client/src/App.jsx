@@ -8,8 +8,8 @@ import RecipeDetails from "./Components/RecipeDetails"
 import UseFetch from "./Components/UseFetch"
 
 function App() {
-    const { backendData } = UseFetch("http://localhost:5000/api/recipes")
-    console.log(backendData)
+    const url = "http://localhost:5000/api/recipes"
+    const data = UseFetch(url) || []
     return (
         <BrowserRouter>
             <main className="container">
@@ -19,7 +19,7 @@ function App() {
                         path="/recipe/:id"
                         element={<RecipeDetails />}
                     ></Route>
-                    <Route path="/" element={<Search />}></Route>
+                    <Route path="/" element={<Search props={data} />}></Route>
                 </Routes>
                 {/* <Search /> */}
             </main>
