@@ -1,21 +1,22 @@
 import Results from "./Results"
 import { useState, useEffect } from "react"
-import recipes from "../assets/recipe-data"
+//import recipes from "../assets/recipe-data"
 
 export default function Search(props) {
     const [recipesArr, setRecipesArr] = useState([])
     const [search, setSearch] = useState("")
-    const message = props.props
-    console.log("MESSAGE in search", message)
+    const recipes = props.props
+    const filtered = recipes.filter((item) => {
+        return item.name.toLowerCase().includes(search.toLowerCase())
+    })
 
-    useEffect(() => {
-        console.count("UseEffect")
+    /* useEffect(() => {
         setRecipesArr(() => {
             return recipes.filter((item) => {
                 return item.name.toLowerCase().includes(search.toLowerCase())
             })
         })
-    }, [search])
+    }, [search]) */
 
     /* APIA VARTEN 
     async function getRecipes() {
@@ -24,9 +25,9 @@ export default function Search(props) {
         setRecipesArr(json.recipes)
     } */
 
-    function getRecipes() {
+    /* function getRecipes() {
         setRecipesArr(recipes)
-    }
+    } */
 
     function handleChange(event) {
         setSearch(event.target.value)
@@ -34,11 +35,6 @@ export default function Search(props) {
 
     function handleSubmit(e) {
         e.preventDefault()
-        setRecipesArr(() => {
-            return recipes.filter((item) => {
-                return item.name.toLowerCase().includes(search.toLowerCase())
-            })
-        })
     }
 
     return (
@@ -58,7 +54,7 @@ export default function Search(props) {
                     </form>
                 </div>
             </div>
-            <Results props={recipesArr} />
+            <Results props={filtered} />
         </section>
     )
 }
