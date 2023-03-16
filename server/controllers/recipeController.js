@@ -3,14 +3,15 @@ import Recipe from "../models/Recipe.js"
 const getAllRecipes = async (req, res) => {
     try {
         let recipes = await Recipe.find()
-
         recipes = recipes.map((item) => {
-            return [
-                item.name,
-                item.description,
-                item.ingredients,
-                item.instructions,
-            ]
+            return {
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                ingredients: item.ingredients,
+                instructions: item.instructions,
+                images: item.images,
+            }
         })
         res.status(200).json({ message: recipes })
     } catch (error) {
