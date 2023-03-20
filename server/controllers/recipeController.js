@@ -34,7 +34,7 @@ const getRecipeById = async (req, res) => {
     const { id } = req.params
     try {
         const recipeById = await Recipe.findById(id)
-        res.status(200).send(recipeById)
+        res.status(200).json({ message: recipeById })
     } catch (error) {
         res.status(404).json({ message: "No such recipe" })
     }
@@ -43,8 +43,8 @@ const getRecipeById = async (req, res) => {
 const createRecipe = async (req, res) => {
     const recipe = req.body
     try {
-        const resu = await Recipe.create(recipe)
-        res.send(resu)
+        const createdRecipe = await Recipe.create(recipe)
+        res.status(201).json({ message: createRecipe })
     } catch (err) {
         res.sendStatus(500)
     }
