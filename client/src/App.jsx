@@ -17,7 +17,7 @@ function App() {
                 <Routes>
                     <Route
                         path="/recipe/:id"
-                        element={<RecipeDetails />}
+                        element={<RecipeDetails props={data} />}
                     ></Route>
                     <Route path="/" element={<Search props={data} />}></Route>
                 </Routes>
