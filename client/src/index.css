@@ -24,9 +24,10 @@ header {
     background-color: var(--clr-accent-neutral);
     box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 50%);
 }
-header,
-.top-nav > ul > li > a {
+header > a,
+.top-nav > a {
     color: var(--clr-text);
+    text-decoration: none;
 }
 .logo-container {
     padding-right: 1em;
@@ -38,17 +39,14 @@ header,
     line-height: 0.8em;
     text-align: left;
 }
-.top-nav > ul {
+.top-nav {
     display: flex;
     list-style-type: none;
     justify-content: center;
     padding: 1em 0;
 }
-.top-nav > ul > li {
+.top-nav > a {
     padding: 0 1em;
-}
-.top-nav > ul > li > a {
-    text-decoration: none;
 }
 .search-container {
     border-radius: 10px;
