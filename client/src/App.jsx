@@ -12,11 +12,9 @@ import RecipeDetails, {
     loader as RecipeDetailsLoader,
 } from "./Components/RecipeDetails"
 import UseFetch from "./Components/UseFetch"
+import Login from "./Pages/Login"
 
 function App() {
-    const url = "http://localhost:5000/api/recipes"
-    const data = UseFetch(url) || []
-
     const routes = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<HomeLayout />}>
@@ -31,8 +29,7 @@ function App() {
                     loader={RecipeDetailsLoader}
                     element={<RecipeDetails />}
                 ></Route>
-                {/*                 <Route path="/" element={<Search props={data} />}></Route> */}
-                {/* <Search /> */}
+                <Route path="login" element={<Login />} />
             </Route>
         )
     )
