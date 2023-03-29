@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 export default function Fooditem({ props }) {
     return (
-        <Link to={`/recipe/${props.id}`} props={props} className="food-item">
+        <Link to={`/recipes/${props.id}`} props={props} className="food-item">
             <div className="img-container">
                 <img src={props.images[0]} alt={props.description} />
             </div>

@@ -1,19 +1,17 @@
-import { useState } from "react"
 import "./App.css"
 import LandingPage from "./Pages/LandingPage"
 import HomeLayout from "./Layouts/HomeLayout"
-import Search from "./Components/Search"
+import Search, { loader as SearchLoader } from "./Components/Search"
 import {
-    BrowserRouter,
-    Routes,
     Route,
     createBrowserRouter,
     createRoutesFromElements,
     RouterProvider,
 } from "react-router-dom"
-import RecipeDetails from "./Components/RecipeDetails"
+import RecipeDetails, {
+    loader as RecipeDetailsLoader,
+} from "./Components/RecipeDetails"
 import UseFetch from "./Components/UseFetch"
-import Results from "./Components/Results"
 
 function App() {
     const url = "http://localhost:5000/api/recipes"
@@ -23,10 +21,15 @@ function App() {
         createRoutesFromElements(
             <Route path="/" element={<HomeLayout />}>
                 <Route index element={<LandingPage />} />
-                <Route path="recipes" element={<Results />} />
                 <Route
-                    path="/recipes/:id"
-                    element={<RecipeDetails props={data} />}
+                    path="recipes"
+                    loader={SearchLoader}
+                    element={<Search />}
+                />
+                <Route
+                    path="recipes/:id"
+                    loader={RecipeDetailsLoader}
+                    element={<RecipeDetails />}
                 ></Route>
                 {/*                 <Route path="/" element={<Search props={data} />}></Route> */}
                 {/* <Search /> */}

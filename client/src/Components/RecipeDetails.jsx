@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 import "./recipeDetails.css"
-import UseFetch from "./UseFetch"
-//import recipes from "../assets/recipe-data"
+import { getRecipeById } from "../utils/utils"
+
+export async function loader({ params }) {
+    const data = await getRecipeById(
+        `http://localhost:5000/api/recipes/${params.id}`
+    )
+    return data
+}
 
 export default function RecipeDetails() {
-    const { id } = useParams()
-    const data = UseFetch(`http://localhost:5000/api/recipes/${id}`)
+    const data = useLoaderData()
 
     return data !== undefined ? (
         <section className="recipe-wrapper">

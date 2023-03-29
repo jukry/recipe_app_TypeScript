@@ -1,11 +1,17 @@
 import Results from "./Results"
 import { useState, useEffect } from "react"
 //import recipes from "../assets/recipe-data"
+import { useLoaderData } from "react-router-dom"
+import { getRecipes } from "../utils/utils"
+
+export async function loader() {
+    const data = await getRecipes("http://localhost:5000/api/recipes")
+    return data
+}
 
 export default function Search(props) {
-    const [recipesArr, setRecipesArr] = useState([])
     const [search, setSearch] = useState("")
-    const recipes = props.props
+    const recipes = useLoaderData()
     const filtered = recipes.filter((item) => {
         return item.name.toLowerCase().includes(search.toLowerCase())
     })
