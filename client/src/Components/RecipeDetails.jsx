@@ -1,4 +1,4 @@
-import { useLoaderData, useLocation } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 import "./recipeDetails.css"
 import { getRecipeById } from "../utils/utils"
 

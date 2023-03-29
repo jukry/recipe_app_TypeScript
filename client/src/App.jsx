@@ -11,7 +11,6 @@ import {
 import RecipeDetails, {
     loader as RecipeDetailsLoader,
 } from "./Components/RecipeDetails"
-import UseFetch from "./Components/UseFetch"
 import Login from "./Pages/Login"
 
 function App() {

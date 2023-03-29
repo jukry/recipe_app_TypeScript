@@ -2,7 +2,6 @@ import Results from "./Results"
 //import recipes from "../assets/recipe-data"
 import { useLoaderData, useSearchParams } from "react-router-dom"
 import { getRecipes } from "../utils/utils"
-import { useState } from "react"
 
 export async function loader() {
     const data = await getRecipes("http://localhost:5000/api/recipes")
