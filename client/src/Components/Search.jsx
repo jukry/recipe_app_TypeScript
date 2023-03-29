@@ -1,8 +1,8 @@
 import Results from "./Results"
-import { useState, useEffect } from "react"
 //import recipes from "../assets/recipe-data"
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useSearchParams } from "react-router-dom"
 import { getRecipes } from "../utils/utils"
+import { useState } from "react"
 
 export async function loader() {
     const data = await getRecipes("http://localhost:5000/api/recipes")
@@ -10,39 +10,27 @@ export async function loader() {
 }
 
 export default function Search(props) {
-    const [search, setSearch] = useState("")
+    const [searchParams, setSearchParams] = useSearchParams()
     const recipes = useLoaderData()
-    const filtered = recipes.filter((item) => {
-        return item.name.toLowerCase().includes(search.toLowerCase())
-    })
-
-    /* useEffect(() => {
-        setRecipesArr(() => {
-            return recipes.filter((item) => {
-                return item.name.toLowerCase().includes(search.toLowerCase())
-            })
-        })
-    }, [search]) */
-
-    /* APIA VARTEN 
-    async function getRecipes() {
-        const res = await fetch(url)
-        const json = await res.json()
-        setRecipesArr(json.recipes)
-    } */
-
-    /* function getRecipes() {
-        setRecipesArr(recipes)
-    } */
-
-    function handleChange(event) {
-        setSearch(event.target.value)
-    }
+    let filtered = []
 
     function handleSubmit(e) {
         e.preventDefault()
     }
-
+    function handleFilter(e) {
+        setSearchParams({ search: e.target.value })
+    }
+    if (recipes) {
+        filtered = recipes.filter((item) => {
+            if (searchParams.get("search") === null) {
+                return recipes
+            } else {
+                return item.name
+                    .toLowerCase()
+                    .includes(searchParams.get("search"))
+            }
+        })
+    }
     return (
         <section className="results-container">
             <div className="search-container">
@@ -51,16 +39,20 @@ export default function Search(props) {
                     <span className="search-icon">&#x1F50E;&#xFE0E;</span>
                     <form onSubmit={handleSubmit}>
                         <input
-                            onChange={handleChange}
+                            onChange={handleFilter}
                             type="text"
                             placeholder="Hae reseptiä"
                             className="recipe-search"
-                            value={search}
+                            value={searchParams.get("search") || ""}
                         />
                     </form>
                 </div>
             </div>
-            <Results props={filtered} />
+            {filtered ? (
+                <Results props={[filtered, searchParams.get("search")]} />
+            ) : (
+                ""
+            )}
         </section>
     )
 }

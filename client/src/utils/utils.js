@@ -6,6 +6,5 @@ export async function getRecipes(url) {
 }
 export async function getRecipeById(url) {
     const data = UseFetch(url)
-    console.log(url)
     return data
 }
