@@ -10,6 +10,7 @@ html {
 }
 body {
     background-color: var(--clr-body);
+    height: 100%;
 }
 .container {
     display: flex;
@@ -24,6 +25,7 @@ header {
     background-color: var(--clr-accent-neutral);
     box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 50%);
     z-index: 1;
+    top: 0;
 }
 header > a,
 .top-nav > a {
@@ -125,4 +127,16 @@ form {
 }
 .recipe-info {
     padding: 0.75em 1.25em;
+}
+footer {
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    background-color: var(--clr-accent-neutral);
+    z-index: 1;
+    padding: 0.8rem;
+    color: var(--clr-text);
+    font-size: 1.25em;
+    bottom: 0;
+    box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 100%);
 }
