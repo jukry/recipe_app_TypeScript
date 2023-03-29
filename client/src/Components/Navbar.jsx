@@ -8,7 +8,7 @@ export default function Navbar() {
                 </h1>
             </Link>
             <nav className="top-nav">
-                <NavLink to="recipes">Reseptit</NavLink>
+                <NavLink to="/">Reseptit</NavLink>
                 <NavLink to="login">Kirjaudu</NavLink>
             </nav>
         </header>

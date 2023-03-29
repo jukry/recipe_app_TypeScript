@@ -1,0 +1,20 @@
+@import "../../constants.css";
+
+.hero-text {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    color: white;
+    z-index: 1;
+}
+.hero-container {
+    background-color: white;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: calc(100% - 54px);
+    width: 100%;
+    background-position: center;
+    position: absolute;
+}

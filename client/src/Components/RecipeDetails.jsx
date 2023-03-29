@@ -15,7 +15,7 @@ export default function RecipeDetails() {
     return data !== undefined ? (
         <section className="recipe-wrapper">
             <div className="recipe-hero">
-                <img src={`../${data.images}`} alt="img" />
+                <img src={`../${data.images}`} alt="Kuva tulossa" />
                 <h1>{data.name}</h1>
                 <h3>{data.description}</h3>
             </div>

@@ -7,8 +7,7 @@ export default function Fooditem(props) {
     function recipesFunc() {
         return (
             <Link
-                to={`/recipes/${data.id}`}
-                props={props}
+                to={`/recipe/${data.id}`}
                 state={{
                     search: `?${searchParams}`,
                 }}
@@ -16,7 +15,7 @@ export default function Fooditem(props) {
                 key={data.id}
             >
                 <div className="img-container">
-                    <img src={data.images[0]} alt={data.description} />
+                    <img src={data.images[0]} alt="Kuva tulossa" />
                 </div>
                 <div className="recipe-info">
                     <h2>{data.name}</h2>
@@ -27,5 +26,5 @@ export default function Fooditem(props) {
     }
     const recipes = recipesFunc()
 
-    return <section className="recipe-list">{recipes}</section>
+    return <div className="fooditem-container">{recipes}</div>
 }
