@@ -1,18 +1,17 @@
 import Results from "./Results"
 //import recipes from "../assets/recipe-data"
-import { useLoaderData, useSearchParams } from "react-router-dom"
+import { defer, useLoaderData, useSearchParams, Await } from "react-router-dom"
 import { getRecipes } from "../utils/utils"
-import { Children, useState } from "react"
+import { useState, Suspense } from "react"
 
 export async function loader() {
-    const data = await getRecipes("http://localhost:5000/api/recipes")
-    return data
+    return defer({ data: getRecipes("http://localhost:5000/api/recipes") })
 }
 
 export default function Search() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [search, setSearch] = useState(searchParams?.get("search") || "")
-    const recipes = useLoaderData()
+    const recipesPromise = useLoaderData()
     let filtered = []
 
     function handleSubmit(e) {
@@ -22,17 +21,22 @@ export default function Search() {
         setSearch(e.target.value)
         setSearchParams({ search: e.target.value })
     }
-    if (recipes) {
-        filtered = recipes.filter((item) => {
-            if (searchParams.get("search") === null) {
-                return recipes
-            } else {
-                return item.name
-                    .toLowerCase()
-                    .includes(searchParams.get("search").toLowerCase())
-            }
-        })
+
+    function renderRecipes(loadedRecipes) {
+        if (loadedRecipes) {
+            filtered = loadedRecipes.filter((item) => {
+                if (searchParams.get("search") === null) {
+                    return loadedRecipes
+                } else {
+                    return item.name
+                        .toLowerCase()
+                        .includes(searchParams.get("search").toLowerCase())
+                }
+            })
+        }
+        return <Results props={[filtered, searchParams]} />
     }
+
     return (
         <section className="results-container">
             <div className="search-container">
@@ -50,7 +54,9 @@ export default function Search() {
                     </form>
                 </div>
             </div>
-            <Results props={[filtered, searchParams]} />
+            <Suspense fallback={<h2>Haetaan reseptejä</h2>}>
+                <Await resolve={recipesPromise.data}>{renderRecipes}</Await>
+            </Suspense>
         </section>
     )
 }
