@@ -9,6 +9,7 @@ export default function Navbar() {
             </Link>
             <nav className="top-nav">
                 <NavLink to="/">Reseptit</NavLink>
+                <NavLink to="account">Oma tili</NavLink>
                 <NavLink to="login">Kirjaudu</NavLink>
             </nav>
         </header>

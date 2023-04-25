@@ -1,0 +1,19 @@
+@import "../../../constants.css";
+
+.account-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5em;
+    margin: 0 auto;
+}
+
+.account-nav {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+a {
+    color: white;
+    text-decoration: none;
+}
