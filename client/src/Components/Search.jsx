@@ -2,14 +2,16 @@ import Results from "./Results"
 //import recipes from "../assets/recipe-data"
 import { useLoaderData, useSearchParams } from "react-router-dom"
 import { getRecipes } from "../utils/utils"
+import { Children, useState } from "react"
 
 export async function loader() {
     const data = await getRecipes("http://localhost:5000/api/recipes")
     return data
 }
 
-export default function Search(props) {
+export default function Search() {
     const [searchParams, setSearchParams] = useSearchParams()
+    const [search, setSearch] = useState(searchParams?.get("search") || "")
     const recipes = useLoaderData()
     let filtered = []
 
@@ -17,6 +19,7 @@ export default function Search(props) {
         e.preventDefault()
     }
     function handleFilter(e) {
+        setSearch(e.target.value)
         setSearchParams({ search: e.target.value })
     }
     if (recipes) {
@@ -26,7 +29,7 @@ export default function Search(props) {
             } else {
                 return item.name
                     .toLowerCase()
-                    .includes(searchParams.get("search"))
+                    .includes(searchParams.get("search").toLowerCase())
             }
         })
     }
@@ -42,16 +45,12 @@ export default function Search(props) {
                             type="text"
                             placeholder="Hae reseptiä"
                             className="recipe-search"
-                            value={searchParams.get("search") || ""}
+                            value={search}
                         />
                     </form>
                 </div>
             </div>
-            {filtered ? (
-                <Results props={[filtered, searchParams.get("search")]} />
-            ) : (
-                ""
-            )}
+            <Results props={[filtered, searchParams]} />
         </section>
     )
 }
