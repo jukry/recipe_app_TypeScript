@@ -2,6 +2,7 @@ import { useState } from "react"
 import { NavLink, Link } from "react-router-dom"
 export default function Navbar() {
     const [showNav, setShowNav] = useState(false)
+    const loggedIn = localStorage.getItem("loggedIn")
     return (
         <header>
             <Link className="logo-container" to="/">
@@ -17,7 +18,18 @@ export default function Navbar() {
                 >
                     <NavLink to="/">Reseptit</NavLink>
                     <NavLink to="account">Oma tili</NavLink>
-                    <NavLink to="login">Kirjaudu</NavLink>
+                    {loggedIn ? (
+                        <NavLink
+                            onClick={() => {
+                                localStorage.removeItem("loggedIn")
+                                location.reload()
+                            }}
+                        >
+                            Kirjaudu ulos
+                        </NavLink>
+                    ) : (
+                        <NavLink to="login">Kirjaudu sisään</NavLink>
+                    )}
                 </section>
             </nav>
 
