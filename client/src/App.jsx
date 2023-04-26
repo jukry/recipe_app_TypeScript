@@ -11,10 +11,16 @@ import {
 import RecipeDetails, {
     loader as RecipeDetailsLoader,
 } from "./Components/RecipeDetails"
-import Login from "./Pages/Login"
-import AccountDashboard from "./Pages/Account/AccountDashboard"
+import Login, {
+    action as loginAction,
+    loader as loginLoader,
+} from "./Pages/Login"
+import AccountDashboard, {
+    loader as dashboardLoader,
+} from "./Pages/Account/AccountDashboard"
 import AccountLayout from "./Pages/Account/AccountLayout"
 import FavoriteRecipes from "./Pages/Account/FavoriteRecipes"
+import { requireAuth } from "./utils/utils"
 
 function App() {
     const routes = createBrowserRouter(
@@ -27,13 +33,25 @@ function App() {
                     element={<RecipeDetails />}
                 ></Route>
                 <Route path="account" element={<AccountLayout />}>
-                    <Route index element={<AccountDashboard />} />
+                    <Route
+                        index
+                        element={<AccountDashboard />}
+                        loader={dashboardLoader}
+                    />
                     <Route
                         path="favoriterecipes"
+                        loader={async ({ request }) =>
+                            await requireAuth(request)
+                        }
                         element={<FavoriteRecipes />}
                     />
                 </Route>
-                <Route path="login" element={<Login />} />
+                <Route
+                    path="login"
+                    element={<Login />}
+                    action={loginAction}
+                    loader={loginLoader}
+                />
             </Route>
         )
     )
