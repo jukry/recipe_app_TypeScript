@@ -1,34 +1,53 @@
 import React from "react"
 import "./styles/Login.css"
+import {
+    Form,
+    redirect,
+    useActionData,
+    useNavigation,
+    useLoaderData,
+} from "react-router-dom"
+import { loginUser } from "../utils/utils"
 
-function handleChange() {
-    //
+export function loader({ request }) {
+    return new URL(request.url).searchParams.get("message")
 }
-function handleSubmit() {
-    //
+
+export async function action({ request }) {
+    const formData = await request.formData()
+    const email = formData.get("email")
+    const pathname = "/account"
+    try {
+        const loggedIn = await loginUser(null)
+        if (loggedIn) localStorage.setItem("loggedIn", true)
+        return redirect(pathname)
+    } catch (error) {
+        return error.message
+    }
 }
 
 export default function Login() {
+    const navigation = useNavigation()
+    const error = useActionData()
+    const message = useLoaderData()
+
+    console.log(navigation.state)
     return (
         <div className="login-container">
-            <h2>Kirjaudu</h2>
-            <form onSubmit={handleSubmit} className="login-form">
+            <h2>{message ? "Kirjaudu ensin sisään" : "Kirjaudu sisään"}</h2>
+            <Form replace method="post" className="login-form">
                 <input
                     type="email"
                     name="email"
-                    onChange={handleChange}
                     placeholder="Sähköpostiosoite"
-                    value=""
                 />
-                <input
-                    type="password"
-                    name="password"
-                    onChange={handleChange}
-                    placeholder="Salasana"
-                    value=""
-                />
-                <button>Kirjaudu sisään</button>
-            </form>
+                <input type="password" name="password" placeholder="Salasana" />
+                <button disabled={navigation.state === "submitting"}>
+                    {navigation.state === "idle"
+                        ? "Kirjaudu sisään"
+                        : "Kirjaudutaan..."}
+                </button>
+            </Form>
         </div>
     )
 }
