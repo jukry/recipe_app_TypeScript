@@ -24,8 +24,9 @@ header {
     position: sticky;
     background-color: var(--clr-accent-neutral);
     box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 50%);
-    z-index: 1;
+    z-index: 1000;
     top: 0;
+    padding: 1em 0;
 }
 header > a,
 .top-nav > a {
@@ -46,7 +47,6 @@ header > a,
     display: flex;
     list-style-type: none;
     justify-content: center;
-    padding: 1em 0;
 }
 .top-nav > a {
     padding: 0 1em;
@@ -140,4 +140,76 @@ footer {
     font-size: 1.25em;
     bottom: 0;
     box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 100%);
+}
+.nav-button {
+    display: none;
+}
+@media screen and (max-width: 500px) {
+    .nav-container {
+        position: relative;
+    }
+    .top-nav {
+        display: flex;
+        background-color: var(--clr-accent-neutral);
+        flex-direction: column;
+        position: fixed;
+        transition: ease-out 0.5s left;
+        border-bottom: 1px solid var(--clr-accent);
+        border-right: 1px solid var(--clr-accent);
+        height: 15em;
+        top: 4em;
+    }
+    .top-nav > a {
+        padding: 1em;
+        font-size: 1.25em;
+        text-align: right;
+        border-bottom: 1px solid black;
+    }
+    .top-nav > a:first-child {
+        border-top: 1px solid black;
+    }
+    .top-nav > a:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    .top-nav-active {
+        width: 100%;
+        left: 0%;
+    }
+    .nav-button {
+        display: flex;
+        flex-direction: column;
+        color: black;
+        z-index: 100;
+        right: 1em;
+        position: absolute;
+    }
+    .top-nav-disabled {
+        left: 110%;
+        width: 100%;
+        transition: ease-in 0.5s left;
+        position: fixed;
+    }
+    .line {
+        width: 2em;
+        height: 4px;
+        border-radius: 10px;
+        background-color: var(--clr-accent);
+        margin: 3px;
+        transition: all 0.1s linear;
+    }
+    .cross {
+        width: 2em;
+        height: 4px;
+        border-radius: 10px;
+        background-color: var(--clr-accent);
+        margin: 3px;
+        transition: all 0.1s linear;
+    }
+    .cross-1 {
+        transform: rotate(45deg) translate(4px, 3px);
+    }
+    .cross-2 {
+        transform: rotate(-45deg) translate(4px, -3px);
+    }
 }
