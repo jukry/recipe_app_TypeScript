@@ -40,9 +40,7 @@ function App() {
                     />
                     <Route
                         path="favoriterecipes"
-                        loader={async ({ request }) =>
-                            await requireAuth(request)
-                        }
+                        loader={dashboardLoader}
                         element={<FavoriteRecipes />}
                     />
                 </Route>

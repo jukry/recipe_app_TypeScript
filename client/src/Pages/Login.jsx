@@ -42,6 +42,7 @@ export default function Login() {
                     placeholder="Sähköpostiosoite"
                 />
                 <input type="password" name="password" placeholder="Salasana" />
+
                 <button disabled={navigation.state === "submitting"}>
                     {navigation.state === "idle"
                         ? "Kirjaudu sisään"

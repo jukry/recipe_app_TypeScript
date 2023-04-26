@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { NavLink, Link } from "react-router-dom"
+
 export default function Navbar() {
     const [showNav, setShowNav] = useState(false)
-    const loggedIn = localStorage.getItem("loggedIn")
+    const [loggedIn, setLoggedIn] = useState(localStorage.getItem("loggedIn"))
+
     return (
         <header>
             <Link className="logo-container" to="/">
@@ -21,7 +23,8 @@ export default function Navbar() {
                     {loggedIn ? (
                         <NavLink
                             onClick={() => {
-                                localStorage.removeItem("loggedIn")
+                                setLoggedIn(false)
+                                localStorage.clear()
                                 location.reload()
                             }}
                         >
