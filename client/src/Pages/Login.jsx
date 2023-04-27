@@ -16,7 +16,8 @@ export function loader({ request }) {
 export async function action({ request }) {
     const formData = await request.formData()
     const email = formData.get("email")
-    const pathname = "/account"
+    const pathname =
+        new URL(request.url).searchParams.get("redirectTo") || "/account"
     try {
         const loggedIn = await loginUser(null)
         if (loggedIn) localStorage.setItem("loggedIn", true)
@@ -31,7 +32,6 @@ export default function Login() {
     const error = useActionData()
     const message = useLoaderData()
 
-    console.log(navigation.state)
     return (
         <div className="login-container">
             <h2>{message ? "Kirjaudu ensin sisään" : "Kirjaudu sisään"}</h2>

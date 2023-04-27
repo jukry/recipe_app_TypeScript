@@ -19,7 +19,9 @@ import AccountDashboard, {
     loader as dashboardLoader,
 } from "./Pages/Account/AccountDashboard"
 import AccountLayout from "./Pages/Account/AccountLayout"
-import FavoriteRecipes from "./Pages/Account/FavoriteRecipes"
+import FavoriteRecipes, {
+    loader as favrecipesLoader,
+} from "./Pages/Account/FavoriteRecipes"
 import { requireAuth } from "./utils/utils"
 
 function App() {
@@ -35,14 +37,12 @@ function App() {
                 <Route path="account" element={<AccountLayout />}>
                     <Route
                         index
-                        element={<AccountDashboard />}
                         loader={dashboardLoader}
+                        element={<AccountDashboard />}
                     />
                     <Route
                         path="favoriterecipes"
-                        loader={async ({ request }) =>
-                            await requireAuth(request)
-                        }
+                        loader={favrecipesLoader}
                         element={<FavoriteRecipes />}
                     />
                 </Route>

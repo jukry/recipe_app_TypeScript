@@ -20,9 +20,9 @@ export default function Navbar() {
                     <NavLink to="account">Oma tili</NavLink>
                     {loggedIn ? (
                         <NavLink
+                            to="/"
                             onClick={() => {
                                 localStorage.removeItem("loggedIn")
-                                location.reload()
                             }}
                         >
                             Kirjaudu ulos
