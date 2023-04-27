@@ -29,6 +29,7 @@ export async function loginUser(creds) {
 }
 export async function requireAuth() {
     const loggedIn = JSON.parse(localStorage.getItem("loggedIn"))
+    console.log("requireauth")
     if (!loggedIn) {
         throw redirect("/login?message=Kirjaudu ensin sisään")
     }

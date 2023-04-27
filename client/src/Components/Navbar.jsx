@@ -1,9 +1,14 @@
-import { useState } from "react"
-import { NavLink, Link } from "react-router-dom"
+import { useContext, useState } from "react"
+import { NavLink, Link, useNavigate } from "react-router-dom"
+import AuthContext from "./AuthContext"
 
 export default function Navbar() {
     const [showNav, setShowNav] = useState(false)
-    const [loggedIn, setLoggedIn] = useState(localStorage.getItem("loggedIn"))
+
+    function logOut() {
+        setLoggedIn(false)
+        localStorage.clear()
+    }
 
     return (
         <header>
@@ -21,13 +26,7 @@ export default function Navbar() {
                     <NavLink to="/">Reseptit</NavLink>
                     <NavLink to="account">Oma tili</NavLink>
                     {loggedIn ? (
-                        <NavLink
-                            onClick={() => {
-                                setLoggedIn(false)
-                                localStorage.clear()
-                                location.reload()
-                            }}
-                        >
+                        <NavLink to="/" onClick={logOut}>
                             Kirjaudu ulos
                         </NavLink>
                     ) : (

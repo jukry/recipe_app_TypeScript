@@ -21,8 +21,11 @@ import AccountDashboard, {
 import AccountLayout from "./Pages/Account/AccountLayout"
 import FavoriteRecipes from "./Pages/Account/FavoriteRecipes"
 import { requireAuth } from "./utils/utils"
+import AuthContext from "./Components/AuthContext"
+import { useContext, useState } from "react"
 
 function App() {
+    const user = useState(null)
     const routes = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<HomeLayout />}>
@@ -53,7 +56,11 @@ function App() {
             </Route>
         )
     )
-    return <RouterProvider router={routes} />
+    return (
+        <AuthContext.Provider value={user}>
+            <RouterProvider router={routes} />
+        </AuthContext.Provider>
+    )
 }
 
 export default App
