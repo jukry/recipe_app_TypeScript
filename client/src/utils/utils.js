@@ -27,10 +27,13 @@ export async function loginUser(creds) {
     return data */
     return true
 }
-export async function requireAuth() {
+export async function requireAuth({ request }) {
+    const pathname = new URL(request.url).pathname
     const loggedIn = JSON.parse(localStorage.getItem("loggedIn"))
     console.log("requireauth")
     if (!loggedIn) {
-        throw redirect("/login?message=Kirjaudu ensin sisään")
+        throw redirect(
+            `/login?message=Kirjaudu ensin sisään&redirectTo=${pathname}`
+        )
     }
 }
