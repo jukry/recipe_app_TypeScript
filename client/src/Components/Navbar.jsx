@@ -4,7 +4,7 @@ import AuthContext from "./AuthContext"
 
 export default function Navbar() {
     const [showNav, setShowNav] = useState(false)
-    const [loggedIn, setLoggedIn] = useState(localStorage.getItem("loggedIn"))
+    const loggedIn = localStorage.getItem("loggedIn")
 
     return (
         <header>
@@ -26,6 +26,7 @@ export default function Navbar() {
                             to="/"
                             onClick={() => {
                                 localStorage.removeItem("loggedIn")
+                                location.replace("/")
                             }}
                         >
                             Kirjaudu ulos
