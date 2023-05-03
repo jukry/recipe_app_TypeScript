@@ -1,6 +1,7 @@
 import express from "express"
 import bp from "body-parser"
 import recipesRouter from "./routes/recipes.js"
+import userRouter from "./routes/user.js"
 import connectDB from "./config/conn.js"
 import mongoose from "mongoose"
 import cors from "cors"
@@ -20,8 +21,9 @@ app.get("/", (req, res) => {
     res.send("Main page")
 })
 
-// /recipes prefix ettei tarvitse recipes.js puolella määritellä
+// prefix ettei tarvitse routerin puolella määritellä
 app.use("/api/recipes", recipesRouter)
+app.use("/api/users", userRouter)
 
 // database connection
 const db = connectDB()
