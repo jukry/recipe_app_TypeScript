@@ -1,6 +1,11 @@
 import { Schema, model } from "mongoose"
 
 const recipe = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+    },
     name: {
         type: String,
         required: true,
