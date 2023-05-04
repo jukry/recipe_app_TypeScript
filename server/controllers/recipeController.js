@@ -44,7 +44,7 @@ const createRecipe = async (req, res) => {
     const recipe = req.body
     try {
         const createdRecipe = await Recipe.create(recipe)
-        res.status(201).json({ message: createRecipe })
+        res.status(201).json({ message: createdRecipe })
     } catch (err) {
         res.sendStatus(500)
     }
