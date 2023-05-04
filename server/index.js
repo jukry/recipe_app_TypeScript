@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 // prefix ettei tarvitse routerin puolella määritellä
 app.use("/api/recipes", recipesRouter)
-app.use("/api/users", userRouter)
+app.use("/users", userRouter)
 
 // database connection
 const db = connectDB()
