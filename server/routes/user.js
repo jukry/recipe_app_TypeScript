@@ -5,9 +5,10 @@ import {
     authenticateUser,
     getUserData,
 } from "../controllers/userController.js"
+import protect from "../middleware/loginMiddleware.js"
 
 userRouter.post("/", registerUser)
 userRouter.post("/login", authenticateUser)
-userRouter.get("/user", getUserData)
+userRouter.get("/user", protect, getUserData)
 
 export default userRouter
