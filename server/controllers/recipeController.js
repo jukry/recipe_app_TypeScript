@@ -42,37 +42,64 @@ const getRecipeById = async (req, res) => {
 
 const createRecipe = async (req, res) => {
     const recipe = req.body
+    const tokenId = req.user.id
+    const { user } = req.body
+
+    if (tokenId !== user) {
+        return res.status(400).json({ Message: "Not authorized" })
+    }
+
     try {
         const createdRecipe = await Recipe.create(recipe)
         res.status(201).json({ message: createdRecipe })
     } catch (err) {
-        res.sendStatus(500)
+        res.status(400).json({
+            Message: "Something went wrong, please check your input",
+        })
     }
 }
 
 const deleteRecipe = async (req, res) => {
     const { id } = req.params
+    const tokenId = req.user.id
+    const recipe = await Recipe.findById(id)
+
+    if (!recipe) {
+        return res.status(404).json({ Message: `No recipe with id ${id}` })
+    }
+
+    if (tokenId !== recipe.user.toString()) {
+        return res.status(400).json({ Message: "Not authorized" })
+    }
+
     try {
         await Recipe.findById(id).deleteOne()
-        console.log(`Document ${id} removed`)
+        return res.status(200).json({ Message: `Document ${id} removed` })
     } catch (error) {
-        console.log(error)
-        res.sendStatus(404)
+        return res.status(400).json({ Message: "Bad request" })
     }
-    res.sendStatus(200)
 }
 
 const updateRecipe = async (req, res) => {
     const { id } = req.params
     const updated = req.body
+    const tokenId = req.user.id
+    const recipe = await Recipe.findById(id)
+
+    if (!recipe) {
+        return res.status(404).json({ Message: `No recipe with id ${id}` })
+    }
+
+    if (tokenId !== recipe.user.toString()) {
+        return res.status(400).json({ Message: "Not authorized" })
+    }
 
     try {
         await Recipe.findById(id).updateOne({ $set: updated })
+        return res.status(200).json({ Message: "Recipe updated" })
     } catch (error) {
-        console.log(error)
-        res.sendStatus(404)
+        return res.status(400).json({ Message: "Bad request" })
     }
-    res.sendStatus(200)
 }
 
 export {
