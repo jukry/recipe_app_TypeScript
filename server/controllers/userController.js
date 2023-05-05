@@ -49,7 +49,12 @@ const authenticateUser = async (req, res) => {
     }
 }
 const getUserData = async (req, res) => {
-    return res.json({ Message: "Get user data" })
+    const { _id, username, email } = await User.findById(req.user.id)
+    res.status(200).json({
+        id: _id,
+        username,
+        email,
+    })
 }
 
 // Generate token
