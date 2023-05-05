@@ -8,9 +8,10 @@ import {
     deleteRecipe,
     updateRecipe,
 } from "../controllers/recipeController.js"
+import protect from "../middleware/loginMiddleware.js"
 
 // route for get all recipes and create recipe
-recipesRouter.route("/").get(getAllRecipes).post(createRecipe)
+recipesRouter.route("/").get(getAllRecipes).post(protect, createRecipe)
 
 // get random recipe
 recipesRouter.get("/random", getRandomRecipe)
@@ -19,7 +20,7 @@ recipesRouter.get("/random", getRandomRecipe)
 recipesRouter
     .route("/:id")
     .get(getRecipeById)
-    .delete(deleteRecipe)
-    .put(updateRecipe)
+    .delete(protect, deleteRecipe)
+    .put(protect, updateRecipe)
 
 export default recipesRouter
