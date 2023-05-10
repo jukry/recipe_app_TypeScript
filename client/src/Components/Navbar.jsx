@@ -4,7 +4,7 @@ import AuthContext from "./AuthContext"
 
 export default function Navbar() {
     const [showNav, setShowNav] = useState(false)
-    const loggedIn = localStorage.getItem("loggedIn")
+    const { username } = useContext(AuthContext)
 
     return (
         <header>
@@ -21,11 +21,11 @@ export default function Navbar() {
                 >
                     <NavLink to="/">Reseptit</NavLink>
                     <NavLink to="account">Oma tili</NavLink>
-                    {loggedIn ? (
+                    {username ? ( // logged in from context??
                         <NavLink
                             to="/"
                             onClick={() => {
-                                localStorage.removeItem("loggedIn")
+                                // log out function from context??
                                 location.replace("/")
                             }}
                         >
