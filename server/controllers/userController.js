@@ -36,14 +36,20 @@ const registerUser = async (req, res) => {
 const authenticateUser = async (req, res) => {
     const { email, password } = req.body
     const user = await User.findOne({ email: email })
-
     if (user && bcrypt.compareSync(password, user.password)) {
-        return res.status(200).json({
-            _id: user.id,
-            username: user.username,
-            email: user.email,
-            token: generateToken(user._id),
-        })
+        let generatedToken = generateToken(user._id)
+        return res
+            .cookie("token", generatedToken, {
+                expires: new Date(Date.now() + 600000),
+                //secure: false, in production, use true
+                httpOnly: true,
+            })
+            .status(200)
+            .json({
+                _id: user.id,
+                username: user.username,
+                email: user.email,
+            })
     } else {
         return res.status(404).json({ Message: "Login not succesful" })
     }
