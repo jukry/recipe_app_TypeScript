@@ -3,17 +3,24 @@ import bp from "body-parser"
 import recipesRouter from "./routes/recipes.js"
 import userRouter from "./routes/user.js"
 import connectDB from "./config/conn.js"
-import mongoose from "mongoose"
 import cors from "cors"
+import cookieParser from "cookie-parser"
 const app = express()
+
+app.use(cookieParser())
 
 app.use(bp.urlencoded({ extended: true }))
 
 //middleware
 app.use(bp.json())
 
+const corsOptions = {
+    origin: true,
+    credentials: true,
+}
+
 // allow all cors-requests
-app.use(cors())
+app.use(cors(corsOptions))
 
 const port = process.env.port || 5000
 
@@ -35,7 +42,3 @@ db.then(() => {
 }).catch((error) => {
     console.log(error)
 })
-
-/* 
-export default db
- */
