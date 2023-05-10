@@ -1,5 +1,4 @@
 import "./App.css"
-import LandingPage from "./Pages/LandingPage"
 import HomeLayout from "./Layouts/HomeLayout"
 import Search, { loader as SearchLoader } from "./Components/Search"
 import {
@@ -22,12 +21,12 @@ import AccountLayout from "./Pages/Account/AccountLayout"
 import FavoriteRecipes, {
     loader as favrecipesLoader,
 } from "./Pages/Account/FavoriteRecipes"
-import { requireAuth } from "./utils/utils"
 import AuthContext from "./Components/AuthContext"
-import { useContext, useState } from "react"
+import { getUserData } from "./utils/utils"
+
+const userData = await getUserData()
 
 function App() {
-    const user = useState(null)
     const routes = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<HomeLayout />}>
@@ -59,7 +58,7 @@ function App() {
         )
     )
     return (
-        <AuthContext.Provider value={user}>
+        <AuthContext.Provider value={userData}>
             <RouterProvider router={routes} />
         </AuthContext.Provider>
     )
