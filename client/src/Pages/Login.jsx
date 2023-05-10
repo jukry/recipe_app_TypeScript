@@ -1,48 +1,45 @@
 import React from "react"
 import "./styles/Login.css"
-import {
-    Form,
-    redirect,
-    useActionData,
-    useNavigation,
-    useLoaderData,
-    useNavigate,
-} from "react-router-dom"
-import { loginUser } from "../utils/utils"
+import { Form, redirect, useNavigation, useLoaderData } from "react-router-dom"
 
 export function loader({ request }) {
-    console.log("loader")
     return new URL(request.url).searchParams.get("message")
 }
 
 export async function action({ request }) {
-    console.log("action")
-
+    event.preventDefault()
     const formData = await request.formData()
-    const email = formData.get("email")
+    async function loginUser() {
+        return await fetch("http://localhost:5000/users/login", {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                email: await formData.get("email"),
+                password: await formData.get("password"),
+            }),
+        })
+    }
+
     const pathname =
         new URL(request.url).searchParams.get("redirectTo") || "/account"
-    try {
-        const loggedIn = await loginUser(null)
-        if (loggedIn) localStorage.setItem("loggedIn", true)
+    const res = await loginUser()
+    const body = await res.json()
+    console.log(body)
+    if (!res.ok) {
+        return res.status
+    } else {
         location.replace("/account")
         return redirect(pathname)
-    } catch (error) {
-        return error.message
     }
 }
 
 export default function Login() {
     const navigation = useNavigation()
-    const error = useActionData()
     const message = useLoaderData()
-    const navigate = useNavigate()
-
-    function handleSubmit(e) {
-        e.preventDefault()
-        //navigate("")
-        redirect("/account")
-    }
 
     return (
         <div className="login-container">
