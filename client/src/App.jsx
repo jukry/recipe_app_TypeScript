@@ -17,14 +17,12 @@ import Login, {
 import AccountDashboard, {
     loader as dashboardLoader,
 } from "./Pages/Account/AccountDashboard"
-import AccountLayout from "./Pages/Account/AccountLayout"
+import AccountLayout, {
+    loader as layoutLoader,
+} from "./Pages/Account/AccountLayout"
 import FavoriteRecipes, {
     loader as favrecipesLoader,
 } from "./Pages/Account/FavoriteRecipes"
-import AuthContext from "./Components/AuthContext"
-import { getUserData } from "./utils/utils"
-
-const userData = await getUserData()
 
 function App() {
     const routes = createBrowserRouter(
@@ -36,7 +34,11 @@ function App() {
                     loader={RecipeDetailsLoader}
                     element={<RecipeDetails />}
                 ></Route>
-                <Route path="account" element={<AccountLayout />}>
+                <Route
+                    path="account"
+                    element={<AccountLayout />}
+                    loader={layoutLoader}
+                >
                     <Route
                         index
                         loader={dashboardLoader}
@@ -57,11 +59,7 @@ function App() {
             </Route>
         )
     )
-    return (
-        <AuthContext.Provider value={userData}>
-            <RouterProvider router={routes} />
-        </AuthContext.Provider>
-    )
+    return <RouterProvider router={routes} />
 }
 
 export default App
