@@ -1,21 +1,23 @@
 import React, { useContext } from "react"
 import "./styles/account.css"
-import AuthContext from "../../Components/AuthContext"
+import { redirect, useLoaderData } from "react-router-dom"
+import { UserContext } from "../../Context/UserContext"
+import { getUserData } from "../../utils/utils"
 
-export async function loader() {
-    /* const data = await fetch("http://localhost:5000/users/user", {
-        method: "GET",
-        credentials: "include",
-    }) */
-    //console.log(data.json())
+export async function loader({ request }) {
+    const res = await getUserData({ request })
+    if (!res.id) {
+        return redirect("/login")
+    }
     return null
 }
 
 export default function AccountDashboard() {
-    const { username, email } = useContext(AuthContext)
+    const loaderData = useLoaderData()
+    const { user } = useContext(UserContext)
     return (
         <section className="account-details">
-            <h3>{username}</h3>
+            <h3>{user.username}</h3>
         </section>
     )
 }
