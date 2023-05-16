@@ -1,10 +1,10 @@
 import { useContext, useState } from "react"
-import { NavLink, Link, useNavigate } from "react-router-dom"
-import AuthContext from "./AuthContext"
+import { NavLink, Link } from "react-router-dom"
+import { AuthContext } from "./AuthContext"
 
 export default function Navbar() {
     const [showNav, setShowNav] = useState(false)
-    const { username } = useContext(AuthContext)
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
 
     return (
         <header>
@@ -21,11 +21,18 @@ export default function Navbar() {
                 >
                     <NavLink to="/">Reseptit</NavLink>
                     <NavLink to="account">Oma tili</NavLink>
-                    {username ? ( // logged in from context??
+                    {isLoggedIn ? (
                         <NavLink
                             to="/"
-                            onClick={() => {
-                                // log out function from context??
+                            onClick={async () => {
+                                setIsLoggedIn((prev) => !prev)
+                                await fetch(
+                                    "http://localhost:5000/auth/logout",
+                                    {
+                                        method: "POST",
+                                        credentials: "include",
+                                    }
+                                )
                                 location.replace("/")
                             }}
                         >
