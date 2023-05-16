@@ -1,6 +1,12 @@
 import React from "react"
 import "./styles/Login.css"
-import { Form, redirect, useNavigation, useLoaderData } from "react-router-dom"
+import {
+    Form,
+    redirect,
+    useNavigation,
+    useLoaderData,
+    useActionData,
+} from "react-router-dom"
 
 export function loader({ request }) {
     return new URL(request.url).searchParams.get("message")
@@ -10,7 +16,7 @@ export async function action({ request }) {
     event.preventDefault()
     const formData = await request.formData()
     async function loginUser() {
-        return await fetch("http://localhost:5000/users/login", {
+        return await fetch("http://localhost:5000/auth", {
             method: "POST",
             mode: "cors",
             headers: {
@@ -27,12 +33,10 @@ export async function action({ request }) {
     const pathname =
         new URL(request.url).searchParams.get("redirectTo") || "/account"
     const res = await loginUser()
-    const body = await res.json()
-    console.log(body)
     if (!res.ok) {
         return res.status
     } else {
-        location.replace("/account")
+        location.replace(pathname)
         return redirect(pathname)
     }
 }
@@ -40,10 +44,20 @@ export async function action({ request }) {
 export default function Login() {
     const navigation = useNavigation()
     const message = useLoaderData()
+    const action = useActionData()
 
     return (
         <div className="login-container">
             <h2>{message ? "Kirjaudu ensin sisään" : "Kirjaudu sisään"}</h2>
+            {action && (
+                <h3 className="check-login-input">
+                    {action === 400
+                        ? "Tarkista syöttämäsi tiedot"
+                        : action === 401
+                        ? "Sähköposti tai salasana väärin"
+                        : ""}
+                </h3>
+            )}
             <Form replace="true" method="post" className="login-form">
                 <input
                     type="email"
