@@ -9,6 +9,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 2em;
 }
 .login-container > h2 {
     color: var(--clr-text);
@@ -42,4 +43,9 @@
 .login-form > button:hover {
     transition: 0.2s;
     scale: 1.01;
+}
+.check-login-input {
+    color: rgb(255, 146, 146);
+    position: absolute;
+    top: 10em;
 }
