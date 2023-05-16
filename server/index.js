@@ -2,6 +2,7 @@ import express from "express"
 import bp from "body-parser"
 import recipesRouter from "./routes/recipes.js"
 import userRouter from "./routes/user.js"
+import authRouter from "./routes/auth.js"
 import connectDB from "./config/conn.js"
 import cors from "cors"
 import cookieParser from "cookie-parser"
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 // prefix ettei tarvitse routerin puolella määritellä
 app.use("/api/recipes", recipesRouter)
 app.use("/users", userRouter)
+app.use("/auth", authRouter)
 
 // database connection
 const db = connectDB()
