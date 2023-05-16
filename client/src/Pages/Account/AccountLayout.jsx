@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { NavLink, Navigate, Outlet, redirect } from "react-router-dom"
-import { AuthContext } from "../../Components/AuthContext"
+import { UserContext } from "../../Context/UserContext"
 import { getUserData } from "../../utils/utils"
 
 export async function loader({ request }) {
@@ -12,7 +12,7 @@ export async function loader({ request }) {
 }
 
 export default function AccountLayout() {
-    const { user } = useContext(AuthContext)
+    const { user } = useContext(UserContext)
 
     const activeStyle = {
         fontWeight: "bold",

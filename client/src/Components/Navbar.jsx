@@ -1,10 +1,10 @@
 import { useContext, useState } from "react"
 import { NavLink, Link } from "react-router-dom"
-import { AuthContext } from "./AuthContext"
+import { UserContext } from "../Context/UserContext"
 
 export default function Navbar() {
     const [showNav, setShowNav] = useState(false)
-    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
+    const { isLoggedIn, setIsLoggedIn } = useContext(UserContext)
 
     return (
         <header>
