@@ -7,7 +7,9 @@
     padding: 0.5em;
     margin: 0 auto;
 }
-
+.account-loading {
+    color: var(--clr-text);
+}
 .account-nav {
     display: flex;
     gap: 1em;
