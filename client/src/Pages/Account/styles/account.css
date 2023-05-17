@@ -7,15 +7,26 @@
     padding: 0.5em;
     margin: 0 auto;
 }
-.account-loading {
-    color: var(--clr-text);
-}
 .account-nav {
     display: flex;
-    gap: 1em;
+    gap: 0.5em;
     align-items: center;
+    margin: 0 0.25em;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+.account-loading {
+    color: var(--clr-text);
 }
 a {
     color: white;
     text-decoration: none;
+}
+@media screen and (min-width: 500px) {
+    .account-nav {
+        display: flex;
+        gap: 1em;
+        align-items: center;
+        flex-direction: row;
+    }
 }
