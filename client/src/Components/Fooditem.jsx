@@ -2,24 +2,24 @@ import { Link } from "react-router-dom"
 
 export default function Fooditem(props) {
     const data = props.props[0]
-    const searchParams = props.props[1]
+    const searchParams = props.props[1] ?? ""
 
     function recipesFunc() {
         return (
             <Link
-                to={`/recipe/${data.id}`}
+                to={`/recipe/${data.id || data._id}`}
                 state={{
                     search: `?${searchParams}`,
                 }}
                 className="food-item"
-                key={data.id}
+                key={data.id || data._id}
             >
                 <div className="img-container">
                     <img
                         src={
                             data.name.includes("Pasta")
-                                ? "./public/pexels-engin-akyurt-1437267.jpg"
-                                : "./public/istockphoto-474048190-612x612.jpg"
+                                ? "https://images.pexels.com/photos/10966377/pexels-photo-10966377.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=1"
+                                : "https://images.pexels.com/photos/10480245/pexels-photo-10480245.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=1"
                         }
                         alt="Kuva tulossa"
                     />
