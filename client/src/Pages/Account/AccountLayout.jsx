@@ -39,8 +39,13 @@ export default function AccountLayout() {
                 >
                     Suosikkireseptit
                 </NavLink>
+                <NavLink
+                    to="myrecipes"
+                    style={({ isActive }) => (isActive ? activeStyle : null)}
+                >
+                    Omat reseptit
+                </NavLink>
             </nav>
-            <h3>Welcome back, {user.email}</h3>
             <Outlet />
         </section>
     )
