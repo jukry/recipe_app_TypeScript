@@ -23,6 +23,9 @@ import AccountLayout, {
 import FavoriteRecipes, {
     loader as favrecipesLoader,
 } from "./Pages/Account/FavoriteRecipes"
+import UserRecipes, {
+    loader as myrecipesLoader,
+} from "./Pages/Account/UserRecipes"
 
 function App() {
     const routes = createBrowserRouter(
@@ -48,6 +51,11 @@ function App() {
                         path="favoriterecipes"
                         loader={favrecipesLoader}
                         element={<FavoriteRecipes />}
+                    />
+                    <Route
+                        path="myrecipes"
+                        loader={myrecipesLoader}
+                        element={<UserRecipes />}
                     />
                 </Route>
                 <Route
