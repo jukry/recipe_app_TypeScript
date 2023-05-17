@@ -15,6 +15,10 @@ const user = new Schema(
             type: String,
             required: [true, "Please add a password"],
         },
+        recipes: {
+            type: [{ id: Schema.Types.ObjectId }],
+            ref: "Recipe",
+        },
     },
     {
         timestamps: true,

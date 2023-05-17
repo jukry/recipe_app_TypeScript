@@ -1,6 +1,7 @@
 import User from "../models/User.js"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
+import Recipe from "../models/Recipe.js"
 const saltRounds = 10
 
 const registerUser = async (req, res) => {
@@ -70,4 +71,11 @@ const generateToken = (id) => {
     })
 }
 
-export { registerUser, authenticateUser, getUserData }
+const getUserRecipes = async (req, res) => {
+    const { _id } = req.user
+    const userId = _id.toString()
+    const recipes = await Recipe.find({ user: userId }).exec()
+    return res.status(200).json({ data: recipes })
+}
+
+export { registerUser, authenticateUser, getUserData, getUserRecipes }
