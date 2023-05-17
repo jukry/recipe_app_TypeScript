@@ -1,0 +1,36 @@
+@import "../../../constants.css";
+
+.user-recipes-container {
+    max-width: 25em;
+}
+.user-recipes-container .fooditem-container {
+    background-color: var(--clr-accent-neutral);
+    border-radius: 10px;
+    transition: all 0.175s ease 0s;
+}
+.user-recipes-container .food-item {
+    display: grid;
+    font-size: 4vw;
+    grid-template-columns: 1fr 3fr;
+    max-height: 150px;
+    margin-bottom: 1em;
+}
+.user-recipes-container .fooditem-container:hover {
+    transform: scale(1.01);
+}
+.user-recipes-container .img-container > img {
+    min-width: 150px;
+    min-height: 150px;
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 10px 0 0 10px;
+    object-fit: cover;
+}
+.user-recipes-container .food-item > .img-container {
+    display: block;
+}
+@media screen and (min-width: 400px) {
+    .user-recipes-container .food-item {
+        font-size: 1em;
+    }
+}
