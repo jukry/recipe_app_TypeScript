@@ -1,16 +1,12 @@
-import { useLoaderData } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import "./recipeDetails.css"
-import { getRecipeById } from "../utils/utils"
-
-export async function loader({ params }) {
-    const data = await getRecipeById(
-        `http://localhost:5000/api/recipes/${params.id}`
-    )
-    return data
-}
+import { useQuery } from "@tanstack/react-query"
+import fetchRecipeById from "../Hooks/fetchRecipeById.js"
 
 export default function RecipeDetails() {
-    const data = useLoaderData()
+    const { id } = useParams()
+    const queryResponse = useQuery(["recipe", id], fetchRecipeById)
+    const data = queryResponse?.data?.message ?? []
 
     return data !== undefined ? (
         <section className="recipe-wrapper">
@@ -23,14 +19,14 @@ export default function RecipeDetails() {
                 <div className="instructions">
                     <h3>Valmistusohje</h3>
                     <ol>
-                        {data.instructions.map((item, i) => {
+                        {data?.instructions?.map((item, i) => {
                             return <li key={i}>{item}</li>
                         })}
                     </ol>
                 </div>
                 <div className="ingredients">
                     <h3>Ainesosat</h3>
-                    {data.ingredients.map((item, i) => {
+                    {data?.ingredients?.map((item, i) => {
                         return (
                             <div className="ingr-line" key={i}>
                                 <p className="ingr-amount">{item.amount}</p>
@@ -42,6 +38,6 @@ export default function RecipeDetails() {
             </div>
         </section>
     ) : (
-        []
+        <h3>Ei mtn</h3>
     )
 }

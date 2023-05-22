@@ -1,18 +1,15 @@
 import Results from "./Results"
 //import recipes from "../assets/recipe-data"
-import { defer, useLoaderData, useSearchParams, Await } from "react-router-dom"
-import { getRecipes } from "../utils/utils"
+import { useLoaderData, useSearchParams } from "react-router-dom"
 import { useState, Suspense } from "react"
-
-export async function loader() {
-    return defer({ data: getRecipes("http://localhost:5000/api/recipes") })
-}
+import { useQuery } from "@tanstack/react-query"
+import fetchRecipes from "../Hooks/fetchRecipes"
 
 export default function Search() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [search, setSearch] = useState(searchParams?.get("search") || "")
-    const recipesPromise = useLoaderData()
-    let filtered = []
+    const queryResponse = useQuery(["recipes"], fetchRecipes)
+    const queryRecipes = queryResponse?.data?.message ?? []
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -22,20 +19,15 @@ export default function Search() {
         setSearchParams({ search: e.target.value })
     }
 
-    function renderRecipes(loadedRecipes) {
-        if (loadedRecipes) {
-            filtered = loadedRecipes.filter((item) => {
-                if (searchParams.get("search") === null) {
-                    return loadedRecipes
-                } else {
-                    return item.name
-                        .toLowerCase()
-                        .includes(searchParams.get("search").toLowerCase())
-                }
-            })
+    const recipes = queryRecipes.filter((item) => {
+        if (searchParams.get("search") === null) {
+            return queryRecipes
+        } else {
+            return item.name
+                .toLowerCase()
+                .includes(searchParams.get("search").toLowerCase())
         }
-        return <Results props={[filtered, searchParams]} />
-    }
+    })
 
     return (
         <section className="results-container">
@@ -54,9 +46,11 @@ export default function Search() {
                     </form>
                 </div>
             </div>
-            <Suspense fallback={<h2>Haetaan reseptejä</h2>}>
-                <Await resolve={recipesPromise.data}>{renderRecipes}</Await>
-            </Suspense>
+            {queryResponse.isLoading ? (
+                <h2>Haetaan reseptejä</h2>
+            ) : (
+                <Results props={[recipes, searchParams]} />
+            )}
         </section>
     )
 }

@@ -1,15 +1,13 @@
 import "./App.css"
 import HomeLayout from "./Layouts/HomeLayout"
-import Search, { loader as SearchLoader } from "./Components/Search"
+import Search from "./Components/Search"
 import {
     Route,
     createBrowserRouter,
     createRoutesFromElements,
     RouterProvider,
 } from "react-router-dom"
-import RecipeDetails, {
-    loader as RecipeDetailsLoader,
-} from "./Components/RecipeDetails"
+import RecipeDetails from "./Components/RecipeDetails"
 import Login, {
     action as loginAction,
     loader as loginLoader,
@@ -26,17 +24,23 @@ import FavoriteRecipes, {
 import UserRecipes, {
     loader as myrecipesLoader,
 } from "./Pages/Account/UserRecipes"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 1000 * 60 * 10,
+            cacheTime: 1000 * 60 * 10,
+        },
+    },
+})
 
 function App() {
     const routes = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<HomeLayout />}>
-                <Route index loader={SearchLoader} element={<Search />} />
-                <Route
-                    path="recipe/:id"
-                    loader={RecipeDetailsLoader}
-                    element={<RecipeDetails />}
-                ></Route>
+                <Route index element={<Search />} />
+                <Route path="recipe/:id" element={<RecipeDetails />}></Route>
                 <Route
                     path="account"
                     element={<AccountLayout />}
@@ -67,7 +71,11 @@ function App() {
             </Route>
         )
     )
-    return <RouterProvider router={routes} />
+    return (
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={routes} />
+        </QueryClientProvider>
+    )
 }
 
 export default App
