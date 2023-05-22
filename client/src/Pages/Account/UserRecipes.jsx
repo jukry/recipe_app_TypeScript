@@ -5,7 +5,7 @@ import "./styles/userRecipes.css"
 
 export async function loader({ request, params }) {
     const userRecipes = await fetch(
-        "http://localhost:5000/users/user/recipes",
+        import.meta.env.VITE_USER_RECIPES_ENDPOINT,
         {
             method: "GET",
             credentials: "include",

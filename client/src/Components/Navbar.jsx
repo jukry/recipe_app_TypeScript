@@ -27,7 +27,7 @@ export default function Navbar() {
                             onClick={async () => {
                                 setIsLoggedIn((prev) => !prev)
                                 await fetch(
-                                    "http://localhost:5000/auth/logout",
+                                    import.meta.env.VITE_LOGOUT_ENDPOINT,
                                     {
                                         method: "POST",
                                         credentials: "include",

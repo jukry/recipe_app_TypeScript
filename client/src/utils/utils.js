@@ -3,7 +3,7 @@ import { redirect } from "react-router-dom"
 export async function getUserData({ request }) {
     const pathname = new URL(request.url).pathname
     try {
-        const data = await fetch("http://localhost:5000/users/user", {
+        const data = await fetch(import.meta.env.VITE_USERDATA_ENDPOINT, {
             method: "get",
             credentials: "include",
         })

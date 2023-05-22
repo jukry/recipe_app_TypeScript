@@ -16,7 +16,7 @@ export async function action({ request }) {
     event.preventDefault()
     const formData = await request.formData()
     async function loginUser() {
-        return await fetch("http://localhost:5000/auth", {
+        return await fetch(import.meta.env.VITE_AUTH_ENDPOINT, {
             method: "POST",
             mode: "cors",
             headers: {

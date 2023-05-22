@@ -8,7 +8,7 @@ export const UserContextProvider = ({ children }) => {
 
     useEffect(() => {
         async function getUserData() {
-            const data = await fetch("http://localhost:5000/users/user", {
+            const data = await fetch(import.meta.env.VITE_USERDATA_ENDPOINT, {
                 method: "get",
                 credentials: "include",
             })

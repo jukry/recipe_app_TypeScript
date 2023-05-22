@@ -1,6 +1,8 @@
 const fetchRecipeById = async ({ queryKey }) => {
     const id = queryKey[1]
-    const apiResponse = await fetch(`http://localhost:5000/api/recipes/${id}`)
+    const apiResponse = await fetch(
+        `${import.meta.env.VITE_RECIPE_ENDPOINT}/${id}`
+    )
     if (!apiResponse.ok) {
         throw new Error(`fetch not ok`)
     }
