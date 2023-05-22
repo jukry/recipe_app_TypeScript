@@ -1,14 +1,4 @@
 import { redirect } from "react-router-dom"
-import UseFetch from "../Hooks/UseFetch"
-
-export async function getRecipes(url) {
-    const data = UseFetch(url)
-    return data
-}
-export async function getRecipeById(url) {
-    const data = UseFetch(url)
-    return data
-}
 
 export async function getUserData({ request }) {
     const pathname = new URL(request.url).pathname
