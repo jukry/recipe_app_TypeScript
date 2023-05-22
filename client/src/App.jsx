@@ -21,9 +21,7 @@ import AccountLayout, {
 import FavoriteRecipes, {
     loader as favrecipesLoader,
 } from "./Pages/Account/FavoriteRecipes"
-import UserRecipes, {
-    loader as myrecipesLoader,
-} from "./Pages/Account/UserRecipes"
+import UserRecipes from "./Pages/Account/UserRecipes"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 const queryClient = new QueryClient({
@@ -56,11 +54,7 @@ function App() {
                         loader={favrecipesLoader}
                         element={<FavoriteRecipes />}
                     />
-                    <Route
-                        path="myrecipes"
-                        loader={myrecipesLoader}
-                        element={<UserRecipes />}
-                    />
+                    <Route path="myrecipes" element={<UserRecipes />} />
                 </Route>
                 <Route
                     path="login"
