@@ -56,11 +56,15 @@ const authenticateUser = async (req, res) => {
     }
 }
 const getUserData = async (req, res) => {
-    const { _id, username, email } = await User.findById(req.user.id)
+    const { _id, username, email, recipes, favrecipes } = await User.findById(
+        req.user.id
+    )
     res.status(200).json({
         id: _id,
         username,
         email,
+        recipes,
+        favrecipes,
     })
 }
 
