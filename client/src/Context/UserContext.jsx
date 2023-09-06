@@ -24,7 +24,9 @@ export const UserContextProvider = ({ children }) => {
         setIsLoggedIn((prev) => !prev)
     }
     return (
-        <UserContext.Provider value={{ user, isLoggedIn, setIsLoggedIn }}>
+        <UserContext.Provider
+            value={{ user, setUser, isLoggedIn, setIsLoggedIn }}
+        >
             {children}
         </UserContext.Provider>
     )
