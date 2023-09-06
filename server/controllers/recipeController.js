@@ -1,4 +1,5 @@
 import Recipe from "../models/Recipe.js"
+import User from "../models/User.js"
 
 const getAllRecipes = async (req, res) => {
     try {
@@ -42,15 +43,18 @@ const getRecipeById = async (req, res) => {
 
 const createRecipe = async (req, res) => {
     const recipe = req.body
-    const tokenId = req.user.id
+    const userId = req.user.id
     const { user } = req.body
-
-    if (tokenId !== user) {
+    if (userId !== user) {
         return res.status(400).json({ Message: "Not authorized" })
     }
 
     try {
         const createdRecipe = await Recipe.create(recipe)
+        await User.findOneAndUpdate(
+            { _id: user }, //filter
+            { $push: { recipes: createdRecipe._id.toString() } } //update
+        )
         res.status(201).json({ message: createdRecipe })
     } catch (err) {
         res.status(400).json({
@@ -61,14 +65,13 @@ const createRecipe = async (req, res) => {
 
 const deleteRecipe = async (req, res) => {
     const { id } = req.params
-    const tokenId = req.user.id
+    const userId = req.user.id
     const recipe = await Recipe.findById(id)
-
     if (!recipe) {
         return res.status(404).json({ Message: `No recipe with id ${id}` })
     }
 
-    if (tokenId !== recipe.user.toString()) {
+    if (userId !== recipe.user.toString()) {
         return res.status(400).json({ Message: "Not authorized" })
     }
 
@@ -83,14 +86,14 @@ const deleteRecipe = async (req, res) => {
 const updateRecipe = async (req, res) => {
     const { id } = req.params
     const updated = req.body
-    const tokenId = req.user.id
+    const userId = req.user.id
     const recipe = await Recipe.findById(id)
 
     if (!recipe) {
         return res.status(404).json({ Message: `No recipe with id ${id}` })
     }
 
-    if (tokenId !== recipe.user.toString()) {
+    if (userId !== recipe.user.toString()) {
         return res.status(400).json({ Message: "Not authorized" })
     }
 
