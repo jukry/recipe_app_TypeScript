@@ -133,6 +133,19 @@ form {
 }
 .recipe-info {
     padding: 0.75em 1.25em;
+    position: relative;
+    height: 100%;
+}
+.fav-heart {
+    position: absolute;
+    bottom: 2px;
+    right: 10px;
+    font-size: 2em;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    border-style: none;
+    background-color: transparent;
 }
 footer {
     display: flex;
