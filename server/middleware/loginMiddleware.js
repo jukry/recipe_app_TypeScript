@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken"
 import User from "../models/User.js"
-import { refresh } from "../controllers/authController.js"
 
 const protect = async (req, res, next) => {
     if (!req.headers.cookie)
