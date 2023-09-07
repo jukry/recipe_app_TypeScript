@@ -4,17 +4,38 @@
 
 Recipe app for my personal use and to showcase my skills.
 
-Starting with the frontend, making my way to the backend(which I still need to learn).
+### Installation
 
-### TODO
+#### Server .env
 
--   Frontend
+Create a .env file in the /server directory and add the following lines
 
-    -   Accessibility
-    -   Add a recipe and edit a recipe
-    -   UI Design
+```
+NODE_ENV = development
+PORT = 5000
+ATLAS_URI=your_mongo_db_uri
+JWT_SECRET = your_secret_token
+REFRESH_SECRET = your_refresh_token
+```
 
--   Backend
+/client/.env contains endpoints. Default is localhost:5000/
 
-    -   Login auth
-    -   API auth
+#### Depedencies
+
+From the root directory:
+
+1. cd client
+2. npm install
+3. cd ..
+4. cd server
+5. npm install
+
+#### Run
+
+After setting up your .env file, again from the root directory:
+
+1.  cd server
+2.  npm run dev
+3.  cd ..
+4.  cd client
+5.  npm run dev
