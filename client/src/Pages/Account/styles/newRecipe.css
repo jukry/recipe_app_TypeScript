@@ -1,0 +1,78 @@
+@import "../../../constants.css";
+
+#new-recipe-container {
+    padding-top: 5em;
+    margin: 0 auto;
+    min-width: 250px;
+    max-width: 750px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#new-recipe-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    padding: 1em;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+#recipe-text-input > input {
+    padding: 1em;
+    outline: none;
+    border: 1px solid grey;
+    font-size: 1.25em;
+}
+#new-recipe-form > button {
+    margin-top: 1em;
+    padding: 1em;
+    font-size: 1.25em;
+    background-color: var(--clr-accent-neutral);
+    outline: none;
+    border: none;
+    color: var(--clr-text);
+    transition: 0.2s;
+    width: 100%;
+}
+#new-recipe-form > button:hover {
+    transition: 0.2s;
+    scale: 1.01;
+}
+#ingredients,
+#recipe-steps {
+    position: relative;
+    padding: 2em 0;
+}
+#button-add-ingredient,
+#button-add-step {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#recipe-steps {
+    display: flex;
+    flex-direction: column;
+}
+#recipe-data-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+}
+#recipe-ingredient-steps-wrapper {
+    display: flex;
+    gap: 2em;
+}
+#recipe-text-input {
+    display: flex;
+    flex-direction: column;
+}
+.ingredient-wrapper {
+    display: flex;
+}
+.check-recipe-input {
+    position: absolute;
+    color: var(--clr-text);
+    top: 0;
+}
