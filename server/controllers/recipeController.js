@@ -42,22 +42,56 @@ const getRecipeById = async (req, res) => {
 }
 
 const createRecipe = async (req, res) => {
-    const recipe = req.body
-    const userId = req.user.id
-    const { user } = req.body
-    if (userId !== user) {
+    const recipe = req.body.formData
+    const userId = req.user._id.toString()
+    const user = req.user
+
+    const newRecipe = {
+        name: recipe.name,
+        description: recipe.description,
+        ingredients: [],
+        instructions: [],
+    }
+    const ingredients = []
+    const instructions = []
+    function iterateRecipe() {
+        for (const [key, value] of Object.entries(recipe)) {
+            if (key.includes("amount") && value !== "") {
+                ingredients.push({ amount: value })
+            } else if (key.includes("ingredient") && value !== "") {
+                const id = Number(key.split("ingredient")[1]) - 1
+                Object.assign(ingredients[id], {
+                    ingredient: value,
+                })
+            } else if (key.includes("step") && value !== "") {
+                instructions.push(value)
+            }
+        }
+    }
+    iterateRecipe()
+    Object.assign(newRecipe.ingredients, ingredients)
+    Object.assign(newRecipe.instructions, instructions)
+
+    if (userId !== user._id.toString()) {
         return res.status(400).json({ Message: "Not authorized" })
     }
 
     try {
-        const createdRecipe = await Recipe.create(recipe)
+        const createdRecipe = await Recipe.create({
+            user: userId,
+            name: newRecipe.name,
+            description: newRecipe.description,
+            ingredients: newRecipe.ingredients,
+            instructions: newRecipe.instructions,
+        })
         await User.findOneAndUpdate(
-            { _id: user }, //filter
+            { _id: userId }, //filter
             { $push: { recipes: createdRecipe._id.toString() } } //update
         )
-        res.status(201).json({ message: createdRecipe })
+        return res.status(201).json({ message: createdRecipe })
     } catch (err) {
-        res.status(400).json({
+        console.log(err)
+        return res.status(400).json({
             Message: "Something went wrong, please check your input",
         })
     }
