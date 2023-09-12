@@ -22,8 +22,10 @@ import FavoriteRecipes, {
     loader as favrecipesLoader,
 } from "./Pages/Account/FavoriteRecipes"
 import UserRecipes from "./Pages/Account/UserRecipes"
+import AddNewRecipe, {
+    action as AddNewRecipeAction,
+} from "./Pages/Account/AddNewRecipe"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
@@ -55,6 +57,11 @@ function App() {
                         element={<FavoriteRecipes />}
                     />
                     <Route path="myrecipes" element={<UserRecipes />} />
+                    <Route
+                        path="addnewrecipe"
+                        element={<AddNewRecipe />}
+                        action={AddNewRecipeAction}
+                    />
                 </Route>
                 <Route
                     path="login"
