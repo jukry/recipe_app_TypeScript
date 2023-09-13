@@ -41,6 +41,11 @@ export default function Navbar() {
                     ) : (
                         <NavLink to="login">Kirjaudu sisään</NavLink>
                     )}
+                    {isLoggedIn ? (
+                        ""
+                    ) : (
+                        <NavLink to="/register">Rekisteröidy</NavLink>
+                    )}
                 </section>
             </nav>
 
