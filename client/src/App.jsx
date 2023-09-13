@@ -26,6 +26,8 @@ import AddNewRecipe, {
     action as AddNewRecipeAction,
 } from "./Pages/Account/AddNewRecipe"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import Register from "./Pages/Register"
+
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
@@ -69,6 +71,7 @@ function App() {
                     action={loginAction}
                     loader={loginLoader}
                 />
+                <Route path="register" element={<Register />} />
             </Route>
         )
     )
