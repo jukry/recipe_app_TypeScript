@@ -4,6 +4,7 @@ export const UserContext = createContext()
 
 export const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {
@@ -14,6 +15,7 @@ export const UserContextProvider = ({ children }) => {
             })
             const body = await data.json()
             setUser(body)
+            setIsLoading(false)
         }
         if (!user.id) {
             getUserData()
@@ -23,9 +25,10 @@ export const UserContextProvider = ({ children }) => {
     if (user.id && !isLoggedIn) {
         setIsLoggedIn((prev) => !prev)
     }
+
     return (
         <UserContext.Provider
-            value={{ user, setUser, isLoggedIn, setIsLoggedIn }}
+            value={{ user, setUser, isLoggedIn, setIsLoggedIn, isLoading }}
         >
             {children}
         </UserContext.Provider>
