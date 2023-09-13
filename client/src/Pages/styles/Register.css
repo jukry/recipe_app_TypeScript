@@ -1,0 +1,51 @@
+@import "../../constants.css";
+
+#register-container {
+    padding-top: 5em;
+    margin: 0 auto;
+    min-width: 250px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+}
+#register-container > h2 {
+    color: var(--clr-text);
+}
+
+#register-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    padding: 1em;
+}
+#register-form > input {
+    padding: 1em;
+    outline: none;
+    border: 1px solid grey;
+    font-size: 1.25em;
+}
+#register-form:first-child {
+    border-bottom: none;
+}
+#register-form > button {
+    margin-top: 1em;
+    padding: 1em;
+    font-size: 1.25em;
+    background-color: var(--clr-accent-neutral);
+    outline: none;
+    border: none;
+    color: var(--clr-text);
+    transition: 0.2s;
+}
+#register-form > button:hover {
+    transition: 0.2s;
+    scale: 1.01;
+}
+#check-register-input {
+    color: rgb(255, 146, 146);
+    position: absolute;
+    top: 10em;
+}
