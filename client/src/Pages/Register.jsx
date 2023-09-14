@@ -38,7 +38,6 @@ export async function action({ request }) {
             })
         }
         const res = await loginUser()
-        console.log(res)
         if (!res.ok) {
             return res.status
         } else {
@@ -51,7 +50,6 @@ export async function action({ request }) {
 export default function Register() {
     const navigation = useNavigation()
     const action = useActionData()
-    console.log(action)
     return (
         <section id="register-container">
             <h2>Rekisteröidy</h2>
