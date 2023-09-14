@@ -29,7 +29,7 @@ export async function action({ request }) {
 
 export default function AddNewRecipe() {
     const navigation = useNavigation()
-    const actionData = "asd"
+    const actionData = useActionData()
     return (
         <section id="new-recipe-container">
             <Form method="post" replace="true" id="new-recipe-form">
