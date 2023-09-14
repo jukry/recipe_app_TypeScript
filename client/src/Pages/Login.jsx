@@ -13,7 +13,6 @@ export function loader({ request }) {
 }
 
 export async function action({ request }) {
-    event.preventDefault()
     const formData = await request.formData()
     async function loginUser() {
         return await fetch(import.meta.env.VITE_AUTH_ENDPOINT, {
