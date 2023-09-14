@@ -2,6 +2,7 @@
 
 .user-recipes-container {
     max-width: 25em;
+    align-self: center;
 }
 .user-recipes-container .fooditem-container {
     background-color: var(--clr-accent-neutral);

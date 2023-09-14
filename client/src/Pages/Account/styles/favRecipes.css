@@ -2,6 +2,7 @@
 
 .favrecipes-container {
     max-width: 25em;
+    align-self: center;
 }
 .favrecipes-container .fooditem-container {
     background-color: var(--clr-accent-neutral);
