@@ -27,7 +27,7 @@ const login = async (req, res) => {
     const refreshToken = jwt.sign({ id }, process.env.REFRESH_SECRET, {
         expiresIn: "7d",
     })
-    found.updateOne({ lastlogin: Date.now() })
+    found.updateOne({ lastlogin: Date.now() }).exec()
     return res
         .cookie("token", refreshToken, {
             maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
