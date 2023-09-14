@@ -17,7 +17,7 @@ export default function AccountDashboard() {
     const { user } = useContext(UserContext)
     return (
         <section className="account-details">
-            <h3>{user.username}</h3>
+            <h3>{user.email}</h3>
         </section>
     )
 }

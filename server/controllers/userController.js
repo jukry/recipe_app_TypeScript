@@ -29,7 +29,6 @@ const registerUser = async (req, res) => {
     user
         ? res.status(201).json({
               _id: user.id,
-              username: user.username,
               email: user.email,
               token: generateToken(user._id),
           })
@@ -51,7 +50,6 @@ const authenticateUser = async (req, res) => {
             .status(200)
             .json({
                 _id: user.id,
-                username: user.username,
                 email: user.email,
             })
     } else {
@@ -59,12 +57,9 @@ const authenticateUser = async (req, res) => {
     }
 }
 const getUserData = async (req, res) => {
-    const { _id, username, email, recipes, favrecipes } = await User.findById(
-        req.user.id
-    )
+    const { _id, email, recipes, favrecipes } = await User.findById(req.user.id)
     res.status(200).json({
         id: _id,
-        username,
         email,
         recipes,
         favrecipes,
