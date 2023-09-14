@@ -16,8 +16,22 @@ export default function AccountDashboard() {
     const loaderData = useLoaderData()
     const { user } = useContext(UserContext)
     return (
-        <section className="account-details">
-            <h3>{user.email}</h3>
+        <section id="account-details">
+            <h3 id="username">Tervetuloa {user.email.split("@")[0]}</h3>
+            <p id="lastlogin">
+                Edellinen kirjautuminen:{" "}
+                {new Date(user.lastlogin).toLocaleString("fi-FI")}
+            </p>
+            <p id="recipesamount">
+                Sinulla on {user.recipes.length}
+                {user.recipes.length === 1 ? " oma resepti" : " omaa reseptiä"}
+            </p>
+            <p id="favrecipeamount">
+                Sinulla on {user.favrecipes.length}
+                {user.favrecipes.length === 1
+                    ? " suosikkiresepti"
+                    : " suosikkireseptiä"}
+            </p>
         </section>
     )
 }
