@@ -23,10 +23,10 @@ import FavoriteRecipes, {
 } from "./Pages/Account/FavoriteRecipes"
 import UserRecipes from "./Pages/Account/UserRecipes"
 import AddNewRecipe, {
-    action as AddNewRecipeAction,
+    action as addNewRecipeAction,
 } from "./Pages/Account/AddNewRecipe"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import Register from "./Pages/Register"
+import Register, { action as registerAction } from "./Pages/Register"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -62,7 +62,7 @@ function App() {
                     <Route
                         path="addnewrecipe"
                         element={<AddNewRecipe />}
-                        action={AddNewRecipeAction}
+                        action={addNewRecipeAction}
                     />
                 </Route>
                 <Route
@@ -71,7 +71,11 @@ function App() {
                     action={loginAction}
                     loader={loginLoader}
                 />
-                <Route path="register" element={<Register />} />
+                <Route
+                    path="register"
+                    element={<Register />}
+                    action={registerAction}
+                />
             </Route>
         )
     )
