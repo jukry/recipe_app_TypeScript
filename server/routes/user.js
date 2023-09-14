@@ -12,7 +12,7 @@ import {
     deleteFavRecipe,
 } from "../controllers/favRecipeController.js"
 
-userRouter.post("/", registerUser)
+userRouter.post("/register", registerUser)
 userRouter.post("/login", authenticateUser)
 userRouter.get("/user", protect, getUserData)
 userRouter.get("/user/recipes", protect, getUserRecipes)
