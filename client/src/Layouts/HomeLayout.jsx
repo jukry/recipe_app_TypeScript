@@ -7,7 +7,6 @@ import Loader from "../Components/Loader"
 
 export default function HomeLayout() {
     const { isLoading } = useContext(UserContext)
-    console.log(isLoading)
     return (
         <div className="container">
             {isLoading ? (
