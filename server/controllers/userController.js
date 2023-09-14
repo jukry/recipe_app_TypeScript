@@ -5,20 +5,23 @@ import Recipe from "../models/Recipe.js"
 const saltRounds = 10
 
 const registerUser = async (req, res) => {
-    const { username, email, password } = req.body
+    const { email, password, repassword } = req.body
 
-    if (!username || !email || !password) {
-        return res.status(400).json({ Message: "Please fill all fields" })
+    if (password !== repassword) {
+        return res.status(200).json({ Message: "Passwords do not match" })
+    }
+
+    if (!email || !password || !repassword) {
+        return res.status(401).json({ Message: "Please fill all fields" })
     }
     const found = await User.find({ email: email }).count()
     if (found) {
-        return res.status(400).json({ Message: "Email already registered" })
+        return res.status(403).json({ Message: "Email already registered" })
     }
 
     const hashedPassword = await bcrypt.hash(password, saltRounds)
 
     const user = await User.create({
-        username: username,
         email: email,
         password: hashedPassword,
     })
