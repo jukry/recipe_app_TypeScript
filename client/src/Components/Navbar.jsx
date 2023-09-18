@@ -2,9 +2,9 @@ import { useContext, useState } from "react"
 import { NavLink, Link } from "react-router-dom"
 import { UserContext } from "../Context/UserContext"
 
-export default function Navbar() {
-    const [showNav, setShowNav] = useState(false)
+export default function Navbar(props) {
     const { isLoggedIn, setIsLoggedIn } = useContext(UserContext)
+    const showNav = props.props
 
     return (
         <header>
@@ -50,7 +50,7 @@ export default function Navbar() {
             </nav>
 
             <div
-                onClick={() => setShowNav((prev) => !prev)}
+                onClick={(e) => props.handleNavClick(e)}
                 className="nav-button"
             >
                 <span
@@ -60,9 +60,7 @@ export default function Navbar() {
                     className={`${!showNav ? "line line-2" : "cross cross-2"}`}
                 ></span>
                 <span
-                    className={`${
-                        !showNav ? "line line-3" : `style="display:none;"`
-                    }`}
+                    className={`${!showNav ? "line line-3" : "line-hidden"}`}
                 ></span>
             </div>
         </header>
