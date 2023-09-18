@@ -206,7 +206,7 @@ footer {
     .top-nav-disabled {
         left: 110%;
         width: 100%;
-        transition: ease-in 0.5s left;
+        transition: ease-in 0.2s left;
         position: fixed;
     }
     .line {
@@ -216,6 +216,9 @@ footer {
         background-color: var(--clr-accent);
         margin: 3px;
         transition: all 0.1s linear;
+    }
+    .line-hidden {
+        display: none;
     }
     .cross {
         width: 2em;
