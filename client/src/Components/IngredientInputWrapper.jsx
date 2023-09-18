@@ -30,7 +30,7 @@ export default function IngredientInputWrapper() {
                 <IngredientInput
                     type="text"
                     placeholder="Anna ainesosan määrä (esim. 200g)"
-                    className="new-recipe-amount"
+                    className="new-recipe-ingredient-amount"
                     name="amount2"
                 />
                 <IngredientInput
@@ -44,7 +44,7 @@ export default function IngredientInputWrapper() {
                 <IngredientInput
                     type="text"
                     placeholder="Anna ainesosan määrä (esim. 200g)"
-                    className="new-recipe-amount"
+                    className="new-recipe-ingredient-amount"
                     name="amount3"
                 />
                 <IngredientInput
@@ -58,7 +58,7 @@ export default function IngredientInputWrapper() {
                 <IngredientInput
                     type="text"
                     placeholder="Anna ainesosan määrä (esim. 200g)"
-                    className="new-recipe-amount"
+                    className="new-recipe-ingredient-amount"
                     name="amount4"
                 />
                 <IngredientInput
