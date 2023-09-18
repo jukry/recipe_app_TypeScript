@@ -3,8 +3,7 @@
 .account-container {
     display: flex;
     flex-direction: column;
-    padding: 0.5em;
-    margin: 0 auto;
+    margin: 1em;
     color: var(--clr-text);
     max-width: 750px;
 }
@@ -39,11 +38,16 @@ a {
     color: white;
     text-decoration: none;
 }
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 700px) {
     .account-nav {
         display: flex;
         gap: 1em;
         align-items: center;
         flex-direction: row;
+        margin: 1em 0;
+    }
+    .account-container {
+        margin: 0 auto;
+        padding: 0 1em;
     }
 }
