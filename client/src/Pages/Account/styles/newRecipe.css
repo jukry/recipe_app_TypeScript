@@ -1,8 +1,6 @@
 @import "../../../constants.css";
 
 #new-recipe-container {
-    padding-top: 5em;
-    margin: 0 auto;
     min-width: 250px;
     max-width: 750px;
     display: flex;
@@ -13,11 +11,9 @@
 #new-recipe-form {
     display: flex;
     flex-direction: column;
-    margin-top: 1em;
-    padding: 1em;
     position: relative;
     justify-content: center;
-    align-items: center;
+    margin: 0 auto;
 }
 #recipe-text-input > input {
     padding: 1em;
@@ -43,25 +39,36 @@
 #ingredients,
 #recipe-steps {
     position: relative;
-    padding: 2em 0;
+    padding: 1em 0;
+    border: none;
+    margin-top: 1em;
+}
+#ingredients {
+    display: flex;
+    flex-direction: column;
 }
 #button-add-ingredient,
 #button-add-step {
-    position: absolute;
-    top: 0;
-    right: 0;
+    font-size: 1.25em;
+    background-color: var(--clr-accent-neutral);
+    outline: none;
+    border: none;
+    color: var(--clr-text);
+    transition: 0.2s;
+    padding: 0.5em;
+    margin-bottom: 0.25em;
 }
 #recipe-steps {
     display: flex;
     flex-direction: column;
+    grid-column: 2;
 }
 #recipe-data-container {
     display: flex;
     flex-direction: column;
-    margin-top: 1em;
 }
 #recipe-ingredient-steps-wrapper {
-    display: flex;
+    display: grid;
     gap: 2em;
 }
 #recipe-text-input {
@@ -69,10 +76,33 @@
     flex-direction: column;
 }
 .ingredient-wrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 .check-recipe-input {
     position: absolute;
     color: var(--clr-text);
     top: 0;
+}
+.new-recipe-ingredient-amount {
+    padding: 0.25em;
+    grid-column: 1 / 2;
+}
+.new-recipe-ingredient {
+    padding: 0.25em;
+    grid-column: 3 / 4;
+}
+.new-recipe-step {
+    padding: 0.25em;
+}
+@media screen and (max-width: 700px) {
+    #recipe-ingredient-steps-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    #ingredients,
+    #recipe-steps {
+        padding: 1em 0 0 0;
+    }
 }
