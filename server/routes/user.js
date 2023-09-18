@@ -11,8 +11,9 @@ import {
     addFavRecipe,
     deleteFavRecipe,
 } from "../controllers/favRecipeController.js"
+import newUserLimiter from "../middleware/newUserLimiter.js"
 
-userRouter.post("/register", registerUser)
+userRouter.post("/register", newUserLimiter, registerUser)
 userRouter.post("/login", authenticateUser)
 userRouter.get("/user", protect, getUserData)
 userRouter.get("/user/recipes", protect, getUserRecipes)
