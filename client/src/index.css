@@ -159,6 +159,7 @@ footer {
     bottom: 0;
     box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 100%);
     width: -webkit-fill-available;
+    width: -moz-available;
 }
 .nav-button {
     display: none;
@@ -175,7 +176,6 @@ footer {
         transition: ease-out 0.5s left;
         border-bottom: 1px solid var(--clr-accent);
         border-right: 1px solid var(--clr-accent);
-        height: 15em;
         top: 4em;
     }
     .top-nav > a {
@@ -189,7 +189,6 @@ footer {
     }
     .top-nav > a:last-child {
         border-bottom: none;
-        padding-bottom: 0;
     }
     .top-nav-active {
         width: 100%;
