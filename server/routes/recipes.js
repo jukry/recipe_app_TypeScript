@@ -9,9 +9,13 @@ import {
     updateRecipe,
 } from "../controllers/recipeController.js"
 import protect from "../middleware/loginMiddleware.js"
+import newRecipeLimiter from "../middleware/newRecipeLimiter.js"
 
 // route for get all recipes and create recipe
-recipesRouter.route("/").get(getAllRecipes).post(protect, createRecipe)
+recipesRouter
+    .route("/")
+    .get(getAllRecipes)
+    .post(protect, newRecipeLimiter, createRecipe)
 
 // get random recipe
 recipesRouter.get("/random", getRandomRecipe)
