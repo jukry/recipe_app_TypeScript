@@ -11,10 +11,12 @@ const user = new Schema(
             type: String,
             required: [true, "Please add a password"],
         },
-        lastlogin: {
-            type: Date,
-            default: () => Date.now(),
-        },
+        lastlogins: [
+            {
+                type: Date,
+                default: () => Date.now(),
+            },
+        ],
         recipes: [
             {
                 type: Schema.Types.ObjectId,
