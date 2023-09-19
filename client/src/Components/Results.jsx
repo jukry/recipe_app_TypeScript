@@ -3,7 +3,7 @@ import Fooditem from "./Fooditem"
 export default function Results(props) {
     const recipeData = props.props[0]
     const searchParams = props.props[1]
-
+    document.title = "Reseptit"
     const foodItem = recipeData.map((item) => {
         return <Fooditem props={[item, searchParams]} key={item.id} />
     })

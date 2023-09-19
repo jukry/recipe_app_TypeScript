@@ -15,6 +15,7 @@ export async function loader({ request }) {
 export default function AccountDashboard() {
     const loaderData = useLoaderData()
     const { user } = useContext(UserContext)
+    document.title = "Omat tiedot"
 
     return (
         <section id="account-details">

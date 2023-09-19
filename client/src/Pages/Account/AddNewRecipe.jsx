@@ -28,6 +28,8 @@ export async function action({ request }) {
 }
 
 export default function AddNewRecipe() {
+    document.title = "Lisää uusi resepti"
+
     const navigation = useNavigation()
     const actionData = useActionData()
     return (

@@ -17,6 +17,7 @@ export async function loader({ request }) {
 }
 
 export default function FavoriteRecipes() {
+    document.title = "Suosikkireseptisi"
     const queryResponse = useQuery(["recipes"], fetchRecipes)
     const favRecipes = queryResponse?.data?.message ?? []
     const context = useContext(UserContext)

@@ -7,6 +7,7 @@ export default function RecipeDetails() {
     const { id } = useParams()
     const queryResponse = useQuery(["recipe", id], fetchRecipeById)
     const data = queryResponse?.data?.message ?? []
+    document.title = data.name
 
     return data !== undefined ? (
         <section className="recipe-wrapper">
