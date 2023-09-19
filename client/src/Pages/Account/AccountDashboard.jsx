@@ -15,13 +15,18 @@ export async function loader({ request }) {
 export default function AccountDashboard() {
     const loaderData = useLoaderData()
     const { user } = useContext(UserContext)
+
     return (
         <section id="account-details">
             <h3 id="username">Tervetuloa {user.email.split("@")[0]}</h3>
-            <p id="lastlogin">
-                Edellinen kirjautuminen:{" "}
-                {new Date(user.lastlogin).toLocaleString("fi-FI")}
-            </p>
+            {user.lastlogins.length === 2 ? (
+                <p id="lastlogin">
+                    Edellinen kirjautuminen:{" "}
+                    {new Date(user.lastlogins[0]).toLocaleString("fi-FI")}
+                </p>
+            ) : (
+                ""
+            )}
             <p id="recipesamount">
                 Sinulla on {user.recipes.length}
                 {user.recipes.length === 1 ? " oma resepti" : " omaa reseptiä"}
