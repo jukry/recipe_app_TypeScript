@@ -30,6 +30,10 @@
 .user-recipes-container .food-item > .img-container {
     display: block;
 }
+#no-recipes {
+    margin-bottom: 1em;
+    text-align: center;
+}
 @media screen and (min-width: 400px) {
     .user-recipes-container .food-item {
         font-size: 1em;
