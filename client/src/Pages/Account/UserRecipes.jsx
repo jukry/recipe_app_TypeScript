@@ -1,9 +1,11 @@
 import React from "react"
-import { useLoaderData } from "react-router-dom"
 import Fooditem from "../../Components/Fooditem"
 import "./styles/userRecipes.css"
 import { useQuery } from "@tanstack/react-query"
 import fetchUserRecipes from "../../Hooks/fetchUserRecipes"
+import Loader from "../../Components/Loader"
+import AddNewRecipe from "./AddNewRecipe"
+import "./styles/newRecipe.css"
 
 export default function UserRecipes() {
     document.title = "Omat reseptisi"
@@ -17,5 +19,23 @@ export default function UserRecipes() {
     }
     const userRecipes = userRecipesMap()
 
-    return <section className="user-recipes-container">{userRecipes}</section>
+    return (
+        <>
+            {queryResponse.isLoading ? (
+                <Loader />
+            ) : recipes.length > 0 ? (
+                <section className="user-recipes-container">
+                    {userRecipes}
+                </section>
+            ) : (
+                <>
+                    <h3 id="no-recipes">
+                        Omia reseptejä ei löytynyt, voit lisätä tästä uuden
+                        reseptin
+                    </h3>
+                    <AddNewRecipe />
+                </>
+            )}
+        </>
+    )
 }
