@@ -8,7 +8,14 @@ export async function getUserData({ request }) {
             credentials: "include",
         })
         const body = await data.json()
-        if (!body.id) {
+        if (pathname.includes("recipe/edit/")) {
+            const recipeId = pathname.split("edit/")[1]
+            if (body?.recipes?.includes(recipeId)) {
+                return body
+            } else {
+                return {}
+            }
+        } else if (!body.id) {
             return redirect(
                 `/login?message=Kirjaudu ensin sisään&redirectTo=${pathname}`
             )
@@ -75,4 +82,49 @@ export function addRow(e) {
     }
 
     return null
+}
+
+export async function handleFavorite(event, data, setUser) {
+    const isfav = event.target.id
+    if (isfav === "isfav") {
+        async function deleteFav() {
+            return await fetch(import.meta.env.VITE_USERFAVRECIPES_ENDPOINT, {
+                method: "DELETE",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ id: data.id || data._id }),
+            })
+        }
+
+        const body = await deleteFav()
+        const message = await body.json()
+        const newFavRecipes = message.Message
+        setUser((prev) => ({
+            ...prev,
+            favrecipes: newFavRecipes,
+        }))
+    } else {
+        async function addFav() {
+            return await fetch(import.meta.env.VITE_USERFAVRECIPES_ENDPOINT, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ id: data.id || data._id }),
+            })
+        }
+
+        const body = await addFav()
+        const message = await body.json()
+        const newFavRecipes = message.Message
+        setUser((prev) => ({
+            ...prev,
+            favrecipes: newFavRecipes,
+        }))
+    }
 }
