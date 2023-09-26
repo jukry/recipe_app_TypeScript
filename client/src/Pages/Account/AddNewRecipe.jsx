@@ -1,6 +1,7 @@
 import "./styles/newRecipe.css"
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom"
 import RecipeDataContainer from "../../Components/RecipeDataContainer"
+import { getUserData } from "../../utils/utils"
 
 export async function action({ request }) {
     const formData = Object.fromEntries(await request.formData())
@@ -23,8 +24,16 @@ export async function action({ request }) {
     if (!res.ok) {
         return res.status
     } else {
-        return redirect("/account/myrecipes")
+        location.replace("/account/myrecipes")
+        return null
     }
+}
+export async function loader({ request }) {
+    const res = await getUserData({ request })
+    if (!res.id) {
+        return redirect("/forbidden")
+    }
+    return null
 }
 
 export default function AddNewRecipe() {
