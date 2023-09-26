@@ -26,7 +26,7 @@ export default function HomeLayout() {
     }
 
     return (
-        <div className="container" onClick={handleNavClick}>
+        <section className="container" id="container" onClick={handleNavClick}>
             {isLoading ? (
                 <Loader />
             ) : (
@@ -38,6 +38,6 @@ export default function HomeLayout() {
                     <Footer />
                 </>
             )}
-        </div>
+        </section>
     )
 }
