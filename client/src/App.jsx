@@ -21,12 +21,19 @@ import AccountLayout, {
 import FavoriteRecipes, {
     loader as favrecipesLoader,
 } from "./Pages/Account/FavoriteRecipes"
-import UserRecipes from "./Pages/Account/UserRecipes"
+import UserRecipes, {
+    loader as userRecipesLoader,
+} from "./Pages/Account/UserRecipes"
 import AddNewRecipe, {
     action as addNewRecipeAction,
+    loader as addNewRecipeLoader,
 } from "./Pages/Account/AddNewRecipe"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import Register, { action as registerAction } from "./Pages/Register"
+import RecipeDetailsEdit, {
+    loader as recipeDetailsEditLoader,
+    action as recipeDetailsEditAction,
+} from "./Components/RecipeDetailsEdit"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -44,6 +51,12 @@ function App() {
                 <Route index element={<Search />} />
                 <Route path="recipe/:id" element={<RecipeDetails />}></Route>
                 <Route
+                    path="recipe/edit/:id"
+                    element={<RecipeDetailsEdit />}
+                    loader={recipeDetailsEditLoader}
+                    action={recipeDetailsEditAction}
+                ></Route>
+                <Route
                     path="account"
                     element={<AccountLayout />}
                     loader={layoutLoader}
@@ -58,11 +71,16 @@ function App() {
                         loader={favrecipesLoader}
                         element={<FavoriteRecipes />}
                     />
-                    <Route path="myrecipes" element={<UserRecipes />} />
+                    <Route
+                        path="myrecipes"
+                        element={<UserRecipes />}
+                        loader={userRecipesLoader}
+                    />
                     <Route
                         path="addnewrecipe"
                         element={<AddNewRecipe />}
                         action={addNewRecipeAction}
+                        loader={addNewRecipeLoader}
                     />
                 </Route>
                 <Route
