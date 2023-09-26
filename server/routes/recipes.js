@@ -25,6 +25,6 @@ recipesRouter
     .route("/:id")
     .get(getRecipeById)
     .delete(protect, deleteRecipe)
-    .put(protect, updateRecipe)
+    .patch(protect, updateRecipe)
 
 export default recipesRouter
