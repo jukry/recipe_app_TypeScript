@@ -17,7 +17,7 @@ const getAllRecipes = async (req, res) => {
         res.status(200).json({ message: recipes })
     } catch (error) {
         console.log(error)
-        res.send(404)
+        res.sendStatus(404)
     }
 }
 
@@ -111,7 +111,12 @@ const deleteRecipe = async (req, res) => {
 
     try {
         await Recipe.findById(id).deleteOne()
-        return res.status(200).json({ Message: `Document ${id} removed` })
+        const updated = await Recipe.find({ user: userId }).select("_id").exec()
+        await User.findOneAndUpdate(
+            { _id: userId },
+            { $set: { recipes: updated } }
+        )
+        return res.status(200).json(updated)
     } catch (error) {
         return res.status(400).json({ Message: "Bad request" })
     }
@@ -119,10 +124,36 @@ const deleteRecipe = async (req, res) => {
 
 const updateRecipe = async (req, res) => {
     const { id } = req.params
-    const updated = req.body
+    const updated = req.body.formData
     const userId = req.user.id
     const recipe = await Recipe.findById(id)
 
+    function iterateRecipe() {
+        if (updated.name !== recipe.name && updated.name !== "") {
+            recipe.name = updated.name
+        }
+        if (
+            updated.description !== recipe.description &&
+            updated.description !== ""
+        ) {
+            recipe.description = updated.description
+        }
+        for (const [key, value] of Object.entries(updated)) {
+            if (key.includes("amount") && value !== "") {
+                const id = Number(key.split("amount")[1]) - 1
+                Object.assign(recipe.ingredients[id], { amount: value })
+            } else if (key.includes("ingredient") && value !== "") {
+                const id = Number(key.split("ingredient")[1]) - 1
+                Object.assign(recipe.ingredients[id], {
+                    ingredient: value,
+                })
+            } else if (key.includes("step") && value !== "") {
+                const id = Number(key.split("step")[1]) - 1
+                recipe.instructions[id] = value
+            }
+        }
+    }
+    iterateRecipe()
     if (!recipe) {
         return res.status(404).json({ Message: `No recipe with id ${id}` })
     }
@@ -132,7 +163,14 @@ const updateRecipe = async (req, res) => {
     }
 
     try {
-        await Recipe.findById(id).updateOne({ $set: updated })
+        await Recipe.findByIdAndUpdate(recipe._id, {
+            $set: {
+                name: recipe.name,
+                description: recipe.description,
+                ingredients: recipe.ingredients,
+                instructions: recipe.instructions,
+            },
+        })
         return res.status(200).json({ Message: "Recipe updated" })
     } catch (error) {
         return res.status(400).json({ Message: "Bad request" })
