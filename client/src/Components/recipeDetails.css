@@ -36,9 +36,6 @@
     border-radius: 10px;
     box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.25);
 }
-.instructions > h3 {
-    text-align: left;
-}
 .instructions > ol > li {
     padding: 0.2em;
 }

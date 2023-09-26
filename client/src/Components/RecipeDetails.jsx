@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query"
 import fetchRecipeById from "../Hooks/fetchRecipeById.js"
 
 export default function RecipeDetails() {
-    const { id } = useParams()
-    const queryResponse = useQuery(["recipe", id], fetchRecipeById)
+    const params = useParams()
+    const queryResponse = useQuery(["recipe", params.id], fetchRecipeById)
     const data = queryResponse?.data?.message ?? []
     document.title = data.name
 
