@@ -1,110 +1,137 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { Link } from "react-router-dom"
 import { UserContext } from "../Context/UserContext"
+import { createPortal } from "react-dom"
+import DeleteModal from "./DeleteModal"
+import { handleFavorite } from "../utils/utils"
 
 export default function Fooditem(props) {
     const data = props.props[0]
     const searchParams = props.props[1] ?? ""
+    const handleDelete = props.props[2]
+    const [showModal, setShowModal] = useState(false)
     const { user, setUser } = useContext(UserContext)
     const { favrecipes } = user
 
-    async function handleFavorite(event) {
-        const isfav = event.target.id
-        if (isfav === "isfav") {
-            async function deleteFav() {
-                return await fetch(
-                    import.meta.env.VITE_USERFAVRECIPES_ENDPOINT,
-                    {
-                        method: "DELETE",
-                        mode: "cors",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        credentials: "include",
-                        body: JSON.stringify({ id: data.id || data._id }),
-                    }
-                )
-            }
-
-            const body = await deleteFav()
-            const message = await body.json()
-            const newFavRecipes = message.Message
-            setUser((prev) => ({
-                ...prev,
-                favrecipes: newFavRecipes,
-            }))
-        } else {
-            async function addFav() {
-                return await fetch(
-                    import.meta.env.VITE_USERFAVRECIPES_ENDPOINT,
-                    {
-                        method: "POST",
-                        mode: "cors",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        credentials: "include",
-                        body: JSON.stringify({ id: data.id || data._id }),
-                    }
-                )
-            }
-
-            const body = await addFav()
-            const message = await body.json()
-            const newFavRecipes = message.Message
-            setUser((prev) => ({
-                ...prev,
-                favrecipes: newFavRecipes,
-            }))
-        }
-    }
-
     function recipesFunc() {
         return (
-            <Link
-                to={`/recipe/${data.id || data._id}`}
-                state={{
-                    search: `?${searchParams}`,
-                }}
-                className="food-item"
-                key={data.id || data._id}
-            >
-                <div className="img-container">
-                    <img
-                        src={
-                            data.name.includes("Pasta")
-                                ? "https://images.pexels.com/photos/10966377/pexels-photo-10966377.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=1"
-                                : "https://images.pexels.com/photos/10480245/pexels-photo-10480245.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=1"
-                        }
-                        alt="Kuva tulossa"
-                    />
-                </div>
-                <div className="recipe-info">
-                    <h2>{data.name}</h2>
-                    <p>{data.description}</p>
-                    <button
-                        className="fav-heart"
-                        onClick={(event) => {
-                            event.stopPropagation()
-                            event.preventDefault()
-                            handleFavorite(event, data._id)
-                        }}
-                    >
-                        {favrecipes?.includes(data.id || data._id) ? (
-                            <p id="isfav" key={data.id || data._id}>
-                                &#x2665;
-                            </p>
-                        ) : (
-                            <p id="notfav" key={data.id}>
-                                &#x2661;
-                            </p>
+            <>
+                <Link
+                    to={`/recipe/${data.id || data._id}`}
+                    state={{
+                        search: `?${searchParams}`,
+                    }}
+                    className="food-item"
+                    id={data.id || data._id}
+                    key={data.id || data._id}
+                >
+                    <div className="img-container">
+                        <img
+                            src={
+                                data.name.includes("Pasta")
+                                    ? "https://images.pexels.com/photos/10966377/pexels-photo-10966377.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=1"
+                                    : "https://images.pexels.com/photos/10480245/pexels-photo-10480245.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=1"
+                            }
+                            alt="Kuva tulossa"
+                        />
+                    </div>
+                    <div className="recipe-info">
+                        <h2>{data.name}</h2>
+                        <p>{data.description}</p>
+                        <button
+                            className="fav-heart"
+                            onClick={(event) => {
+                                event.stopPropagation()
+                                event.preventDefault()
+                                handleFavorite(event, data, setUser)
+                            }}
+                        >
+                            {favrecipes?.includes(data.id || data._id) ? (
+                                <p
+                                    title="Poista resepti suosikeista"
+                                    id="isfav"
+                                    key={data.id || data._id}
+                                >
+                                    &#x2665;
+                                </p>
+                            ) : (
+                                <p
+                                    title="Lisää resepti suosikkeihin"
+                                    id="notfav"
+                                    key={data.id}
+                                >
+                                    &#x2661;
+                                </p>
+                            )}
+                        </button>
+                    </div>
+                </Link>
+                <section className="recipe-management">
+                    {location.href.includes("account/myrecipes") ? (
+                        <Link
+                            to={`/recipe/edit/${data._id || data.id}`}
+                            className="edit-button"
+                            title="Muokkaa reseptiä"
+                        >
+                            &#9998;
+                        </Link>
+                    ) : (
+                        ""
+                    )}
+                    {location.href.includes("account/myrecipes") ? (
+                        <button
+                            className="delete-button"
+                            title="Poista resepti"
+                            onClick={() => {
+                                setShowModal((prev) => !prev)
+                            }}
+                        >
+                            &#128465;
+                        </button>
+                    ) : (
+                        ""
+                    )}
+                    {showModal &&
+                        createPortal(
+                            <DeleteModal
+                                props={{
+                                    name: data.name,
+                                    id: data._id,
+                                }}
+                                onDelete={(event) => {
+                                    if (event.target.id === "delete-yes") {
+                                        handleDelete(data._id)
+                                    }
+                                }}
+                                onClose={(event) => {
+                                    if (
+                                        event.target.className !==
+                                        "delete-modal"
+                                    ) {
+                                        event.preventDefault()
+                                        setShowModal(false)
+                                    }
+                                }}
+                            />,
+                            document.getElementById("container")
                         )}
-                    </button>
-                </div>
-            </Link>
+                </section>
+            </>
         )
     }
+
     const recipes = recipesFunc()
 
-    return <div className="fooditem-container">{recipes}</div>
+    return (
+        <div
+            className="fooditem-container"
+            onKeyDown={(event) => {
+                if (event.key === "Escape") {
+                    setShowModal(false)
+                }
+            }}
+        >
+            {recipes}
+        </div>
+    )
 }
