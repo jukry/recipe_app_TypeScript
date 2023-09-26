@@ -1,20 +1,49 @@
-import React from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Fooditem from "../../Components/Fooditem"
 import "./styles/userRecipes.css"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import fetchUserRecipes from "../../Hooks/fetchUserRecipes"
 import Loader from "../../Components/Loader"
 import AddNewRecipe from "./AddNewRecipe"
 import "./styles/newRecipe.css"
+import { getUserData } from "../../utils/utils"
 
-export default function UserRecipes() {
+export async function loader({ request }) {
+    const res = await getUserData({ request })
+    if (!res.id) {
+        return redirect("/forbidden")
+    }
+    return null
+}
+
+export default function UserRecipes({ props }) {
     document.title = "Omat reseptisi"
-
     const queryResponse = useQuery(["userRecipes"], fetchUserRecipes)
     const recipes = queryResponse?.data?.data ?? []
+
+    const mutation = useMutation({
+        mutationFn: (id) => {
+            return fetch(`${import.meta.env.VITE_RECIPE_ENDPOINT}/${id}`, {
+                method: "DELETE",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ id: id }),
+            })
+        },
+        onSuccess: () => queryResponse.refetch(),
+    })
+
     function userRecipesMap() {
-        return recipes.map((item) => {
-            return <Fooditem props={[item]} key={item._id} />
+        return recipes?.map((item) => {
+            return (
+                <Fooditem
+                    props={[item, props, mutation.mutate]}
+                    key={item._id}
+                />
+            )
         })
     }
     const userRecipes = userRecipesMap()
