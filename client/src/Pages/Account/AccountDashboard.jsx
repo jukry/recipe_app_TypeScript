@@ -6,7 +6,7 @@ import { getUserData } from "../../utils/utils"
 
 export async function loader({ request }) {
     const res = await getUserData({ request })
-    if (!res.id) {
+    if (!res) {
         return redirect("/login")
     }
     return res
