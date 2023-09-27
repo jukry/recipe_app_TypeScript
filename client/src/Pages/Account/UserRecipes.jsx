@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext } from "react"
 import Fooditem from "../../Components/Fooditem"
 import "./styles/userRecipes.css"
 import { useMutation, useQuery } from "@tanstack/react-query"
@@ -7,6 +7,7 @@ import Loader from "../../Components/Loader"
 import AddNewRecipe from "./AddNewRecipe"
 import "./styles/newRecipe.css"
 import { getUserData } from "../../utils/utils"
+import { UserContext } from "../../Context/UserContext"
 
 export async function loader({ request }) {
     const res = await getUserData({ request })
@@ -20,6 +21,7 @@ export default function UserRecipes({ props }) {
     document.title = "Omat reseptisi"
     const queryResponse = useQuery(["userRecipes"], fetchUserRecipes)
     const recipes = queryResponse?.data?.data ?? []
+    const { user, setUser } = useContext(UserContext)
 
     const mutation = useMutation({
         mutationFn: (id) => {
@@ -33,7 +35,15 @@ export default function UserRecipes({ props }) {
                 body: JSON.stringify({ id: id }),
             })
         },
-        onSuccess: () => queryResponse.refetch(),
+        onSuccess: async (data) => {
+            queryResponse.refetch()
+            const res = await data.json()
+            const recipeMap = res.map((item) => item._id)
+            setUser((prev) => ({
+                ...prev,
+                recipes: recipeMap,
+            }))
+        },
     })
 
     function userRecipesMap() {
