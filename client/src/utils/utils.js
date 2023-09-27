@@ -84,7 +84,10 @@ export function addRow(e) {
     return null
 }
 
-export async function handleFavorite(event, data, setUser) {
+export async function handleFavorite(data) {
+    const event = data[0]
+    const id = data[1]
+    const setUser = data[2]
     const isfav = event.target.id
     if (isfav === "isfav") {
         async function deleteFav() {
@@ -95,7 +98,7 @@ export async function handleFavorite(event, data, setUser) {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({ id: data.id || data._id }),
+                body: JSON.stringify({ id: id }),
             })
         }
 
@@ -115,7 +118,7 @@ export async function handleFavorite(event, data, setUser) {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({ id: data.id || data._id }),
+                body: JSON.stringify({ id: id }),
             })
         }
 
