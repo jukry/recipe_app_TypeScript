@@ -4,6 +4,7 @@ import { UserContext } from "../Context/UserContext"
 import { createPortal } from "react-dom"
 import DeleteModal from "./DeleteModal"
 import { handleFavorite } from "../utils/utils"
+import { useMutation } from "@tanstack/react-query"
 
 export default function Fooditem(props) {
     const data = props.props[0]
@@ -12,6 +13,10 @@ export default function Fooditem(props) {
     const [showModal, setShowModal] = useState(false)
     const { user, setUser } = useContext(UserContext)
     const { favrecipes } = user
+
+    const { mutate, isLoading } = useMutation({
+        mutationFn: handleFavorite,
+    })
 
     function recipesFunc() {
         return (
@@ -43,8 +48,9 @@ export default function Fooditem(props) {
                             onClick={(event) => {
                                 event.stopPropagation()
                                 event.preventDefault()
-                                handleFavorite(event, data, setUser)
+                                mutate([event, data._id || data.id, setUser])
                             }}
+                            disabled={isLoading}
                         >
                             {favrecipes?.includes(data.id || data._id) ? (
                                 <p
@@ -58,7 +64,7 @@ export default function Fooditem(props) {
                                 <p
                                     title="Lisää resepti suosikkeihin"
                                     id="notfav"
-                                    key={data.id}
+                                    key={data.id || data._id}
                                 >
                                     &#x2661;
                                 </p>
