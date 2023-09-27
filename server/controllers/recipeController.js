@@ -110,12 +110,24 @@ const deleteRecipe = async (req, res) => {
     }
 
     try {
+        //delete recipe
         await Recipe.findById(id).deleteOne()
+        //get updated recipe array
         const updated = await Recipe.find({ user: userId }).select("_id").exec()
+        //update user's recipe array
         await User.findOneAndUpdate(
             { _id: userId },
             { $set: { recipes: updated } }
         )
+        //delete recipe from user's who have it as favorite
+        await User.updateMany(
+            { favrecipes: id },
+            {
+                $pull: {
+                    favrecipes: id,
+                },
+            }
+        ).exec()
         return res.status(200).json(updated)
     } catch (error) {
         return res.status(400).json({ Message: "Bad request" })
