@@ -26,6 +26,7 @@ export async function action({ request }) {
         return res.status
     } else {
         location.replace("/account/myrecipes")
+        return null
     }
 }
 
