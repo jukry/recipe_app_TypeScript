@@ -35,7 +35,7 @@ export default function Search() {
                 <h1>Etsi reseptiä nimellä</h1>
                 <div className="input-wrapper">
                     <span className="search-icon">&#x1F50E;&#xFE0E;</span>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} id="search-form">
                         <input
                             onChange={handleFilter}
                             type="text"
