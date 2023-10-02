@@ -34,6 +34,9 @@ import RecipeDetailsEdit, {
     loader as recipeDetailsEditLoader,
     action as recipeDetailsEditAction,
 } from "./Components/RecipeDetailsEdit"
+import UserSettings, {
+    action as userSettingsAction,
+} from "./Pages/Account/UserSettings"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -81,6 +84,11 @@ function App() {
                         element={<AddNewRecipe />}
                         action={addNewRecipeAction}
                         loader={addNewRecipeLoader}
+                    />
+                    <Route
+                        path="usersettings"
+                        element={<UserSettings />}
+                        action={userSettingsAction}
                     />
                 </Route>
                 <Route
