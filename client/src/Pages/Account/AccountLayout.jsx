@@ -51,6 +51,12 @@ export default function AccountLayout() {
                 >
                     Lisää uusi resepti
                 </NavLink>
+                <NavLink
+                    to="usersettings"
+                    style={({ isActive }) => (isActive ? activeStyle : null)}
+                >
+                    Käyttäjäasetukset
+                </NavLink>
             </nav>
             <Outlet />
         </section>
