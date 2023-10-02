@@ -8,7 +8,7 @@ const registerUser = async (req, res) => {
     const { email, password, repassword } = req.body
 
     if (password !== repassword) {
-        return res.status(200).json({ Message: "Passwords do not match" })
+        return res.status(406).json({ Message: "Passwords do not match" })
     }
 
     if (!email || !password || !repassword) {
@@ -83,4 +83,33 @@ const getUserRecipes = async (req, res) => {
     return res.status(200).json({ data: recipes })
 }
 
-export { registerUser, authenticateUser, getUserData, getUserRecipes }
+const changePassword = async (req, res) => {
+    const { _id } = req.user
+    const { oldPassword, newPassword, newRePassword } = req.body.formData
+
+    if (!_id || !newPassword || !newRePassword) {
+        return res.status(400).json({ Message: "Please fill all fields" })
+    }
+    if (newPassword !== newRePassword) {
+        return res.status(401).json({ Message: "Passwords do not match" })
+    }
+
+    const user = await User.findById(_id)
+
+    const comparePassword = await bcrypt.compare(oldPassword, user.password)
+
+    if (!comparePassword) {
+        return res.status(401).json({ Message: "Check input" })
+    } else {
+        const hashedPassword = await bcrypt.hash(newPassword, saltRounds)
+        user.updateOne({ password: hashedPassword }).exec()
+    }
+    return res.sendStatus(200)
+}
+export {
+    registerUser,
+    authenticateUser,
+    getUserData,
+    getUserRecipes,
+    changePassword,
+}
