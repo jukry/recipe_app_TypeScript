@@ -55,7 +55,7 @@ export default function Register() {
             <h2>Rekisteröidy</h2>
             {action && (
                 <h3 id="check-register-input">
-                    {action === 200
+                    {action === 406
                         ? "Salasanat eivät täsmää"
                         : action === 401
                         ? "Täytä kaikki kentät"
