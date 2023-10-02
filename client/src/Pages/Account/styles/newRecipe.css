@@ -14,6 +14,7 @@
     position: relative;
     justify-content: center;
     margin: 0 auto;
+    width: 100%;
 }
 #recipe-text-input > input {
     padding: 1em;
