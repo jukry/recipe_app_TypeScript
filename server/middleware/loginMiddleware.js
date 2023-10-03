@@ -10,15 +10,18 @@ const protect = async (req, res, next) => {
 
     //set if access token has expired
     if (token && !acc) {
-        const response = await fetch("http://localhost:5000/auth/refresh", {
-            method: "GET",
-            mode: "cors",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-                Cookie: token,
-            },
-        })
+        const response = await fetch(
+            "https://recipe-app-api.onrender.com/auth/refresh",
+            {
+                method: "GET",
+                mode: "cors",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                    Cookie: token,
+                },
+            }
+        )
         acc =
             response?.headers
                 ?.get("set-cookie")
