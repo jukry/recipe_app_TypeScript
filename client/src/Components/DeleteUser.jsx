@@ -32,7 +32,7 @@ export default function DeleteUser() {
                         }}
                         onDelete={(event) => {
                             if (event.target.id === "delete-yes") {
-                                //deleteUser()
+                                deleteUser()
                             }
                         }}
                         onClose={(event) => {
