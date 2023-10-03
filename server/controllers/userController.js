@@ -93,7 +93,6 @@ const changePassword = async (req, res) => {
     if (newPassword !== newRePassword) {
         return res.status(401).json({ Message: "Passwords do not match" })
     }
-
     const user = await User.findById(_id)
 
     const comparePassword = await bcrypt.compare(oldPassword, user.password)
@@ -106,10 +105,41 @@ const changePassword = async (req, res) => {
     }
     return res.sendStatus(200)
 }
+
+const deleteUser = async (req, res) => {
+    const { _id: userId } = req.user
+    const userRecipes = req.user.recipes
+
+    if (!userId) {
+        return res.status(401).json({ Message: "Not authorized" })
+    }
+
+    try {
+        userRecipes.map((id) => {
+            //delete recipe from users who have it as favorite
+            User.updateMany(
+                { favrecipes: id },
+                {
+                    $pull: {
+                        favrecipes: id,
+                    },
+                }
+            ).exec()
+            //delete recipe
+            Recipe.findByIdAndDelete(id).exec()
+        })
+        //delete user
+        await User.findByIdAndDelete(userId).exec()
+    } catch (error) {
+        return res.status(400).json(error)
+    }
+    return res.sendStatus(200)
+}
 export {
     registerUser,
     authenticateUser,
     getUserData,
     getUserRecipes,
     changePassword,
+    deleteUser,
 }
