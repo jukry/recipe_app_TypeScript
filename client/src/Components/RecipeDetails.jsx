@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import "./recipeDetails.css"
+import "./Styles/recipeDetails.css"
 import { useQuery } from "@tanstack/react-query"
 import fetchRecipeById from "../Hooks/fetchRecipeById.js"
 

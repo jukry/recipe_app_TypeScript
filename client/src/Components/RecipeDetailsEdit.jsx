@@ -1,5 +1,5 @@
 import { Form, redirect, useNavigation, useParams } from "react-router-dom"
-import "./recipeDetailsEdit.css"
+import "./Styles/recipeDetailsEdit.css"
 import { useQuery } from "@tanstack/react-query"
 import fetchRecipeById from "../Hooks/fetchRecipeById.js"
 import { getUserData } from "../utils/utils"
