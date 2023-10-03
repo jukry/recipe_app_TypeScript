@@ -15,18 +15,23 @@ export function loader({ request }) {
 export async function action({ request }) {
     const formData = await request.formData()
     async function loginUser() {
-        return await fetch(import.meta.env.VITE_AUTH_ENDPOINT, {
-            method: "POST",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                email: await formData.get("email"),
-                password: await formData.get("password"),
-            }),
-        })
+        return await fetch(
+            process.env.NODE_ENV === "production"
+                ? import.meta.env.VITE_AUTH_ENDPOINT
+                : import.meta.env.VITE_AUTH_ENDPOINT_DEV,
+            {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    email: await formData.get("email"),
+                    password: await formData.get("password"),
+                }),
+            }
+        )
     }
 
     const pathname =

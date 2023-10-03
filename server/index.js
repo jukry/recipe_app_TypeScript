@@ -16,11 +16,14 @@ app.use(bp.urlencoded({ extended: true }))
 app.use(bp.json())
 
 const corsOptions = {
-    origin: [
-        "https://recipe-app-five-drab.vercel.app",
-        "https://recipe-powutmvwi-jukry.vercel.app",
-        "https://recipe-app-git-main-jukry.vercel.app/",
-    ],
+    origin:
+        process.env.NODE_ENV === "production"
+            ? [
+                  "https://recipe-app-five-drab.vercel.app",
+                  "https://recipe-powutmvwi-jukry.vercel.app",
+                  "https://recipe-app-git-main-jukry.vercel.app/",
+              ]
+            : true,
     credentials: true,
     optionsSuccessStatus: 200,
 }

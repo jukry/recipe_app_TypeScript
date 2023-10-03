@@ -25,15 +25,20 @@ export default function UserRecipes({ props }) {
 
     const mutation = useMutation({
         mutationFn: (id) => {
-            return fetch(`${import.meta.env.VITE_RECIPE_ENDPOINT}/${id}`, {
-                method: "DELETE",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({ id: id }),
-            })
+            return fetch(
+                process.env.NODE_ENV === "production"
+                    ? `${import.meta.env.VITE_RECIPE_ENDPOINT}/${id}`
+                    : `${import.meta.env.VITE_RECIPE_ENDPOINT_DEV}/${id}`,
+                {
+                    method: "DELETE",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({ id: id }),
+                }
+            )
         },
         onSuccess: async (data) => {
             queryResponse.refetch()

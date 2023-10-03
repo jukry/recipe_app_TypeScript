@@ -1,7 +1,9 @@
 const fetchRecipeById = async ({ queryKey }) => {
     const id = queryKey[1]
     const apiResponse = await fetch(
-        `${import.meta.env.VITE_RECIPE_ENDPOINT}/${id}`
+        process.env.NODE_ENV === "production"
+            ? `${import.meta.env.VITE_RECIPE_ENDPOINT}/${id}`
+            : `${import.meta.env.VITE_RECIPE_ENDPOINT_DEV}/${id}`
     )
     if (!apiResponse.ok) {
         throw new Error(`fetch not ok`)

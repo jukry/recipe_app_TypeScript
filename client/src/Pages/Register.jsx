@@ -5,18 +5,23 @@ import "./styles/Register.css"
 export async function action({ request }) {
     const formData = await request.formData()
     async function registerUser() {
-        return await fetch(import.meta.env.VITE_REGISTER_ENDPOINT, {
-            method: "POST",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: await formData.get("email"),
-                password: await formData.get("password"),
-                repassword: await formData.get("re-password"),
-            }),
-        })
+        return await fetch(
+            process.env.NODE_ENV === "production"
+                ? import.meta.env.VITE_REGISTER_ENDPOINT
+                : import.meta.env.VITE_REGISTER_ENDPOINT_DEV,
+            {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: await formData.get("email"),
+                    password: await formData.get("password"),
+                    repassword: await formData.get("re-password"),
+                }),
+            }
+        )
     }
     const res = await registerUser()
 
@@ -24,18 +29,23 @@ export async function action({ request }) {
         return res.status
     } else {
         async function loginUser() {
-            return await fetch(import.meta.env.VITE_AUTH_ENDPOINT, {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({
-                    email: await formData.get("email"),
-                    password: await formData.get("password"),
-                }),
-            })
+            return await fetch(
+                process.env.NODE_ENV === "production"
+                    ? import.meta.env.VITE_AUTH_ENDPOINT
+                    : import.meta.env.VITE_AUTH_ENDPOINT_DEV,
+                {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({
+                        email: await formData.get("email"),
+                        password: await formData.get("password"),
+                    }),
+                }
+            )
         }
         const res = await loginUser()
         if (!res.ok) {

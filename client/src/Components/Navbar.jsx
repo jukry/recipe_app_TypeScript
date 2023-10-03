@@ -27,7 +27,10 @@ export default function Navbar(props) {
                             onClick={async () => {
                                 setIsLoggedIn((prev) => !prev)
                                 await fetch(
-                                    import.meta.env.VITE_LOGOUT_ENDPOINT,
+                                    process.env.NODE_ENV === "production"
+                                        ? import.meta.env.VITE_LOGOUT_ENDPOINT
+                                        : import.meta.env
+                                              .VITE_LOGOUT_ENDPOINT_DEV,
                                     {
                                         method: "POST",
                                         credentials: "include",

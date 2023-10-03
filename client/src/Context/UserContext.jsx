@@ -9,10 +9,15 @@ export const UserContextProvider = ({ children }) => {
 
     useEffect(() => {
         async function getUserData() {
-            const data = await fetch(import.meta.env.VITE_USERDATA_ENDPOINT, {
-                method: "get",
-                credentials: "include",
-            })
+            const data = await fetch(
+                process.env.NODE_ENV === "production"
+                    ? import.meta.env.VITE_USERDATA_ENDPOINT
+                    : import.meta.env.VITE_USERDATA_ENDPOINT_DEV,
+                {
+                    method: "get",
+                    credentials: "include",
+                }
+            )
             const body = await data.json()
             setUser(body)
             setIsLoading(false)

@@ -3,11 +3,16 @@ import { redirect } from "react-router-dom"
 export async function getUserData({ request }) {
     const pathname = new URL(request.url).pathname
     try {
-        const data = await fetch(import.meta.env.VITE_USERDATA_ENDPOINT, {
-            method: "get",
-            credentials: "include",
-            referrerPolicy: "origin",
-        })
+        const data = await fetch(
+            process.env.NODE_ENV === "production"
+                ? import.meta.env.VITE_USERDATA_ENDPOINT
+                : import.meta.env.VITE_USERDATA_ENDPOINT_DEV,
+            {
+                method: "get",
+                credentials: "include",
+                referrerPolicy: "origin",
+            }
+        )
         const body = await data.json()
         if (pathname.includes("recipe/edit/")) {
             const recipeId = pathname.split("edit/")[1]
@@ -92,15 +97,20 @@ export async function handleFavorite(data) {
     const isfav = event.target.id
     if (isfav === "isfav") {
         async function deleteFav() {
-            return await fetch(import.meta.env.VITE_USERFAVRECIPES_ENDPOINT, {
-                method: "DELETE",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({ id: id }),
-            })
+            return await fetch(
+                process.env.NODE_ENV === "production"
+                    ? import.meta.env.VITE_USERFAVRECIPES_ENDPOINT
+                    : import.meta.env.VITE_USERFAVRECIPES_ENDPOINT_DEV,
+                {
+                    method: "DELETE",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({ id: id }),
+                }
+            )
         }
 
         const body = await deleteFav()
@@ -112,15 +122,20 @@ export async function handleFavorite(data) {
         }))
     } else {
         async function addFav() {
-            return await fetch(import.meta.env.VITE_USERFAVRECIPES_ENDPOINT, {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({ id: id }),
-            })
+            return await fetch(
+                process.env.NODE_ENV === "production"
+                    ? import.meta.env.VITE_USERFAVRECIPES_ENDPOINT
+                    : import.meta.env.VITE_USERFAVRECIPES_ENDPOINT_DEV,
+                {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({ id: id }),
+                }
+            )
         }
 
         const body = await addFav()
@@ -134,7 +149,9 @@ export async function handleFavorite(data) {
 }
 export async function changePassword(formData) {
     return await fetch(
-        `${import.meta.env.VITE_USERDATA_ENDPOINT}/newpassword`,
+        process.env.NODE_ENV === "production"
+            ? `${import.meta.env.VITE_USERDATA_ENDPOINT}/newpassword`
+            : `${import.meta.env.VITE_USERDATA_ENDPOINT_DEV}/newpassword`,
         {
             method: "POST",
             mode: "cors",
@@ -150,17 +167,27 @@ export async function changePassword(formData) {
 }
 
 export async function deleteUser() {
-    await fetch(`${import.meta.env.VITE_USERDATA_ENDPOINT}`, {
-        method: "DELETE",
-        mode: "cors",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        credentials: "include",
-    })
-    await fetch(import.meta.env.VITE_LOGOUT_ENDPOINT, {
-        method: "POST",
-        credentials: "include",
-    })
+    await fetch(
+        process.env.NODE_ENV === "production"
+            ? import.meta.env.VITE_USERDATA_ENDPOINT
+            : import.meta.env.VITE_USERDATA_ENDPOINT_DEV,
+        {
+            method: "DELETE",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+        }
+    )
+    await fetch(
+        process.env.NODE_ENV === "production"
+            ? import.meta.env.VITE_LOGOUT_ENDPOINT
+            : import.meta.env.VITE_LOGOUT_ENDPOINT_DEV,
+        {
+            method: "POST",
+            credentials: "include",
+        }
+    )
     return location.replace("/")
 }
