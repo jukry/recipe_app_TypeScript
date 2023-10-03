@@ -101,6 +101,7 @@ export default function Fooditem(props) {
                         createPortal(
                             <DeleteModal
                                 props={{
+                                    text: "Haluatko poistaa reseptin ",
                                     name: data.name,
                                     id: data._id,
                                 }}
