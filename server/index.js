@@ -16,7 +16,7 @@ app.use(bp.urlencoded({ extended: true }))
 app.use(bp.json())
 
 const corsOptions = {
-    origin: "https://recipe-app-pkdp.onrender.com/",
+    origin: "https://recipe-app-pkdp.onrender.com",
     credentials: true,
     optionsSuccessStatus: 200,
 }
