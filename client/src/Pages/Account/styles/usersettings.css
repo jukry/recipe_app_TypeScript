@@ -1,17 +1,14 @@
 @import "../../../constants.css";
 
 #user-settings-container {
-    display: flex;
-    flex-direction: column;
     background-color: var(--clr-accent-neutral);
     min-height: 50vh;
     border-radius: 5px;
     box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 50%);
-    padding: 1em;
+    padding: 1em 1em;
 }
 #password-form {
     display: flex;
-    margin: 0 5em;
     flex-direction: column;
 }
 #password-form > input {
@@ -27,4 +24,14 @@
     border: none;
     color: var(--clr-text);
     transition: 0.2s;
+}
+#password-form > button:hover {
+    transition: 0.2s;
+    scale: 1.01;
+}
+
+@media screen and (min-width: 700px) {
+    #user-settings-container {
+        padding: 1em 3em;
+    }
 }
