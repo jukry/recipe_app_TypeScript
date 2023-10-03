@@ -6,6 +6,7 @@ export async function getUserData({ request }) {
         const data = await fetch(import.meta.env.VITE_USERDATA_ENDPOINT, {
             method: "get",
             credentials: "include",
+            referrerPolicy: "origin",
         })
         const body = await data.json()
         if (pathname.includes("recipe/edit/")) {
