@@ -131,3 +131,35 @@ export async function handleFavorite(data) {
         }))
     }
 }
+export async function changePassword(formData) {
+    return await fetch(
+        `${import.meta.env.VITE_USERDATA_ENDPOINT}/newpassword`,
+        {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                formData,
+            }),
+        }
+    )
+}
+
+export async function deleteUser() {
+    await fetch(`${import.meta.env.VITE_USERDATA_ENDPOINT}`, {
+        method: "DELETE",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    })
+    await fetch(import.meta.env.VITE_LOGOUT_ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+    })
+    return location.replace("/")
+}
