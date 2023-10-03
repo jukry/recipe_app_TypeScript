@@ -4,10 +4,10 @@ import "./styles/userRecipes.css"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import fetchUserRecipes from "../../Hooks/fetchUserRecipes"
 import Loader from "../../Components/Loader"
-import AddNewRecipe from "./AddNewRecipe"
 import "./styles/newRecipe.css"
 import { getUserData } from "../../utils/utils"
 import { UserContext } from "../../Context/UserContext"
+import { redirect } from "react-router-dom"
 
 export async function loader({ request }) {
     const res = await getUserData({ request })
@@ -57,7 +57,6 @@ export default function UserRecipes({ props }) {
         })
     }
     const userRecipes = userRecipesMap()
-
     return (
         <>
             {queryResponse.isLoading ? (
@@ -67,13 +66,7 @@ export default function UserRecipes({ props }) {
                     {userRecipes}
                 </section>
             ) : (
-                <>
-                    <h3 id="no-recipes">
-                        Omia reseptejä ei löytynyt, voit lisätä tästä uuden
-                        reseptin
-                    </h3>
-                    <AddNewRecipe />
-                </>
+                location.replace("/account/addnewrecipe")
             )}
         </>
     )
