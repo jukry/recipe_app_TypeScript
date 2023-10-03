@@ -16,7 +16,11 @@ app.use(bp.urlencoded({ extended: true }))
 app.use(bp.json())
 
 const corsOptions = {
-    origin: "https://recipe-app-pkdp.onrender.com",
+    origin: [
+        "https://recipe-app-five-drab.vercel.app",
+        "https://recipe-powutmvwi-jukry.vercel.app",
+        "https://recipe-app-git-main-jukry.vercel.app/",
+    ],
     credentials: true,
     optionsSuccessStatus: 200,
 }
