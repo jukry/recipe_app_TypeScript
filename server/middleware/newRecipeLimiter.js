@@ -10,6 +10,7 @@ const newRecipeLimiter = rateLimit({
     },
     standardHeaders: true,
     legacyHeaders: false,
+    validate: { trustProxy: false },
 })
 
 export default newRecipeLimiter
