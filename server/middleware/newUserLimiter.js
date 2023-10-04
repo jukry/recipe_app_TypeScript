@@ -10,6 +10,7 @@ const newUserLimiter = rateLimit({
     },
     standardHeaders: true,
     legacyHeaders: false,
+    validate: { xForwardedForHeader: false },
 })
 
 export default newUserLimiter
