@@ -32,7 +32,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 const port = process.env.port || 5000
-
+app.enable("trust proxy")
 app.get("/", (req, res) => {
     res.send("Main page")
 })
