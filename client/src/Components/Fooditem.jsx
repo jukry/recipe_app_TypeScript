@@ -25,6 +25,7 @@ export default function Fooditem(props) {
                     to={`/recipe/${data.id || data._id}`}
                     state={{
                         search: `?${searchParams}`,
+                        referrer: location.pathname,
                     }}
                     className="food-item"
                     id={data.id || data._id}
