@@ -154,6 +154,7 @@ header > a,
     padding: 0;
     border-style: none;
     background-color: transparent;
+    color: white;
 }
 footer {
     display: flex;
