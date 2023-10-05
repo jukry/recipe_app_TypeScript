@@ -1,0 +1,7 @@
+@import "../../constants.css";
+
+.back-button {
+    margin: 1em;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
