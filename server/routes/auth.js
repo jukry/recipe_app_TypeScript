@@ -3,7 +3,7 @@ const authRouter = express.Router()
 import { login, logout, refresh } from "../controllers/authController.js"
 import loginLimiter from "../middleware/loginLimiter.js"
 
-authRouter.post("/", login)
+authRouter.post("/", loginLimiter, login)
 authRouter.get("/refresh", refresh)
 authRouter.post("/logout", logout)
 
