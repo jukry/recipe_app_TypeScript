@@ -7,6 +7,7 @@
     flex-direction: column;
     margin: 0 auto;
     color: var(--clr-text);
+    max-width: 1000px;
 }
 .recipe-hero {
     margin: 0 auto;
