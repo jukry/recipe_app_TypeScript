@@ -21,7 +21,8 @@ const corsOptions = {
             ? [
                   "https://recipe-app-five-drab.vercel.app",
                   "https://recipe-powutmvwi-jukry.vercel.app",
-                  "https://recipe-app-git-main-jukry.vercel.app/",
+                  "https://recipe-app-git-main-jukry.vercel.app",
+                  "https://recipe-app-git-development-jukry.vercel.app",
               ]
             : true,
     credentials: true,
