@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import "./Styles/recipeDetails.css"
 import { useQuery } from "@tanstack/react-query"
 import fetchRecipeById from "../Hooks/fetchRecipeById.js"
+import BackButton from "./BackButton"
 
 export default function RecipeDetails() {
     const params = useParams()
@@ -11,6 +12,7 @@ export default function RecipeDetails() {
 
     return data !== undefined ? (
         <section className="recipe-wrapper">
+            <BackButton />
             <div className="recipe-hero">
                 <img src={`../${data.images}`} alt="Kuva tulossa" />
                 <h1>{data.name}</h1>
