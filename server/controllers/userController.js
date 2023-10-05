@@ -44,7 +44,7 @@ const authenticateUser = async (req, res) => {
         return res
             .cookie("token", generatedToken, {
                 expires: new Date(Date.now() + 600000),
-                //secure: false, in production, use true
+                secure: true,
                 httpOnly: true,
             })
             .status(200)

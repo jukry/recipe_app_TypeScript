@@ -40,14 +40,12 @@ const login = async (req, res) => {
     return res
         .cookie("token", refreshToken, {
             maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
-            //secure: false, in production, use true
             httpOnly: true,
             sameSite: "none",
             secure: true,
         })
         .cookie("acc", accessToken, {
             maxAge: 60 * 10000, // 10 minutes
-            //secure: false, in production, use true
             httpOnly: true,
             sameSite: "none",
             secure: true,
@@ -69,8 +67,9 @@ const refresh = async (req, res) => {
         return res
             .cookie("acc", accessToken, {
                 maxAge: 60 * 10000, // 10 minutes
-                //secure: false, in production, use true
+                secure: true,
                 httpOnly: true,
+                sameSite: "none",
             })
             .json({ accessToken })
     } catch (err) {
@@ -81,8 +80,8 @@ const refresh = async (req, res) => {
 const logout = async (req, res) => {
     const cookies = req.cookies
     if (!cookies.token) return res.sendStatus(204)
-    res.clearCookie("token", { httpOnly: true })
-    res.clearCookie("acc", { httpOnly: true })
+    res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "none" })
+    res.clearCookie("acc", { httpOnly: true, secure: true, sameSite: "none" })
     res.json({ Message: "Cookie cleared" })
 }
 

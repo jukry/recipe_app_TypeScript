@@ -29,7 +29,7 @@ const protect = async (req, res, next) => {
                 .split("; ")[0] || ""
         res.cookie("acc", acc, {
             maxAge: 60 * 10000, // 10 minutes
-            //secure: false, in production, use true
+            secure: true,
             httpOnly: true,
         })
     }
