@@ -141,7 +141,7 @@ header > a,
     margin-right: 0.2em;
 }
 .recipe-info > * {
-    font-size: clamp(10px, 20px);
+    font-size: clamp(1.25em, 1vw, 2em);
 }
 
 .fav-heart {
