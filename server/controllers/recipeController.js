@@ -60,9 +60,22 @@ const createRecipe = async (req, res) => {
                 ingredients.push({ amount: value })
             } else if (key.includes("ingredient") && value !== "") {
                 const id = Number(key.split("ingredient")[1]) - 1
-                Object.assign(ingredients[id], {
-                    ingredient: value,
-                })
+
+                try {
+                    if (!ingredients[id]) {
+                        ingredients.push({
+                            amount: " ",
+                            ingredient: value,
+                        })
+                    } else {
+                        Object.assign(ingredients[id], {
+                            ingredient: value,
+                        })
+                    }
+                } catch (err) {
+                    console.log(err)
+                    return res.status(200).json(err)
+                }
             } else if (key.includes("step") && value !== "") {
                 instructions.push(value)
             }
