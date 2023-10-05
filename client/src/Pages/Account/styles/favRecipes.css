@@ -1,9 +1,5 @@
 @import "../../../constants.css";
 
-.favrecipes-container {
-    max-width: 25em;
-    align-self: center;
-}
 .favrecipes-container .fooditem-container {
     background-color: var(--clr-accent-neutral);
     border-radius: 10px;
@@ -22,7 +18,7 @@
 .favrecipes-container .img-container > img {
     min-width: 150px;
     min-height: 150px;
-    max-height: 100%;
+    max-height: 150px;
     max-width: 100%;
     border-radius: 10px 0 0 10px;
     object-fit: cover;
