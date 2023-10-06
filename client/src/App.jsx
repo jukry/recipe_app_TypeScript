@@ -37,6 +37,8 @@ import RecipeDetailsEdit, {
 import UserSettings, {
     action as userSettingsAction,
 } from "./Pages/Account/UserSettings"
+import Forbidden from "./Components/Forbidden"
+import NotFound from "./Components/NotFound"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -102,6 +104,8 @@ function App() {
                     element={<Register />}
                     action={registerAction}
                 />
+                <Route path="forbidden" element={<Forbidden />} />
+                <Route path="notfound" element={<NotFound />} />
             </Route>
         )
     )
