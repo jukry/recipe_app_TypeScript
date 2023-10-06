@@ -4,7 +4,6 @@ import "./Styles/backButton.css"
 
 export default function BackButton(props) {
     const location = useLocation()
-    console.log(location.state)
     return (
         <Link
             to={
@@ -18,15 +17,16 @@ export default function BackButton(props) {
             relative="route"
             className="back-button"
         >
-            Takaisin
-            {location?.state?.referrer === undefined
-                ? " hakuun"
-                : location?.state?.referrer === "/"
-                ? " hakuun"
+            Takaisin{" "}
+            {props?.text
+                ? props.text
+                : location?.state?.referrer === undefined ||
+                  location?.state?.referrer === "/"
+                ? "hakuun"
                 : location?.state?.referrer === "/account/myrecipes"
-                ? " omiin resepteihin"
+                ? "omiin resepteihin"
                 : location?.state?.referrer === "/account/favoriterecipes"
-                ? " lempiresepteihin"
+                ? "lempiresepteihin"
                 : ""}
         </Link>
     )
