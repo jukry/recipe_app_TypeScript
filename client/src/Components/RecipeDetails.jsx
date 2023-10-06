@@ -9,8 +9,7 @@ export default function RecipeDetails() {
     const queryResponse = useQuery(["recipe", params.id], fetchRecipeById)
     const data = queryResponse?.data?.message ?? []
     document.title = data.name
-
-    return data !== undefined ? (
+    return data !== undefined || data !== null ? (
         <section className="recipe-wrapper">
             <BackButton />
             <div className="recipe-hero">
@@ -41,6 +40,6 @@ export default function RecipeDetails() {
             </div>
         </section>
     ) : (
-        <h3>Ei mtn</h3>
+        location.replace("/notfound")
     )
 }
