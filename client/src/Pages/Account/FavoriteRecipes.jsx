@@ -18,17 +18,12 @@ export async function loader({ request }) {
 
 export default function FavoriteRecipes() {
     document.title = "Suosikkireseptisi"
-    const loaderData = useLoaderData()
     const queryResponse = useQuery(["recipes"], fetchRecipes)
     const favRecipes = queryResponse?.data?.message ?? []
     const context = useContext(UserContext)
-    const loaderFavRecipes = loaderData.favrecipes
     function favRecipesMap() {
-        return favRecipes.map((item) => {
-            if (
-                loaderFavRecipes?.includes(item.id) &&
-                context.user.favrecipes.includes(item.id)
-            ) {
+        return favRecipes?.map((item) => {
+            if (context.user.favrecipes.includes(item.id)) {
                 return <Fooditem props={[item]} key={item.id} />
             }
         })

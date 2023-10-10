@@ -29,14 +29,12 @@ export default function AccountDashboard() {
                 ""
             )}
             <p id="recipesamount">
-                Sinulla on {loaderData.recipes.length}
-                {loaderData.recipes.length === 1
-                    ? " oma resepti"
-                    : " omaa reseptiä"}
+                Sinulla on {user.recipes.length}
+                {user.recipes.length === 1 ? " oma resepti" : " omaa reseptiä"}
             </p>
             <p id="favrecipeamount">
-                Sinulla on {loaderData.favrecipes.length}
-                {loaderData.favrecipes.length === 1
+                Sinulla on {user.favrecipes.length}
+                {user.favrecipes.length === 1
                     ? " suosikkiresepti"
                     : " suosikkireseptiä"}
             </p>
