@@ -7,7 +7,7 @@ export default function Navbar(props) {
     const showNav = props.props[0]
     const showNavBar = props.props[1]
     return (
-        <header className={!showNavBar ? "header-hidden" : ""}>
+        <header className={!showNavBar ? "header-hidden" : "header-show"}>
             <Link className="logo-container" to="/">
                 <h1 className="logo">
                     My <span>Recipes</span>
