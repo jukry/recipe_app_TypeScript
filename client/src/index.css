@@ -236,7 +236,6 @@ footer {
     }
     .header-hidden {
         top: -20%;
-        position: fixed;
         transition: ease-in 0.2s top;
         width: 100%;
     }
