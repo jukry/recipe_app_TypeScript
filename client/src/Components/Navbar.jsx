@@ -1,13 +1,13 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { NavLink, Link } from "react-router-dom"
 import { UserContext } from "../Context/UserContext"
 
 export default function Navbar(props) {
     const { isLoggedIn, setIsLoggedIn } = useContext(UserContext)
-    const showNav = props.props
-
+    const showNav = props.props[0]
+    const showNavBar = props.props[1]
     return (
-        <header>
+        <header className={!showNavBar ? "header-hidden" : ""}>
             <Link className="logo-container" to="/">
                 <h1 className="logo">
                     My <span>Recipes</span>
