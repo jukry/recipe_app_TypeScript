@@ -11,7 +11,9 @@ const protect = async (req, res, next) => {
     //set if access token has expired
     if (token && !acc) {
         const response = await fetch(
-            "https://recipe-app-api-kkr7.onrender.com/auth/refresh",
+            process.env.NODE_ENV === "production"
+                ? "https://recipe-app-api-kkr7.onrender.com/auth/refresh"
+                : "http://localhost:5000/auth/refresh",
             {
                 method: "GET",
                 mode: "cors",
