@@ -10,7 +10,7 @@
     margin-top: 1em;
 }
 #delete-user-button {
-    background-color: red;
+    background-color: var(--clr-accent-danger);
     margin-top: 1em;
     padding: 1em;
     font-size: 1.25em;
