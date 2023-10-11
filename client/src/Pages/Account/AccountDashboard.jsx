@@ -1,19 +1,8 @@
 import React, { useContext } from "react"
 import "./styles/account.css"
-import { redirect, useLoaderData } from "react-router-dom"
 import { UserContext } from "../../Context/UserContext"
-import { getUserData } from "../../utils/utils"
-
-export async function loader({ request }) {
-    const res = await getUserData({ request })
-    if (!res) {
-        return redirect("/login")
-    }
-    return res
-}
 
 export default function AccountDashboard() {
-    const loaderData = useLoaderData()
     const { user } = useContext(UserContext)
     document.title = "Omat tiedot"
 
