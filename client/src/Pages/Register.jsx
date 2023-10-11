@@ -1,6 +1,13 @@
-import React from "react"
-import { Form, redirect, useActionData, useNavigation } from "react-router-dom"
+import React, { useContext } from "react"
+import {
+    Form,
+    Navigate,
+    redirect,
+    useActionData,
+    useNavigation,
+} from "react-router-dom"
 import "./styles/Register.css"
+import { UserContext } from "../Context/UserContext"
 
 export async function action({ request }) {
     const formData = await request.formData()
@@ -60,6 +67,10 @@ export async function action({ request }) {
 export default function Register() {
     const navigation = useNavigation()
     const action = useActionData()
+    const { user } = useContext(UserContext)
+    if (user.id) {
+        return <Navigate to="/account" />
+    }
     return (
         <section id="register-container">
             <h2>Rekisteröidy</h2>
