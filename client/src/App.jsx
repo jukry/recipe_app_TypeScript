@@ -8,25 +8,15 @@ import {
     RouterProvider,
 } from "react-router-dom"
 import RecipeDetails from "./Components/RecipeDetails"
-import Login, {
-    action as loginAction,
-    loader as loginLoader,
-} from "./Pages/Login"
-import AccountDashboard, {
-    loader as dashboardLoader,
-} from "./Pages/Account/AccountDashboard"
-import AccountLayout, {
-    loader as layoutLoader,
-} from "./Pages/Account/AccountLayout"
+import Login, { action as loginAction } from "./Pages/Login"
+import AccountDashboard from "./Pages/Account/AccountDashboard"
+import AccountLayout from "./Pages/Account/AccountLayout"
 import FavoriteRecipes, {
     loader as favrecipesLoader,
 } from "./Pages/Account/FavoriteRecipes"
-import UserRecipes, {
-    loader as userRecipesLoader,
-} from "./Pages/Account/UserRecipes"
+import UserRecipes from "./Pages/Account/UserRecipes"
 import AddNewRecipe, {
     action as addNewRecipeAction,
-    loader as addNewRecipeLoader,
 } from "./Pages/Account/AddNewRecipe"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import Register, { action as registerAction } from "./Pages/Register"
@@ -39,6 +29,7 @@ import UserSettings, {
 } from "./Pages/Account/UserSettings"
 import Forbidden from "./Components/Forbidden"
 import NotFound from "./Components/NotFound"
+import ProtectedRoutes from "./Components/ProtectedRoutes"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -61,44 +52,28 @@ function App() {
                     loader={recipeDetailsEditLoader}
                     action={recipeDetailsEditAction}
                 ></Route>
-                <Route
-                    path="account"
-                    element={<AccountLayout />}
-                    loader={layoutLoader}
-                >
-                    <Route
-                        index
-                        loader={dashboardLoader}
-                        element={<AccountDashboard />}
-                    />
-                    <Route
-                        path="favoriterecipes"
-                        loader={favrecipesLoader}
-                        element={<FavoriteRecipes />}
-                    />
-                    <Route
-                        path="myrecipes"
-                        element={<UserRecipes />}
-                        loader={userRecipesLoader}
-                    />
-                    <Route
-                        path="addnewrecipe"
-                        element={<AddNewRecipe />}
-                        action={addNewRecipeAction}
-                        loader={addNewRecipeLoader}
-                    />
-                    <Route
-                        path="usersettings"
-                        element={<UserSettings />}
-                        action={userSettingsAction}
-                    />
+                <Route element={<ProtectedRoutes />}>
+                    <Route path="account" element={<AccountLayout />}>
+                        <Route index element={<AccountDashboard />} />
+                        <Route
+                            path="favoriterecipes"
+                            loader={favrecipesLoader}
+                            element={<FavoriteRecipes />}
+                        />
+                        <Route path="myrecipes" element={<UserRecipes />} />
+                        <Route
+                            path="addnewrecipe"
+                            element={<AddNewRecipe />}
+                            action={addNewRecipeAction}
+                        />
+                        <Route
+                            path="usersettings"
+                            element={<UserSettings />}
+                            action={userSettingsAction}
+                        />
+                    </Route>
                 </Route>
-                <Route
-                    path="login"
-                    element={<Login />}
-                    action={loginAction}
-                    loader={loginLoader}
-                />
+                <Route path="login" element={<Login />} action={loginAction} />
                 <Route
                     path="register"
                     element={<Register />}
