@@ -1,29 +1,13 @@
-import React, { useContext } from "react"
-import { NavLink, Navigate, Outlet, redirect } from "react-router-dom"
-import { UserContext } from "../../Context/UserContext"
-import { getUserData } from "../../utils/utils"
-
-export async function loader({ request }) {
-    const res = await getUserData({ request })
-    if (!res.id) {
-        return redirect("/login")
-    }
-    return null
-}
+import React from "react"
+import { NavLink, Outlet } from "react-router-dom"
 
 export default function AccountLayout() {
-    const { user } = useContext(UserContext)
-
     const activeStyle = {
         fontWeight: "bold",
         textDecoration: "underline",
         color: "hsl(35, 69%, 88%)",
     }
-    return !user.id ? (
-        <section className="account-container">
-            <h3 className="account-loading">Haetaan tietoja...</h3>
-        </section>
-    ) : (
+    return (
         <section className="account-container">
             <nav className="account-nav">
                 <NavLink
