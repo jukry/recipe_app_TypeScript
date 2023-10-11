@@ -1,16 +1,13 @@
-import React from "react"
+import React, { useContext } from "react"
 import "./styles/Login.css"
 import {
     Form,
     redirect,
     useNavigation,
-    useLoaderData,
     useActionData,
+    Navigate,
 } from "react-router-dom"
-
-export function loader({ request }) {
-    return new URL(request.url).searchParams.get("message")
-}
+import { UserContext } from "../Context/UserContext"
 
 export async function action({ request }) {
     const formData = await request.formData()
@@ -47,12 +44,14 @@ export async function action({ request }) {
 
 export default function Login() {
     const navigation = useNavigation()
-    const message = useLoaderData()
     const action = useActionData()
-
+    const { user } = useContext(UserContext)
+    if (user.id) {
+        return <Navigate to="/account" />
+    }
     return (
         <div className="login-container">
-            <h2>{message ? "Kirjaudu ensin sisään" : "Kirjaudu sisään"}</h2>
+            <h2>Kirjaudu sisään</h2>
             {action && (
                 <h3 className="check-login-input">
                     {action === 400
