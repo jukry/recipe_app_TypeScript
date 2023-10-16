@@ -5,7 +5,6 @@ export default function AccountLayout() {
     const activeStyle = {
         fontWeight: "bold",
         textDecoration: "underline",
-        color: "hsl(35, 69%, 88%)",
     }
     return (
         <section className="account-container">
