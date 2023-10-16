@@ -135,6 +135,20 @@ header > a,
 .results .fooditem-container > .food-item:hover {
     transform: scale(1.02);
 }
+#load-more-button {
+    padding: 1em;
+    font-size: 1.25em;
+    background-color: var(--clr-accent-neutral);
+    border: none;
+    color: var(--clr-text);
+    align-self: center;
+    grid-column: 1/-1;
+    transition: 0.2s;
+    border-radius: 5px;
+}
+#load-more-button:hover {
+    scale: 1.01;
+}
 .recipe-info {
     padding: 0.75em 1em;
     position: relative;
