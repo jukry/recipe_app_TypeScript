@@ -153,6 +153,16 @@ const updateRecipe = async (req, res) => {
     const userId = req.user.id
     const recipe = await Recipe.findById(id)
 
+    if (!recipe) {
+        return res.status(404).json({ Message: `No recipe with id ${id}` })
+    }
+
+    if (userId !== recipe.user.toString()) {
+        return res.status(400).json({ Message: "Not authorized" })
+    }
+
+    //array for holding used ingredient indexes
+    const arrOfIndexes = []
     function iterateRecipe() {
         if (updated.name !== recipe.name && updated.name !== "") {
             recipe.name = updated.name
@@ -163,30 +173,106 @@ const updateRecipe = async (req, res) => {
         ) {
             recipe.description = updated.description
         }
+        //create object from amount + ingredient
         for (const [key, value] of Object.entries(updated)) {
-            if (key.includes("amount") && value !== "") {
-                const id = Number(key.split("amount")[1]) - 1
-                Object.assign(recipe.ingredients[id], { amount: value })
-            } else if (key.includes("ingredient") && value !== "") {
-                const id = Number(key.split("ingredient")[1]) - 1
-                Object.assign(recipe.ingredients[id], {
-                    ingredient: value,
-                })
-            } else if (key.includes("step") && value !== "") {
-                const id = Number(key.split("step")[1]) - 1
-                recipe.instructions[id] = value
+            if (key.includes("amount")) {
+                const ingredientId = Number(key.split("amount")[1]) - 1
+                if (
+                    value !== "" &&
+                    recipe?.ingredients[ingredientId]?.amount &&
+                    recipe?.ingredients[ingredientId]?.ingredient
+                ) {
+                    //if amount is changed on an existing object
+                    Object.assign(recipe.ingredients[ingredientId], {
+                        amount: value,
+                    })
+                } else if (value !== "" && recipe.ingredients[ingredientId]) {
+                    //if amount is changed of existing object and ingredient is empty
+                    Object.assign(recipe.ingredients[ingredientId], {
+                        amount: value,
+                    })
+                } else if (value !== "") {
+                    //if amount is given and it is a new ingredient line
+                    recipe.ingredients.push({
+                        amount: value,
+                        ingredient: "",
+                    })
+                } else if (value === "" && !recipe.ingredients[ingredientId]) {
+                    //if amount is missing and is new line
+                    recipe.ingredients.push({
+                        amount: "",
+                    })
+                } else {
+                    //do nothing
+                }
+                arrOfIndexes.push(ingredientId)
+            } else if (key.includes("ingredient")) {
+                const ingredientId = Number(key.split("ingredient")[1]) - 1
+                if (
+                    value === "" &&
+                    recipe?.ingredients[ingredientId]?.ingredient
+                ) {
+                    //if ingredient is empty and ingredient already exists
+                } else
+                    try {
+                        if (value !== "" && recipe.ingredients[ingredientId]) {
+                            //if ingredient value is given and it already exists
+                            Object.assign(recipe.ingredients[ingredientId], {
+                                ...recipe.ingredients[ingredientId],
+                                ingredient: value,
+                            })
+                        } else {
+                            //if ingredient, assign it to corresponding amount
+                            Object.assign(recipe.ingredients[ingredientId], {
+                                ingredient: value,
+                            })
+                        }
+                    } catch (err) {
+                        console.log(err)
+                        return res.status(200).json(err)
+                    }
             }
         }
     }
+
+    //create array from step indexes
+    const stepIndexes = []
+    const newSteps = Object.entries(updated)
+        .filter((item) => {
+            if (item[0].includes("step")) {
+                stepIndexes.push(Number(item[0].split("step")[1]) - 1)
+            }
+            return item[0].includes("step")
+        })
+        .map((item) => {
+            return item[1]
+        })
+    const currentSteps = recipe.instructions
+
     iterateRecipe()
-    if (!recipe) {
-        return res.status(404).json({ Message: `No recipe with id ${id}` })
-    }
+    const updatedStepsArr = []
+    stepIndexes.map((index) => {
+        if (newSteps[index] === undefined) {
+            updatedStepsArr.push(currentSteps[index])
+        } else if (newSteps[index] === "" && !currentSteps[index]) {
+            updatedStepsArr.push(newSteps[index])
+        } else if (newSteps[index] === "" && currentSteps[index]) {
+            updatedStepsArr.push(currentSteps[index])
+        } else {
+            updatedStepsArr.push(newSteps[index])
+        }
+    })
 
-    if (userId !== recipe.user.toString()) {
-        return res.status(400).json({ Message: "Not authorized" })
-    }
-
+    recipe.ingredients = arrOfIndexes
+        .map((index) => {
+            return recipe.ingredients[index]
+        })
+        .filter((item) => {
+            if (item.amount !== "" || item.ingredient !== "") return item
+        })
+    recipe.instructions = updatedStepsArr.filter((item) => {
+        return item !== ""
+    })
     try {
         await Recipe.findByIdAndUpdate(recipe._id, {
             $set: {
