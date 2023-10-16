@@ -152,6 +152,9 @@ const updateRecipe = async (req, res) => {
     const updated = req.body.formData
     const userId = req.user.id
     const recipe = await Recipe.findById(id)
+    console.log("updated", updated)
+    console.log("userId", userId)
+    console.log("recipe", recipe)
 
     if (!recipe) {
         return res.status(404).json({ Message: `No recipe with id ${id}` })
