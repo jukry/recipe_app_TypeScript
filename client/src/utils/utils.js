@@ -81,13 +81,139 @@ export function addRow(e) {
         newStepField.setAttribute("class", "new-recipe-step")
         newStepField.setAttribute("type", "text")
         newStepField.setAttribute("placeholder", "Kirjoita vaihe")
-        newStepField.setAttribute("id", `step-${stepListLength + 1}`)
+        newStepField.setAttribute("id", `step${stepListLength + 1}`)
         newStepField.setAttribute("name", `step${stepListLength + 1}`)
 
         stepList.append(newStepField)
-    }
+    } else if (button === "button-add-step-edit") {
+        const stepList = document.getElementById("instructions-edit")
+        const stepListLength =
+            stepList.getElementsByClassName("recipe-step-edit").length
+        const stepListIndex =
+            Number(
+                stepList.lastChild.className
+                    .split("recipe-step-container-")[1]
+                    .split(" ")[0]
+            ) + 1
+        if (stepListLength >= 50) {
+            return null //viesti ettei enempää rivejä voi lisätä
+        }
+        const newStepField = document.createElement("input")
+        newStepField.setAttribute("class", "recipe-step-edit")
+        newStepField.setAttribute("type", "text")
+        newStepField.setAttribute("placeholder", "Kirjoita vaihe")
+        newStepField.setAttribute("id", `step${stepListIndex}`)
+        newStepField.setAttribute("name", `step${stepListIndex}`)
 
-    return null
+        const newStepFieldContainer = document.createElement("section")
+        newStepFieldContainer.setAttribute(
+            "class",
+            `recipe-step-container-${stepListIndex} recipe-step-container`
+        )
+
+        const deleteRowButton = document.createElement("button")
+        deleteRowButton.setAttribute(
+            "class",
+            `delete-button-${stepListIndex} delete-step-button`
+        )
+        deleteRowButton.setAttribute(
+            "id",
+            `delete-step-button-${stepListIndex}`
+        )
+        deleteRowButton.setAttribute("type", "button")
+        deleteRowButton.innerHTML = "-"
+        deleteRowButton.addEventListener("click", deleteStepRow)
+        stepList.append(newStepFieldContainer)
+        newStepFieldContainer.append(newStepField)
+        newStepFieldContainer.append(deleteRowButton)
+    } else if (button === "button-add-ingredient-edit") {
+        const ingredientList = document.getElementById("ingredients-edit")
+        console.log(ingredientList)
+        const ingredientListLength =
+            ingredientList.getElementsByClassName("ingr-line-edit").length
+        const ingredientListIndex =
+            Number(
+                ingredientList.lastChild.className
+                    .split("ingr-line-edit-")[1]
+                    .split(" ")[0]
+            ) + 1
+        console.log(ingredientListLength)
+        if (ingredientListLength >= 50) {
+            return null //viesti ettei enempää rivejä voi lisätä
+        }
+        const newSection = document.createElement("div")
+        newSection.setAttribute(
+            "class",
+            `ingr-line-edit-${ingredientListIndex} ingr-line-edit`
+        )
+        newSection.setAttribute(
+            "id",
+            `ingr-line-container-${ingredientListIndex}`
+        )
+        ingredientList.append(newSection)
+
+        const newAmountField = document.createElement("input")
+        newAmountField.setAttribute("class", "ingr-amount-edit")
+        newAmountField.setAttribute("type", "text")
+        newAmountField.setAttribute(
+            "placeholder",
+            "Anna ainesosan määrä (esim. 200g)"
+        )
+        newAmountField.setAttribute("id", `amount-${ingredientListIndex}`)
+        newAmountField.setAttribute("name", `amount${ingredientListIndex}`)
+
+        const newIngredientField = document.createElement("input")
+        newIngredientField.setAttribute("class", "ingr-edit")
+        newIngredientField.setAttribute("type", "text")
+        newIngredientField.setAttribute("placeholder", "Anna ainesosa")
+        newIngredientField.setAttribute(
+            "id",
+            `ingredient-${ingredientListIndex}`
+        )
+        newIngredientField.setAttribute(
+            "name",
+            `ingredient${ingredientListIndex}`
+        )
+
+        newSection.append(newAmountField, newIngredientField)
+    }
+}
+export function deleteStepRow(e) {
+    const id = e.target.className.split("delete-button-")[1].split(" ")[0]
+    const allInputs = document
+        .getElementById("instructions-edit")
+        .querySelectorAll("input")
+    for (const [_, entry] of allInputs.entries()) {
+        const entryId = entry.name.split("step")[1]
+        if (entryId > id && entry.value) {
+            entry.setAttribute("name", `step${entryId - 1}`)
+            entry.setAttribute("id", `step${entryId - 1}`)
+            entry.parentElement.setAttribute(
+                "class",
+                `recipe-step-container-${entryId - 1} recipe-step-container`
+            )
+            console.log(id)
+            const deleteButton = document.getElementById(
+                `delete-step-button-${entryId}`
+            )
+
+            deleteButton.setAttribute("id", `delete-step-button-${entryId - 1}`)
+            deleteButton.setAttribute(
+                "class",
+                `delete-button-${entryId - 1} delete-step-button`
+            )
+        }
+    }
+    const recipeStep = document.getElementById(`step${id}`)
+    const elementId = e.target.parentElement.parentElement.id
+    const stepList = document.getElementById(elementId)
+
+    recipeStep.parentElement.remove()
+}
+export function deleteIngredientRow(e) {
+    const elementId = e.target.parentElement.id
+    const parentElement = document.getElementById(elementId)
+    parentElement.remove()
 }
 
 export async function handleFavorite(data) {
