@@ -2,7 +2,12 @@ import { Form, redirect, useNavigation, useParams } from "react-router-dom"
 import "./Styles/recipeDetailsEdit.css"
 import { useQuery } from "@tanstack/react-query"
 import fetchRecipeById from "../Hooks/fetchRecipeById.js"
-import { getUserData } from "../utils/utils"
+import {
+    addRow,
+    deleteIngredientRow,
+    deleteStepRow,
+    getUserData,
+} from "../utils/utils"
 
 export async function action({ request }) {
     const id = request.url.split("edit/")[1]
@@ -66,37 +71,95 @@ export default function RecipeDetailsEdit() {
                 ></input>
             </div>
             <div className="recipe-data-edit">
-                <div className="instructions-edit">
+                <div id="instructions-edit">
                     <h3>Valmistusohje</h3>
-
+                    <button
+                        type="button"
+                        id="button-add-step-edit"
+                        onClick={addRow}
+                    >
+                        Lisää vaihe
+                    </button>
                     {data?.instructions?.map((item, i) => {
                         return (
-                            <input
-                                name={`step${i + 1}`}
-                                placeholder={`Vaihe ${i + 1}: ${item}`}
+                            <section
+                                className={`recipe-step-container-${
+                                    i + 1
+                                } recipe-step-container`}
                                 key={i}
-                            ></input>
+                            >
+                                <input
+                                    name={`step${i + 1}`}
+                                    placeholder={`Vaihe ${i + 1}: ${item}`}
+                                    className="recipe-step-edit"
+                                    id={`step${i + 1}`}
+                                    type="text"
+                                ></input>
+                                {i >= 1 ? (
+                                    <button
+                                        className={`delete-button-${
+                                            i + 1
+                                        } delete-step-button`}
+                                        type="button"
+                                        onClick={deleteStepRow}
+                                        id={`delete-step-button-${i + 1}`}
+                                    >
+                                        -
+                                    </button>
+                                ) : (
+                                    ""
+                                )}
+                            </section>
                         )
                     })}
                 </div>
-                <div className="ingredients-edit">
+                <div id="ingredients-edit">
                     <h3>Ainesosat</h3>
+                    <button
+                        type="button"
+                        id="button-add-ingredient-edit"
+                        onClick={addRow}
+                    >
+                        Lisää ainesosa
+                    </button>
                     {data?.ingredients?.map((item, i) => {
                         return (
-                            <div className="ingr-line-edit" key={i}>
+                            <div
+                                className={`ingr-line-edit-${
+                                    i + 1
+                                } ingr-line-edit`}
+                                key={i}
+                                id={`ingr-line-container-${i + 1}`}
+                            >
                                 <input
                                     name={`amount${i + 1}`}
                                     placeholder={`Aineosa ${i + 1} määrä: ${
                                         item.amount
                                     }`}
                                     className="ingr-amount-edit"
+                                    id={`amount${i + 1}`}
                                 ></input>
                                 <input
                                     name={`ingredient${i + 1}`}
                                     placeholder={`Aineosa ${i + 1}: ${
                                         item.ingredient
                                     }`}
+                                    className="ingr-edit"
+                                    id={`ingredient${i + 1}`}
                                 ></input>
+                                {i >= 1 ? (
+                                    <button
+                                        className={`delete-ingredient-button-${
+                                            i + 1
+                                        } delete-ingredient-button`}
+                                        type="button"
+                                        onClick={deleteIngredientRow}
+                                    >
+                                        -
+                                    </button>
+                                ) : (
+                                    ""
+                                )}
                             </div>
                         )
                     })}
