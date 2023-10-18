@@ -11,7 +11,8 @@ function CommentForm(props) {
         content: "",
         username: "",
     })
-    const handleSubmit = props.props
+    const handleSubmit = props.props.mutate
+    const mutation = props.props
     const handleCommentChange = (e) => {
         setComment((prev) => ({
             ...prev,
@@ -77,6 +78,14 @@ function CommentForm(props) {
                 <button type="submit" id="comment-submit-button">
                     Lisää kommentti
                 </button>
+                {!mutation.isError ? (
+                    <p id="comment-post-error">
+                        Voit lähettää maksimissaan 2 kommenttia 10 minuutin
+                        sisällä
+                    </p>
+                ) : (
+                    ""
+                )}
             </form>
         </section>
     )
