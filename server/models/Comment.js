@@ -12,6 +12,10 @@ const comment = new Schema(
             ref: "Recipe",
             required: true,
         },
+        username: {
+            type: String,
+            required: true,
+        },
         content: {
             type: String,
             required: true,
@@ -27,4 +31,4 @@ const comment = new Schema(
 )
 
 const Comment = model("comment", comment)
-export default comment
+export default Comment
