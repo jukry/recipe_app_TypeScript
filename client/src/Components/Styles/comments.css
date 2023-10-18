@@ -1,0 +1,84 @@
+@import "../../constants.css";
+
+#comment-section-container {
+    margin: 1em;
+}
+#comment-section-container > h3 {
+    text-align: center;
+    font-size: 1.5em;
+}
+.comment-user,
+.comment-content {
+    font-size: clamp(1em, 1.75vw, 1.25em);
+}
+#comments-container {
+    box-shadow: 0 0 0 0 black;
+    margin-bottom: 1em;
+}
+.comment-container {
+    margin-bottom: 0.5em;
+    display: flex;
+    flex-direction: column;
+}
+.comment-user {
+    font-weight: 700;
+}
+.comment-content {
+    border-bottom: 1px solid var(--clr-accent-neutral);
+    padding-bottom: 0.25em;
+}
+.comment-poster-container {
+    display: flex;
+    align-items: center;
+}
+.comment-date {
+    font-size: 0.8em;
+}
+.comment-separator {
+    padding: 0 0.5em;
+}
+#no-comments-text {
+    font-size: 1.25em;
+    text-align: center;
+    margin-top: 1em;
+}
+#comment-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#comment-nav-container {
+    display: flex;
+    padding: 0.1em 2em;
+    background-color: var(--clr-accent-neutral);
+    border-radius: 5px;
+    position: relative;
+    align-items: center;
+    box-shadow: 0px 0px 10px 2px #2425268a;
+    font-size: 1.25em;
+    font-weight: 700;
+}
+#comment-nav-container button {
+    background-color: transparent;
+    border: none;
+    color: var(--clr-text);
+    font-family: monospace;
+    padding-bottom: 0.4em;
+}
+#comment-nav-container p {
+    padding: 0.3em 1.5em;
+    border-right: 1px solid var(--clr-accent);
+    border-left: 1px solid var(--clr-accent);
+}
+#comment-nav-back {
+    position: absolute;
+    left: 0;
+    padding: 0.25em;
+    font-size: 2em;
+}
+#comment-nav-forward {
+    right: 0;
+    position: absolute;
+    padding: 0.25em;
+    font-size: 2em;
+}
