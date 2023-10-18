@@ -25,7 +25,7 @@ const postComment = async (req, res) => {
                 comments: newComment._id,
             },
         }).exec()
-        return res.status(201).json({ newComment })
+        return res.sendStatus(201)
     } catch (err) {
         console.log(err)
         return res.status(400).json(err)
