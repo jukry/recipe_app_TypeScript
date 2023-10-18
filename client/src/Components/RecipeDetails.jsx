@@ -3,6 +3,7 @@ import "./Styles/recipeDetails.css"
 import { useQuery } from "@tanstack/react-query"
 import fetchRecipeById from "../Hooks/fetchRecipeById.js"
 import BackButton from "./BackButton"
+import RecipeComments from "./RecipeComments"
 
 export default function RecipeDetails() {
     const params = useParams()
@@ -38,6 +39,7 @@ export default function RecipeDetails() {
                     })}
                 </div>
             </div>
+            <RecipeComments />
         </section>
     ) : (
         location.replace("/notfound")
