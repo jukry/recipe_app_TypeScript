@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 1em;
 }
 #comment-form-container {
     position: relative;
@@ -15,7 +16,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 1em;
 }
 #comment-box {
     margin: 0 auto;
@@ -43,4 +43,14 @@
     top: -1.5em;
     right: 0;
     margin-right: 1em;
+}
+#comment-username {
+    width: 100%;
+    font-size: 1.25em;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 0.5em;
+}
+#comment-username {
+    outline: 2px solid var(--clr-accent-neutral);
 }
