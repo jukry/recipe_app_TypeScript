@@ -1,14 +1,40 @@
 import { useParams } from "react-router-dom"
 import "./Styles/recipeDetails.css"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import fetchRecipeById from "../Hooks/fetchRecipeById.js"
 import BackButton from "./BackButton"
 import RecipeComments from "./RecipeComments"
+import fetchRecipeComments from "../Hooks/fetchRecipeComments"
+import { postComment } from "../utils/utils"
 
 export default function RecipeDetails() {
     const params = useParams()
     const queryResponse = useQuery(["recipe", params.id], fetchRecipeById)
     const data = queryResponse?.data?.message ?? []
+    const queryResponseComments = useQuery(
+        ["comments", params.id],
+        fetchRecipeComments
+    )
+
+    const mutation = useMutation({
+        mutationFn: async ([_, comment, id, userId, setComment]) => {
+            const res = await postComment(comment, id, userId)
+            return [res, setComment]
+        },
+        onSuccess: async ([res, setComment]) => {
+            const commentBox = document.getElementById("comment-box")
+            const usernameBox = document.getElementById("comment-username")
+            commentBox.value = ""
+            usernameBox.value = ""
+            setComment({
+                content: "",
+                username: "",
+            })
+            queryResponseComments.refetch()
+        },
+    })
+
+    const comments = queryResponseComments?.data ?? []
     document.title = data.name
     return data !== undefined || data !== null ? (
         <section className="recipe-wrapper">
@@ -39,7 +65,7 @@ export default function RecipeDetails() {
                     })}
                 </div>
             </div>
-            <RecipeComments />
+            <RecipeComments props={[comments, mutation.mutate]} />
         </section>
     ) : (
         location.replace("/notfound")
