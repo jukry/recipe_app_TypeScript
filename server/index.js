@@ -3,6 +3,7 @@ import bp from "body-parser"
 import recipesRouter from "./routes/recipes.js"
 import userRouter from "./routes/user.js"
 import authRouter from "./routes/auth.js"
+import commentsRouter from "./routes/comments.js"
 import connectDB from "./config/conn.js"
 import cors from "cors"
 import cookieParser from "cookie-parser"
@@ -43,6 +44,7 @@ app.get("/", (req, res) => {
 app.use("/api/recipes", recipesRouter)
 app.use("/users", userRouter)
 app.use("/auth", authRouter)
+app.use("/comments", commentsRouter)
 
 // database connection
 const db = connectDB()
