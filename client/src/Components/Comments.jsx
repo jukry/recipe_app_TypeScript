@@ -55,11 +55,11 @@ export default function Comments({ comments }) {
             initialComments * currentPage
         )
         .map((comment) => {
-            let timeDelta = (Date.now() - comment.createdAt) / 1000
+            let timeDelta = (Date.now() - new Date(comment.createdAt)) / 1000
             timeDelta = timeDelta / 60
             const getCommentTime = commentTime(timeDelta)
             return (
-                <section className="comment-container" key={comment.id}>
+                <section className="comment-container" key={comment._id}>
                     <section className="comment-poster-container">
                         <p className="comment-user">{comment.username}</p>
                         <span className="comment-separator">|</span>
@@ -81,7 +81,7 @@ export default function Comments({ comments }) {
             pagesArr?.length - currentPage === 1 &&
             event?.target?.id === "comment-nav-back"
         ) {
-            ref.current?.scrollIntoView({ behavior: "smooth" })
+            ref.current?.scrollIntoView({ behavior: "instant" })
         }
     }, [currentPage])
 
