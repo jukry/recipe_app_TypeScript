@@ -1,0 +1,46 @@
+@import "../../constants.css";
+
+#comment-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#comment-form-container {
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+}
+#comment-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1em;
+}
+#comment-box {
+    margin: 0 auto;
+    width: 100%;
+    font-size: 1.25em;
+    border-radius: 5px;
+    padding: 5px;
+}
+#comment-box:focus {
+    outline: 2px solid var(--clr-accent-neutral);
+}
+#comment-submit-button {
+    background-color: var(--clr-accent-neutral);
+    color: var(--clr-text);
+    padding: 1em;
+    font-size: 1.25em;
+    border: none;
+    margin: 0.5em 0;
+    border-radius: 5px;
+}
+#comment-length-field {
+    color: var(--clr-text);
+    font-size: 1em;
+    position: absolute;
+    top: -1.5em;
+    right: 0;
+    margin-right: 1em;
+}
