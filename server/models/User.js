@@ -29,6 +29,12 @@ const user = new Schema(
                 ref: "Recipe",
             },
         ],
+        comments: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Comment",
+            },
+        ],
     },
     {
         timestamps: true,
