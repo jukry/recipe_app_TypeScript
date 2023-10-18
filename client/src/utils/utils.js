@@ -128,7 +128,6 @@ export function addRow(e) {
         newStepFieldContainer.append(deleteRowButton)
     } else if (button === "button-add-ingredient-edit") {
         const ingredientList = document.getElementById("ingredients-edit")
-        console.log(ingredientList)
         const ingredientListLength =
             ingredientList.getElementsByClassName("ingr-line-edit").length
         const ingredientListIndex =
@@ -137,7 +136,6 @@ export function addRow(e) {
                     .split("ingr-line-edit-")[1]
                     .split(" ")[0]
             ) + 1
-        console.log(ingredientListLength)
         if (ingredientListLength >= 50) {
             return null //viesti ettei enempää rivejä voi lisätä
         }
@@ -192,7 +190,6 @@ export function deleteStepRow(e) {
                 "class",
                 `recipe-step-container-${entryId - 1} recipe-step-container`
             )
-            console.log(id)
             const deleteButton = document.getElementById(
                 `delete-step-button-${entryId}`
             )
@@ -345,4 +342,24 @@ export function commentTime(timeDelta) {
         : `${Math.floor(
               timeDelta / 60 / 24 / 30 / 12 //x years ago
           )} vuotta sitten`
+}
+export async function postComment(commentData, id, userId) {
+    return await fetch(
+        process.env.NODE_ENV === "production"
+            ? `${import.meta.env.VITE_COMMENTS_ENDPOINT}`
+            : `${import.meta.env.VITE_COMMENTS_ENDPOINT_DEV}`,
+        {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                commentData,
+                id,
+                userId,
+            }),
+        }
+    )
 }
