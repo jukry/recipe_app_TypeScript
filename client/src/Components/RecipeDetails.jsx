@@ -19,6 +19,9 @@ export default function RecipeDetails() {
     const mutation = useMutation({
         mutationFn: async ([_, comment, id, userId, setComment]) => {
             const res = await postComment(comment, id, userId)
+            if (!res.ok) {
+                throw new Error(res.status)
+            }
             return [res, setComment]
         },
         onSuccess: async ([res, setComment]) => {
@@ -65,7 +68,7 @@ export default function RecipeDetails() {
                     })}
                 </div>
             </div>
-            <RecipeComments props={[comments, mutation.mutate]} />
+            <RecipeComments props={[comments, mutation]} />
         </section>
     ) : (
         location.replace("/notfound")
