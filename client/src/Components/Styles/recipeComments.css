@@ -51,7 +51,7 @@
     padding: 5px;
     margin-top: 0.5em;
 }
-#comment-username {
+#comment-username:focus {
     outline: 2px solid var(--clr-accent-neutral);
 }
 #comment-post-error {
