@@ -5,9 +5,8 @@ import Loader from "./Loader"
 
 export default function ProtectedRoutes() {
     const context = useContext(UserContext)
-    console.log(context)
     return context.isLoading ? (
-        <Loader />
+        <Loader text={"Ladataan sisältöä"} />
     ) : context.user.id ? (
         <Outlet />
     ) : (
