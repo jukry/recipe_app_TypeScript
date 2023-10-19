@@ -78,7 +78,7 @@ function CommentForm(props) {
                 <button type="submit" id="comment-submit-button">
                     Lisää kommentti
                 </button>
-                {!mutation.isError ? (
+                {mutation.isError ? (
                     <p id="comment-post-error">
                         Voit lähettää maksimissaan 2 kommenttia 10 minuutin
                         sisällä
