@@ -65,7 +65,7 @@ export default function UserRecipes({ props }) {
     return (
         <>
             {queryResponse.isLoading ? (
-                <Loader />
+                <Loader text={"Ladataan käyttäjän reseptejä"} />
             ) : recipes.length > 0 ? (
                 <section className="user-recipes-container">
                     {userRecipes}
