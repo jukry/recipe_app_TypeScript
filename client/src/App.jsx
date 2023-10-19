@@ -7,29 +7,30 @@ import {
     createRoutesFromElements,
     RouterProvider,
 } from "react-router-dom"
-import RecipeDetails from "./Components/RecipeDetails"
-import Login, { action as loginAction } from "./Pages/Login"
-import AccountDashboard from "./Pages/Account/AccountDashboard"
-import AccountLayout from "./Pages/Account/AccountLayout"
-import FavoriteRecipes, {
-    loader as favrecipesLoader,
-} from "./Pages/Account/FavoriteRecipes"
-import UserRecipes from "./Pages/Account/UserRecipes"
-import AddNewRecipe, {
-    action as addNewRecipeAction,
-} from "./Pages/Account/AddNewRecipe"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import Register, { action as registerAction } from "./Pages/Register"
-import RecipeDetailsEdit, {
-    loader as recipeDetailsEditLoader,
-    action as recipeDetailsEditAction,
-} from "./Components/RecipeDetailsEdit"
-import UserSettings, {
-    action as userSettingsAction,
-} from "./Pages/Account/UserSettings"
-import Forbidden from "./Components/Forbidden"
-import NotFound from "./Components/NotFound"
-import ProtectedRoutes from "./Components/ProtectedRoutes"
+import { Suspense, lazy } from "react"
+import Loader from "./Components/Loader"
+import AccountDashboard from "./Pages/Account/AccountDashboard"
+const RecipeDetails = lazy(() => import("./Components/RecipeDetails"))
+const ProtectedRoutes = lazy(() => import("./Components/ProtectedRoutes"))
+const AccountLayout = lazy(() => import("./Pages/Account/AccountLayout"))
+const RecipeDetailsEdit = lazy(() => import("./Components/RecipeDetailsEdit"))
+const FavoriteRecipes = lazy(() => import("./Pages/Account/FavoriteRecipes"))
+const UserRecipes = lazy(() => import("./Pages/Account/UserRecipes"))
+const AddNewRecipe = lazy(() => import("./Pages/Account/AddNewRecipe"))
+const UserSettings = lazy(() => import("./Pages/Account/UserSettings"))
+const Register = lazy(() => import("./Pages/Register"))
+const Login = lazy(() => import("./Pages/Login"))
+const NotFound = lazy(() => import("./Components/NotFound"))
+const Forbidden = lazy(() => import("./Components/Forbidden"))
+
+import { loader as recipeDetailsLoader } from "./Components/loaders/recipeDetailsEditLoader"
+import { action as recipeDetailsAction } from "./Components/actions/recipeDetailsEditAction"
+import { loader as favRecipesLoader } from "./Components/loaders/favRecipesLoader"
+import { action as addNewRecipeAction } from "./Pages/Account/actions/addNewRecipeAction"
+import { action as userSettingsActions } from "./Pages/Account/actions/userSettingsAction"
+import { action as loginAction } from "./Pages/actions/loginAction"
+import { action as registerAction } from "./Pages/actions/registerAction"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -45,42 +46,125 @@ function App() {
         createRoutesFromElements(
             <Route path="/" element={<HomeLayout />}>
                 <Route index element={<Search />} />
-                <Route path="recipe/:id" element={<RecipeDetails />}></Route>
+                <Route
+                    path="recipe/:id"
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <RecipeDetails />
+                        </Suspense>
+                    }
+                ></Route>
                 <Route
                     path="recipe/edit/:id"
-                    element={<RecipeDetailsEdit />}
-                    loader={recipeDetailsEditLoader}
-                    action={recipeDetailsEditAction}
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <RecipeDetailsEdit />
+                        </Suspense>
+                    }
+                    loader={async ({ request }) => {
+                        return recipeDetailsLoader({ request })
+                    }}
+                    action={async ({ request }) => {
+                        return recipeDetailsAction({ request })
+                    }}
                 ></Route>
-                <Route element={<ProtectedRoutes />}>
-                    <Route path="account" element={<AccountLayout />}>
+                <Route
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <ProtectedRoutes />
+                        </Suspense>
+                    }
+                >
+                    <Route
+                        path="account"
+                        element={
+                            <Suspense fallback={<Loader />}>
+                                <AccountLayout />
+                            </Suspense>
+                        }
+                    >
                         <Route index element={<AccountDashboard />} />
                         <Route
                             path="favoriterecipes"
-                            loader={favrecipesLoader}
-                            element={<FavoriteRecipes />}
+                            loader={async ({ request }) => {
+                                return favRecipesLoader({ request })
+                            }}
+                            element={
+                                <Suspense fallback={<Loader />}>
+                                    <FavoriteRecipes />
+                                </Suspense>
+                            }
                         />
-                        <Route path="myrecipes" element={<UserRecipes />} />
+                        <Route
+                            path="myrecipes"
+                            element={
+                                <Suspense fallback={<Loader />}>
+                                    <UserRecipes />
+                                </Suspense>
+                            }
+                        />
                         <Route
                             path="addnewrecipe"
-                            element={<AddNewRecipe />}
-                            action={addNewRecipeAction}
+                            element={
+                                <Suspense fallback={<Loader />}>
+                                    <AddNewRecipe />
+                                </Suspense>
+                            }
+                            action={async ({ request }) => {
+                                return addNewRecipeAction({ request })
+                            }}
                         />
                         <Route
                             path="usersettings"
-                            element={<UserSettings />}
-                            action={userSettingsAction}
+                            element={
+                                <Suspense fallback={<Loader />}>
+                                    <UserSettings />
+                                </Suspense>
+                            }
+                            action={async ({ request }) => {
+                                return userSettingsActions({ request })
+                            }}
                         />
                     </Route>
                 </Route>
-                <Route path="login" element={<Login />} action={loginAction} />
+                <Route
+                    path="login"
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <Login />
+                        </Suspense>
+                    }
+                    action={async ({ request }) => {
+                        return loginAction({ request })
+                    }}
+                />
                 <Route
                     path="register"
-                    element={<Register />}
-                    action={registerAction}
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <Register />
+                        </Suspense>
+                    }
+                    action={async ({ request }) => {
+                        return registerAction({ request })
+                    }}
                 />
-                <Route path="forbidden" element={<Forbidden />} />
-                <Route path="notfound" element={<NotFound />} />
+                <Route
+                    path="forbidden"
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <Forbidden />
+                        </Suspense>
+                    }
+                />
+                <Route
+                    path="notfound"
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <NotFound />
+                        </Suspense>
+                    }
+                />
             </Route>
         )
     )
