@@ -2,11 +2,8 @@ import React, { useContext, useEffect, useState } from "react"
 import { Outlet } from "react-router-dom"
 import Footer from "../Components/Footer"
 import Navbar from "../Components/Navbar"
-import { UserContext } from "../Context/UserContext"
-import Loader from "../Components/Loader"
 
 export default function HomeLayout() {
-    const { isLoading } = useContext(UserContext)
     const [showNav, setShowNav] = useState(false)
     const [showNavBar, setShowNavBar] = useState(true)
     const [position, setPosition] = useState(window.scrollY)
@@ -44,20 +41,14 @@ export default function HomeLayout() {
 
     return (
         <section className="container" id="container" onClick={handleNavClick}>
-            {isLoading ? (
-                <Loader />
-            ) : (
-                <>
-                    <Navbar
-                        props={[showNav, showNavBar]}
-                        handleNavClick={handleNavClick}
-                    />
-                    <main>
-                        <Outlet />
-                    </main>
-                    <Footer />
-                </>
-            )}
+            <Navbar
+                props={[showNav, showNavBar]}
+                handleNavClick={handleNavClick}
+            />
+            <main>
+                <Outlet />
+            </main>
+            <Footer />
         </section>
     )
 }
