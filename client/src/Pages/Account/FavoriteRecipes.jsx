@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 import fetchRecipes from "../../Hooks/fetchRecipes"
 import Fooditem from "../../Components/Fooditem"
 import "./styles/favRecipes.css"
+import Loader from "../../Components/Loader"
 
 export async function loader({ request }) {
     const res = await getUserData({ request })
@@ -30,5 +31,13 @@ export default function FavoriteRecipes() {
     }
     const userFavRecipes = favRecipesMap()
 
-    return <section className="favrecipes-container">{userFavRecipes}</section>
+    return (
+        <section className="favrecipes-container">
+            {queryResponse.isLoading ? (
+                <Loader text={"Ladataan käyttäjän suosikkireseptejä"} />
+            ) : (
+                userFavRecipes
+            )}
+        </section>
+    )
 }
