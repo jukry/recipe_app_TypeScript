@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react"
-import { Outlet } from "react-router-dom"
+import React, { useEffect, useState } from "react"
+import { Outlet, ScrollRestoration } from "react-router-dom"
 import Footer from "../Components/Footer"
 import Navbar from "../Components/Navbar"
 
@@ -49,6 +49,7 @@ export default function HomeLayout() {
                 <Outlet />
             </main>
             <Footer />
+            <ScrollRestoration />
         </section>
     )
 }
