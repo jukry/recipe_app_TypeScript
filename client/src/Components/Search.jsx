@@ -1,9 +1,9 @@
 import Results from "./Results"
-//import recipes from "../assets/recipe-data"
-import { useLoaderData, useSearchParams } from "react-router-dom"
-import { useState, Suspense } from "react"
+import { useSearchParams } from "react-router-dom"
+import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import fetchRecipes from "../Hooks/fetchRecipes"
+import Loader from "./Loader"
 
 export default function Search() {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -47,7 +47,7 @@ export default function Search() {
                 </div>
             </div>
             {queryResponse.isLoading ? (
-                <h2>Haetaan reseptejä</h2>
+                <Loader text={"Ladataan reseptejä"} />
             ) : (
                 <Results props={[recipes, searchParams]} />
             )}
