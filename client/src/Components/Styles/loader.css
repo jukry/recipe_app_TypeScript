@@ -9,6 +9,8 @@
 #loader-text {
     font-size: 1.25em;
     color: var(--clr-text);
+    text-align: center;
+    margin-top: 0.5em;
 }
 #loading-bars {
     display: inline-block;
