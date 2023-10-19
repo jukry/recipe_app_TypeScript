@@ -1,54 +1,10 @@
-import { Form, redirect, useNavigation, useParams } from "react-router-dom"
+import { Form, useNavigation, useParams } from "react-router-dom"
 import "./Styles/recipeDetailsEdit.css"
 import { useQuery } from "@tanstack/react-query"
 import fetchRecipeById from "../Hooks/fetchRecipeById.js"
-import {
-    addRow,
-    deleteIngredientRow,
-    deleteStepRow,
-    getUserData,
-} from "../utils/utils"
+import { addRow, deleteIngredientRow, deleteStepRow } from "../utils/utils"
 
-export async function action({ request }) {
-    const id = request.url.split("edit/")[1]
-    const formData = Object.fromEntries(await request.formData())
-    async function sendUpdatedRecipe() {
-        return await fetch(
-            process.env.NODE_ENV === "production"
-                ? `${import.meta.env.VITE_RECIPE_ENDPOINT}/${id}`
-                : `${import.meta.env.VITE_RECIPE_ENDPOINT_DEV}/${id}`,
-            {
-                method: "PATCH",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({
-                    formData,
-                }),
-            }
-        )
-    }
-
-    const res = await sendUpdatedRecipe()
-    if (!res.ok) {
-        return res.status
-    } else {
-        location.replace("/account/myrecipes")
-        return null
-    }
-}
-
-export async function loader({ request }) {
-    const res = await getUserData({ request })
-    if (!res.id) {
-        return redirect("/forbidden")
-    }
-    return null
-}
-
-export default function RecipeDetailsEdit() {
+function RecipeDetailsEdit() {
     const params = useParams()
     const queryResponse = useQuery(["recipe", params.id], fetchRecipeById)
     const data = queryResponse?.data?.message ?? []
@@ -178,3 +134,4 @@ export default function RecipeDetailsEdit() {
         <h3>Ei mtn</h3>
     )
 }
+export default RecipeDetailsEdit

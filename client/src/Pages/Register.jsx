@@ -1,68 +1,7 @@
 import React, { useContext } from "react"
-import {
-    Form,
-    Navigate,
-    redirect,
-    useActionData,
-    useNavigation,
-} from "react-router-dom"
+import { Form, Navigate, useActionData, useNavigation } from "react-router-dom"
 import "./styles/Register.css"
 import { UserContext } from "../Context/UserContext"
-
-export async function action({ request }) {
-    const formData = await request.formData()
-    async function registerUser() {
-        return await fetch(
-            process.env.NODE_ENV === "production"
-                ? import.meta.env.VITE_REGISTER_ENDPOINT
-                : import.meta.env.VITE_REGISTER_ENDPOINT_DEV,
-            {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: await formData.get("email"),
-                    password: await formData.get("password"),
-                    repassword: await formData.get("re-password"),
-                }),
-            }
-        )
-    }
-    const res = await registerUser()
-
-    if (!res.ok) {
-        return res.status
-    } else {
-        async function loginUser() {
-            return await fetch(
-                process.env.NODE_ENV === "production"
-                    ? import.meta.env.VITE_AUTH_ENDPOINT
-                    : import.meta.env.VITE_AUTH_ENDPOINT_DEV,
-                {
-                    method: "POST",
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    credentials: "include",
-                    body: JSON.stringify({
-                        email: await formData.get("email"),
-                        password: await formData.get("password"),
-                    }),
-                }
-            )
-        }
-        const res = await loginUser()
-        if (!res.ok) {
-            return res.status
-        } else {
-            location.replace("/account")
-            return redirect("/account")
-        }
-    }
-}
 
 export default function Register() {
     const navigation = useNavigation()

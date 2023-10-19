@@ -3,7 +3,7 @@ import { UserContext } from "../Context/UserContext"
 import { Navigate, Outlet } from "react-router-dom"
 import Loader from "./Loader"
 
-export default function ProtectedRoutes() {
+function ProtectedRoutes() {
     const context = useContext(UserContext)
     return context.isLoading ? (
         <Loader text={"Ladataan sisältöä"} />
@@ -13,3 +13,5 @@ export default function ProtectedRoutes() {
         <Navigate to="/login" />
     )
 }
+
+export default ProtectedRoutes

@@ -7,7 +7,7 @@ import RecipeComments from "./RecipeComments"
 import fetchRecipeComments from "../Hooks/fetchRecipeComments"
 import { postComment } from "../utils/utils"
 
-export default function RecipeDetails() {
+function RecipeDetails() {
     const params = useParams()
     const queryResponse = useQuery(["recipe", params.id], fetchRecipeById)
     const data = queryResponse?.data?.message ?? []
@@ -74,3 +74,4 @@ export default function RecipeDetails() {
         location.replace("/notfound")
     )
 }
+export default RecipeDetails

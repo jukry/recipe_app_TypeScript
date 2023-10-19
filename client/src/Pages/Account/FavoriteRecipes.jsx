@@ -1,7 +1,5 @@
 import React, { useContext } from "react"
 import "./styles/account.css"
-import { getUserData } from "../../utils/utils"
-import { redirect, useLoaderData } from "react-router-dom"
 import { UserContext } from "../../Context/UserContext"
 import { useQuery } from "@tanstack/react-query"
 import fetchRecipes from "../../Hooks/fetchRecipes"
@@ -9,15 +7,7 @@ import Fooditem from "../../Components/Fooditem"
 import "./styles/favRecipes.css"
 import Loader from "../../Components/Loader"
 
-export async function loader({ request }) {
-    const res = await getUserData({ request })
-    if (!res.id) {
-        return redirect("/login")
-    }
-    return res
-}
-
-export default function FavoriteRecipes() {
+function FavoriteRecipes() {
     document.title = "Suosikkireseptisi"
     const queryResponse = useQuery(["recipes"], fetchRecipes)
     const favRecipes = queryResponse?.data?.message ?? []
@@ -41,3 +31,4 @@ export default function FavoriteRecipes() {
         </section>
     )
 }
+export default FavoriteRecipes
