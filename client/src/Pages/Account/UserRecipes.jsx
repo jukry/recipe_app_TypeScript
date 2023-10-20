@@ -11,7 +11,7 @@ function UserRecipes({ props }) {
     document.title = "Omat reseptisi"
     const queryResponse = useQuery(["userRecipes"], fetchUserRecipes)
     const recipes = queryResponse?.data?.data ?? []
-    const { user, setUser } = useContext(UserContext)
+    const { user, dispatch } = useContext(UserContext)
 
     const mutation = useMutation({
         mutationFn: (id) => {
@@ -34,10 +34,10 @@ function UserRecipes({ props }) {
             queryResponse.refetch()
             const res = await data.json()
             const recipeMap = res.map((item) => item._id)
-            setUser((prev) => ({
-                ...prev,
-                recipes: recipeMap,
-            }))
+            dispatch({
+                type: "DELETERECIPE",
+                payload: [{ ...user, recipes: recipeMap }],
+            })
         },
     })
 
