@@ -1,15 +1,33 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useEffect, useReducer, useState } from "react"
 
 export const UserContext = createContext()
 
+export const userReducer = (state, action) => {
+    switch (action.type) {
+        case "UPDATEFAV":
+            return { user: action.payload[0] }
+        case "DELETERECIPE":
+            return { user: action.payload[0] }
+        case "LOGIN":
+            return { user: action.payload }
+        case "LOGOUT":
+            return { user: {} }
+        default:
+            return state
+    }
+}
+
 export const UserContextProvider = ({ children }) => {
-    const [user, setUser] = useState({})
-    const [isLoading, setIsLoading] = useState(true)
+    const [state, dispatch] = useReducer(userReducer, {
+        user: {},
+    })
+    const [isLoading, setIsLoading] = useState()
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {
+        setIsLoading(true)
         async function getUserData() {
-            const data = await fetch(
+            const res = await fetch(
                 process.env.NODE_ENV === "production"
                     ? import.meta.env.VITE_USERDATA_ENDPOINT
                     : import.meta.env.VITE_USERDATA_ENDPOINT_DEV,
@@ -18,22 +36,27 @@ export const UserContextProvider = ({ children }) => {
                     credentials: "include",
                 }
             )
-            const body = await data.json()
-            setUser(body)
+            const userData = await res.json()
+            if (userData.id) {
+                setIsLoggedIn(true)
+                setIsLoading(false)
+                dispatch({ type: "LOGIN", payload: userData })
+            }
             setIsLoading(false)
         }
-        if (!user.id) {
-            getUserData()
-        }
+        getUserData()
     }, [])
-
-    if (user.id && !isLoggedIn) {
-        setIsLoggedIn((prev) => !prev)
-    }
 
     return (
         <UserContext.Provider
-            value={{ user, setUser, isLoggedIn, setIsLoggedIn, isLoading }}
+            value={{
+                isLoggedIn,
+                setIsLoggedIn,
+                isLoading,
+                setIsLoading,
+                ...state,
+                dispatch,
+            }}
         >
             {children}
         </UserContext.Provider>
