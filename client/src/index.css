@@ -258,31 +258,6 @@ footer {
         transition: ease-in 0.2s top;
         width: 100%;
     }
-    .line {
-        width: 2em;
-        height: 4px;
-        border-radius: 10px;
-        background-color: var(--clr-accent);
-        margin: 3px;
-        transition: all 0.1s linear;
-    }
-    .line-hidden {
-        display: none;
-    }
-    .cross {
-        width: 2em;
-        height: 4px;
-        border-radius: 10px;
-        background-color: var(--clr-accent);
-        margin: 3px;
-        transition: all 0.1s linear;
-    }
-    .cross-1 {
-        transform: rotate(45deg) translate(4px, 3px);
-    }
-    .cross-2 {
-        transform: rotate(-45deg) translate(4px, -3px);
-    }
     .results-container {
         padding: 0 1em;
     }
