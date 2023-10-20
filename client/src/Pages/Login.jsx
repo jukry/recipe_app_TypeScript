@@ -1,40 +1,79 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import "./styles/Login.css"
-import { Form, useNavigation, useActionData, Navigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import { UserContext } from "../Context/UserContext"
+import { useLogin } from "../Hooks/useLogin"
 
 export default function Login() {
-    const navigation = useNavigation()
-    const action = useActionData()
-    const { user } = useContext(UserContext)
+    const { user, isLoading, setIsLoading } = useContext(UserContext)
+    const { login } = useLogin()
+    const navigate = useNavigate()
+    const [userData, setUserData] = useState({
+        email: "",
+        password: "",
+    })
+    const [loginStatus, setLoginStatus] = useState()
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const res = await login(userData.email, userData.password)
+        if (!res.ok) {
+            setLoginStatus(res.status)
+            setIsLoading(false)
+            return loginStatus
+        }
+        return navigate("/account")
+    }
     if (user.id) {
         return <Navigate to="/account" />
     }
     return (
         <div className="login-container">
             <h2>Kirjaudu sisään</h2>
-            {action && (
+            {loginStatus && (
                 <h3 className="check-login-input">
-                    {action === 400
+                    {loginStatus === 400
                         ? "Tarkista syöttämäsi tiedot"
-                        : action === 401
+                        : loginStatus === 401
                         ? "Sähköposti tai salasana väärin"
                         : ""}
                 </h3>
             )}
-            <Form replace="true" method="post" className="login-form">
+            <form
+                replace="true"
+                method="post"
+                className="login-form"
+                onSubmit={handleSubmit}
+            >
                 <input
+                    required
                     type="email"
                     name="email"
                     placeholder="Sähköpostiosoite"
+                    value={userData.email}
+                    onChange={(e) =>
+                        setUserData((prev) => ({
+                            ...prev,
+                            email: e.target.value,
+                        }))
+                    }
                 />
-                <input type="password" name="password" placeholder="Salasana" />
-                <button disabled={navigation.state === "submitting"}>
-                    {navigation.state === "idle"
-                        ? "Kirjaudu sisään"
-                        : "Kirjaudutaan..."}
+                <input
+                    required
+                    type="password"
+                    name="password"
+                    placeholder="Salasana"
+                    value={userData.password}
+                    onChange={(e) =>
+                        setUserData((prev) => ({
+                            ...prev,
+                            password: e.target.value,
+                        }))
+                    }
+                />
+                <button type="submit" disabled={isLoading}>
+                    {!isLoading ? "Kirjaudu sisään" : "Kirjaudutaan..."}
                 </button>
-            </Form>
+            </form>
         </div>
     )
 }
