@@ -29,7 +29,6 @@ import { action as recipeDetailsAction } from "./Components/actions/recipeDetail
 import { loader as favRecipesLoader } from "./Components/loaders/favRecipesLoader"
 import { action as addNewRecipeAction } from "./Pages/Account/actions/addNewRecipeAction"
 import { action as userSettingsActions } from "./Pages/Account/actions/userSettingsAction"
-import { action as loginAction } from "./Pages/actions/loginAction"
 import { action as registerAction } from "./Pages/actions/registerAction"
 
 const queryClient = new QueryClient({
@@ -134,9 +133,6 @@ function App() {
                             <Login />
                         </Suspense>
                     }
-                    action={async ({ request }) => {
-                        return loginAction({ request })
-                    }}
                 />
                 <Route
                     path="register"
