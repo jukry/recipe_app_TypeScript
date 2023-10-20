@@ -11,10 +11,11 @@ export default function Fooditem(props) {
     const searchParams = props.props[1] ?? ""
     const handleDelete = props.props[2]
     const [showModal, setShowModal] = useState(false)
-    const { user, setUser } = useContext(UserContext)
+    const { user, dispatch } = useContext(UserContext)
     const { favrecipes } = user
 
     const { mutate, isLoading } = useMutation({
+        //TODO optimistic update
         mutationFn: handleFavorite,
     })
 
@@ -49,7 +50,12 @@ export default function Fooditem(props) {
                             onClick={(event) => {
                                 event.stopPropagation()
                                 event.preventDefault()
-                                mutate([event, data._id || data.id, setUser])
+                                mutate([
+                                    event,
+                                    data._id || data.id,
+                                    dispatch,
+                                    user,
+                                ])
                             }}
                             disabled={isLoading}
                         >

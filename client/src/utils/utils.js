@@ -216,7 +216,8 @@ export function deleteIngredientRow(e) {
 export async function handleFavorite(data) {
     const event = data[0]
     const id = data[1]
-    const setUser = data[2]
+    const dispatch = data[2]
+    const user = data[3]
     const isfav = event.target.id
     if (isfav === "isfav") {
         async function deleteFav() {
@@ -239,10 +240,10 @@ export async function handleFavorite(data) {
         const body = await deleteFav()
         const message = await body.json()
         const newFavRecipes = message.Message
-        setUser((prev) => ({
-            ...prev,
-            favrecipes: newFavRecipes,
-        }))
+        dispatch({
+            type: "UPDATEFAV",
+            payload: [{ ...user, favrecipes: newFavRecipes }],
+        })
     } else {
         async function addFav() {
             return await fetch(
@@ -264,10 +265,10 @@ export async function handleFavorite(data) {
         const body = await addFav()
         const message = await body.json()
         const newFavRecipes = message.Message
-        setUser((prev) => ({
-            ...prev,
-            favrecipes: newFavRecipes,
-        }))
+        dispatch({
+            type: "UPDATEFAV",
+            payload: [{ ...user, favrecipes: newFavRecipes }],
+        })
     }
 }
 export async function changePassword(formData) {
