@@ -1,4 +1,5 @@
 import React from "react"
+import "./Styles/deleteModal.css"
 
 export default function DeleteModal(props) {
     return (
