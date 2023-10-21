@@ -18,14 +18,20 @@ export default function Search() {
         setSearch(e.target.value)
         setSearchParams({ search: e.target.value })
     }
-
+    const searchParam = searchParams.get("search")
     const recipes = queryRecipes.filter((item) => {
-        if (searchParams.get("search") === null) {
+        if (searchParam === null) {
             return queryRecipes
         } else {
-            return item.name
+            const nameMatch = item.name
                 .toLowerCase()
-                .includes(searchParams.get("search").toLowerCase())
+                .includes(searchParam.toLowerCase())
+            const ingredientMatch = item.ingredients.some((ingredient) =>
+                ingredient.ingredient
+                    .toLowerCase()
+                    .includes(searchParam.toLowerCase())
+            )
+            return nameMatch || ingredientMatch
         }
     })
 
