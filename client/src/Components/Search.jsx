@@ -47,6 +47,8 @@ export default function Search() {
                             type="text"
                             placeholder="Hae reseptiä"
                             className="recipe-search"
+                            id="recipe-search"
+                            name="recipesearch"
                             value={search}
                         />
                     </form>
