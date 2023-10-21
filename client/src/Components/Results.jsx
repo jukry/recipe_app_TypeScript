@@ -2,7 +2,7 @@ import { useState } from "react"
 import Fooditem from "./Fooditem"
 
 export default function Results(props) {
-    const initialRecipes = 6
+    const initialRecipes = 8
     const recipeData = props.props[0]
     const [recipesShown, setRecipesShown] = useState(initialRecipes)
     const searchParams = props.props[1]
