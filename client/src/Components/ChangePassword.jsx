@@ -5,6 +5,7 @@ export default function ChangePassword() {
     const navigation = useNavigation()
     return (
         <section id="change-password-container">
+            <h3>Vaihda salasana</h3>
             <Form
                 name="change-password"
                 replace="true"
