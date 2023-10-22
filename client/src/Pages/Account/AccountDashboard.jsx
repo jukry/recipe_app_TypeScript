@@ -8,7 +8,7 @@ export default function AccountDashboard() {
 
     return (
         <section id="account-details">
-            <h3 id="username">Tervetuloa {user.email.split("@")[0]}</h3>
+            <h3 id="username">Tervetuloa {user.email}</h3>
             {user.lastlogins.length === 2 ? (
                 <p id="lastlogin">
                     Edellinen kirjautuminen:{" "}
