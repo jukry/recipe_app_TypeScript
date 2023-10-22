@@ -135,6 +135,28 @@ const deleteUser = async (req, res) => {
     }
     return res.sendStatus(200)
 }
+const changeEmail = async (req, res) => {
+    const oldEmail = req.user.email
+    const { _id: id } = req.user
+    const { changeemail: newEmail, confirmemailpassword: password } =
+        req.body.formData
+
+    const user = await User.findById(id)
+    const comparePassword = await bcrypt.compare(password, user.password)
+
+    const found = await User.find({ email: newEmail }).count()
+    if (found) {
+        //already exists
+        return res.sendStatus(403)
+    }
+
+    if (!comparePassword) {
+        return res.sendStatus(401)
+    } else if (comparePassword) {
+        await user.updateOne({ email: newEmail }).exec()
+        return res.status(200).json({ Message: newEmail })
+    }
+}
 export {
     registerUser,
     authenticateUser,
@@ -142,4 +164,5 @@ export {
     getUserRecipes,
     changePassword,
     deleteUser,
+    changeEmail,
 }
