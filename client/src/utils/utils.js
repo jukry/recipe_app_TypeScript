@@ -364,3 +364,21 @@ export async function postComment(commentData, id, userId) {
         }
     )
 }
+export async function changeEmail(formData) {
+    return await fetch(
+        process.env.NODE_ENV === "production"
+            ? `${import.meta.env.VITE_USERDATA_ENDPOINT}/changeemail`
+            : `${import.meta.env.VITE_USERDATA_ENDPOINT_DEV}/changeemail`,
+        {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                formData,
+            }),
+        }
+    )
+}
