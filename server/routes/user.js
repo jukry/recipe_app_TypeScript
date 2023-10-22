@@ -7,6 +7,7 @@ import {
     getUserRecipes,
     changePassword,
     deleteUser,
+    changeEmail,
 } from "../controllers/userController.js"
 import protect from "../middleware/loginMiddleware.js"
 import {
@@ -23,5 +24,6 @@ userRouter.get("/user/recipes", protect, getUserRecipes)
 userRouter.post("/user/favrecipes", protect, addFavRecipe)
 userRouter.delete("/user/favrecipes", protect, deleteFavRecipe)
 userRouter.post("/user/newpassword", protect, changePassword)
+userRouter.post("/user/changeemail", protect, changeEmail)
 
 export default userRouter
