@@ -1,18 +1,28 @@
-import { useState } from "react"
+import { useContext, useEffect } from "react"
 import Fooditem from "./Fooditem"
+import { RecipesShownContext } from "../Context/RecipesShownContext"
 
 export default function Results(props) {
-    const initialRecipes = 8
     const recipeData = props.props[0]
-    const [recipesShown, setRecipesShown] = useState(initialRecipes)
+    const { recipesShown, setRecipesShown } = useContext(RecipesShownContext)
+    const { currentRecipe } = useContext(RecipesShownContext)
     const searchParams = props.props[1]
     document.title = "Reseptit"
+    function scrollToId(itemId) {
+        document.getElementById(itemId).scrollIntoView({
+            behavior: "instant",
+        })
+    }
+    useEffect(() => {
+        if (currentRecipe) scrollToId(currentRecipe)
+    }, [])
+
     const foodItem = recipeData.slice(0, recipesShown).map((item) => {
         return <Fooditem props={[item, searchParams]} key={item.id} />
     })
 
     function loadMore() {
-        setRecipesShown((prev) => prev + 6)
+        setRecipesShown((prev) => prev + 8)
     }
 
     return (
