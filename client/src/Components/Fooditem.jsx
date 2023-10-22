@@ -5,11 +5,13 @@ import { createPortal } from "react-dom"
 import DeleteModal from "./DeleteModal"
 import { handleFavorite } from "../utils/utils"
 import { useMutation } from "@tanstack/react-query"
+import { RecipesShownContext } from "../Context/RecipesShownContext"
 
 export default function Fooditem(props) {
     const data = props.props[0]
     const searchParams = props.props[1] ?? ""
     const handleDelete = props.props[2]
+    const { setCurrentRecipe } = useContext(RecipesShownContext)
     const [showModal, setShowModal] = useState(false)
     const { user, dispatch } = useContext(UserContext)
     const { favrecipes } = user
@@ -27,6 +29,9 @@ export default function Fooditem(props) {
                     state={{
                         search: `?${searchParams}`,
                         referrer: location.pathname,
+                    }}
+                    onClick={() => {
+                        setCurrentRecipe(data.id)
                     }}
                     className="food-item"
                     id={data.id || data._id}
