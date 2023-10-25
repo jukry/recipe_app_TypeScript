@@ -14,7 +14,7 @@ function RecipeDetailsEdit() {
     return data !== undefined ? (
         <Form method="post" replace="true" className="recipe-wrapper-edit">
             <div className="recipe-hero-edit">
-                <img src={`../${data.images}`} alt="Kuva tulossa" />
+                <img src={data.images} alt="Kuva tulossa" />
                 <input
                     name="name"
                     id="recipe-name"
