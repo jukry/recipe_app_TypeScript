@@ -27,7 +27,6 @@ const Forbidden = lazy(() => import("./Components/Forbidden"))
 import { loader as recipeDetailsLoader } from "./Components/loaders/recipeDetailsEditLoader"
 import { action as recipeDetailsAction } from "./Components/actions/recipeDetailsEditAction"
 import { loader as favRecipesLoader } from "./Components/loaders/favRecipesLoader"
-import { action as addNewRecipeAction } from "./Pages/Account/actions/addNewRecipeAction"
 import { action as userSettingsActions } from "./Pages/Account/actions/userSettingsAction"
 import { action as registerAction } from "./Pages/actions/registerAction"
 
@@ -109,9 +108,6 @@ function App() {
                                     <AddNewRecipe />
                                 </Suspense>
                             }
-                            action={async ({ request }) => {
-                                return addNewRecipeAction({ request })
-                            }}
                         />
                         <Route
                             path="usersettings"
