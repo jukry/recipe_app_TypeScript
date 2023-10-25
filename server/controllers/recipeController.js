@@ -1,5 +1,6 @@
 import Recipe from "../models/Recipe.js"
 import User from "../models/User.js"
+import { v2 as cloudinary } from "cloudinary"
 
 const getAllRecipes = async (req, res) => {
     try {
@@ -41,8 +42,26 @@ const getRecipeById = async (req, res) => {
     }
 }
 
+const uploadRecipeImage = async (file) => {
+    cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+    })
+
+    const res = await cloudinary.uploader.upload(
+        file,
+        { resource_type: "auto" },
+        function (error, result) {
+            // console.log(error)
+            // console.log(result)
+        }
+    )
+    return res
+}
+
 const createRecipe = async (req, res) => {
-    const recipe = req.body.formData
+    const recipe = req.body
     const userId = req.user._id.toString()
     const user = req.user
 
@@ -96,6 +115,7 @@ const createRecipe = async (req, res) => {
             description: newRecipe.description,
             ingredients: newRecipe.ingredients,
             instructions: newRecipe.instructions,
+            images: recipe.images[0],
         })
         await User.findOneAndUpdate(
             { _id: userId }, //filter
@@ -295,4 +315,5 @@ export {
     createRecipe,
     deleteRecipe,
     updateRecipe,
+    uploadRecipeImage,
 }
