@@ -10,17 +10,16 @@
     max-width: 1000px;
 }
 .recipe-hero {
-    margin: 0 auto;
+    margin: 0 1em;
     text-align: center;
 }
 .recipe-hero > img {
     max-height: 500px;
     height: 100%;
     width: 100%;
-    margin: 1em;
     object-fit: cover;
-    border-radius: 30px;
-    box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px hsl(0deg 0% 0% / 50%);
 }
 .recipe-data {
     display: flex;

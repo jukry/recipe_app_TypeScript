@@ -23,7 +23,7 @@
     font-size: 1.25em;
 }
 #new-recipe-form > button {
-    margin-top: 1em;
+    margin: 1em 0;
     padding: 1em;
     font-size: 1.25em;
     background-color: var(--clr-accent-neutral);
@@ -67,10 +67,6 @@
 #recipe-data-container {
     display: flex;
     flex-direction: column;
-}
-#recipe-ingredient-steps-wrapper {
-    display: grid;
-    gap: 2em;
 }
 #recipe-text-input {
     display: flex;

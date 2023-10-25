@@ -25,9 +25,19 @@
 }
 .favrecipes-container .food-item > .img-container {
     display: block;
+    max-width: 150px;
 }
 @media screen and (min-width: 400px) {
     .favrecipes-container .food-item {
         font-size: 1em;
+    }
+}
+@media screen and (max-width: 700px) {
+    .favrecipes-container .food-item > .img-container {
+        overflow: visible;
+    }
+    .favrecipes-container .img-container > img {
+        min-width: 125px;
+        max-width: 125px;
     }
 }
