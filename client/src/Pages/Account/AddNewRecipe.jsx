@@ -33,7 +33,9 @@ function AddNewRecipe() {
         formData.append("imageUpload", file)
 
         const imageSend = await fetch(
-            "http://localhost:5000/api/recipes/upload",
+            process.env.NODE_ENV === "production"
+                ? `${import.meta.env.VITE_RECIPE_ENDPOINT}/upload`
+                : `${import.meta.env.VITE_RECIPE_ENDPOINT_DEV}/upload`,
             {
                 method: "POST",
                 mode: "cors",
