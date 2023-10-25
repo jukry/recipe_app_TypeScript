@@ -14,7 +14,6 @@ function AddNewRecipe() {
     }
     function handleFileChange(e) {
         e.preventDefault()
-        console.log(e.target.id)
         if (
             e.target.files?.length === 0 ||
             e.target.id === "delete-image-button"
