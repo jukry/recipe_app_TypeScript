@@ -43,7 +43,7 @@ function RecipeDetails() {
         <section className="recipe-wrapper">
             <BackButton />
             <div className="recipe-hero">
-                <img src={data.images} alt="Kuva tulossa" />
+                {data.images && <img src={data.images} alt="Kuva ateriasta" />}
                 <h1>{data.name}</h1>
                 <h3>{data.description}</h3>
             </div>
