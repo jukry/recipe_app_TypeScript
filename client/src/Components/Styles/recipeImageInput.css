@@ -1,0 +1,36 @@
+@import "../../constants.css";
+
+#image-upload-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+}
+#image-upload-button {
+    background-color: var(--clr-accent-neutral);
+    color: var(--clr-text);
+    transition: 0.2s;
+    padding: 0.5em;
+    margin-bottom: 0.25em;
+    font-size: 1.25em;
+    text-align: center;
+}
+#image-upload {
+    display: none;
+    visibility: hidden;
+}
+#preview-image-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+#delete-image-button {
+    position: absolute;
+    background-color: var(--clr-accent-danger);
+    outline: none;
+    border: none;
+    padding: 0.5em;
+    margin: 0.5em;
+    top: 2em;
+    color: var(--clr-text);
+    font-size: 1.25em;
+}
