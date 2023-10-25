@@ -1,27 +1,93 @@
 import "./styles/newRecipe.css"
-import { Form, useActionData, useNavigation } from "react-router-dom"
 import RecipeDataContainer from "../../Components/RecipeDataContainer"
+import { useState } from "react"
 
 function AddNewRecipe() {
     document.title = "Lisää uusi resepti"
+    const [recipe, setRecipe] = useState([])
+    const [file, setFile] = useState({})
+    const [previewFile, setPreviewFile] = useState()
+    const [isLoading, setIsLoading] = useState(false)
 
-    const navigation = useNavigation()
-    const actionData = useActionData()
+    function handleChange(e) {
+        setRecipe((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    }
+    function handleFileChange(e) {
+        e.preventDefault()
+        console.log(e.target.id)
+        if (
+            e.target.files?.length === 0 ||
+            e.target.id === "delete-image-button"
+        ) {
+            setFile({})
+            setPreviewFile(undefined)
+            return
+        }
+        setFile(e.target.files[0])
+        setPreviewFile(URL.createObjectURL(e.target.files[0]))
+    }
+
+    async function handleSubmit(e) {
+        setIsLoading(true)
+        e.preventDefault()
+        const formData = new FormData()
+        formData.append("imageUpload", file)
+
+        const imageSend = await fetch(
+            "http://localhost:5000/api/recipes/upload",
+            {
+                method: "POST",
+                mode: "cors",
+                credentials: "include",
+                body: formData,
+            }
+        )
+        const imageRes = await imageSend.json()
+        const recipeRes = await fetch(
+            process.env.NODE_ENV === "production"
+                ? import.meta.env.VITE_RECIPE_ENDPOINT
+                : import.meta.env.VITE_RECIPE_ENDPOINT_DEV,
+            {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    ...recipe,
+                    images: [imageRes.secure_url || ""],
+                }),
+            }
+        )
+        if (!recipeRes.ok) {
+            return recipeRes.status
+        } else {
+            location.replace("/account/myrecipes")
+        }
+    }
     return (
         <section id="new-recipe-container">
-            <Form method="post" replace="true" id="new-recipe-form">
-                {actionData && (
-                    <h3 className="check-recipe-input">
-                        Jotain meni pieleen, tarkista syöttämäsi tiedot
-                    </h3>
-                )}
-                <RecipeDataContainer />
-                <button disabled={navigation.state === "submitting"}>
-                    {navigation.state === "idle"
-                        ? "Lähetä resepti"
-                        : "Lähetetään..."}
+            <form
+                method="post"
+                replace="true"
+                id="new-recipe-form"
+                encType="multipart/form-data"
+                onSubmit={handleSubmit}
+            >
+                <RecipeDataContainer
+                    props={{
+                        recipe,
+                        handleChange,
+                        handleFileChange,
+                        previewFile,
+                        file,
+                    }}
+                />
+                <button disabled={isLoading}>
+                    {!isLoading ? "Lähetä resepti" : "Lähetetään..."}
                 </button>
-            </Form>
+            </form>
         </section>
     )
 }
