@@ -2,7 +2,7 @@ import React from "react"
 import { addRow } from "../utils/utils"
 import "../Pages/Account/styles/newRecipe.css"
 
-export default function RecipeStepsInput() {
+export default function RecipeStepsInput({ props }) {
     return (
         <fieldset id="recipe-steps">
             <legend>Anna reseptin valmistusohje</legend>
@@ -15,6 +15,8 @@ export default function RecipeStepsInput() {
                 className="new-recipe-step"
                 id="step-1"
                 name="step1"
+                value={props.recipe?.step1 || ""}
+                onChange={(event) => props.handleChange(event)}
                 required={true}
             />
             <input
@@ -23,6 +25,8 @@ export default function RecipeStepsInput() {
                 className="new-recipe-step"
                 id="step-2"
                 name="step2"
+                value={props.recipe?.step2 || ""}
+                onChange={(event) => props.handleChange(event)}
             />
             <input
                 type="text"
@@ -30,6 +34,8 @@ export default function RecipeStepsInput() {
                 className="new-recipe-step"
                 id="step-3"
                 name="step3"
+                value={props.recipe?.step3 || ""}
+                onChange={(event) => props.handleChange(event)}
             />
             <input
                 type="text"
@@ -37,6 +43,8 @@ export default function RecipeStepsInput() {
                 className="new-recipe-step"
                 id="step-4"
                 name="step4"
+                value={props.recipe?.step4 || ""}
+                onChange={(event) => props.handleChange(event)}
             />
         </fieldset>
     )

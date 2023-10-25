@@ -2,7 +2,7 @@ import React from "react"
 import IngredientInput from "./IngredientInput"
 import "../Pages/Account/styles/newRecipe.css"
 
-export default function RecipeDataInput() {
+export default function RecipeDataInput({ props }) {
     return (
         <section id="recipe-text-input">
             <IngredientInput
@@ -10,6 +10,8 @@ export default function RecipeDataInput() {
                 placeholder="Anna reseptin nimi"
                 className="new-recipe-name"
                 name="name"
+                value={props.recipe?.name || ""}
+                onChange={props.handleChange}
                 required={true}
             />
             <IngredientInput
@@ -17,6 +19,8 @@ export default function RecipeDataInput() {
                 placeholder="Anna reseptin kuvaus"
                 className="new-recipe-description"
                 name="description"
+                value={props.recipe?.description || ""}
+                onChange={props.handleChange}
                 required={true}
             />
         </section>
