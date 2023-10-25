@@ -9,7 +9,7 @@
     display: grid;
     font-size: 4vw;
     grid-template-columns: 1fr 3fr;
-    max-height: 150px;
+    height: 150px;
     margin-bottom: 1em;
 }
 .favrecipes-container .fooditem-container:hover {
@@ -26,6 +26,7 @@
 .favrecipes-container .food-item > .img-container {
     display: block;
     max-width: 150px;
+    text-align: center;
 }
 @media screen and (min-width: 400px) {
     .favrecipes-container .food-item {
@@ -35,6 +36,7 @@
 @media screen and (max-width: 700px) {
     .favrecipes-container .food-item > .img-container {
         overflow: visible;
+        width: 125px;
     }
     .favrecipes-container .img-container > img {
         min-width: 125px;
