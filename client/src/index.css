@@ -117,7 +117,8 @@ header > a,
     min-height: 250px;
     max-width: 100%;
     border-radius: 10px 10px 0 0;
-    object-fit: fill;
+    object-fit: cover;
+    object-position: center;
 }
 .food-item > .img-container {
     display: block;
@@ -141,6 +142,10 @@ header > a,
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
+#fooditem-stock-image {
+    filter: contrast(50%);
+    opacity: 0.5;
 }
 .results .fooditem-container > .food-item:hover {
     transform: scale(1.02);
