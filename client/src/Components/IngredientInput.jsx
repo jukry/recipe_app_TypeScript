@@ -8,6 +8,8 @@ export default function IngredientInput(props) {
             className={props.className}
             name={props.name}
             required={props.required}
+            value={props.value}
+            onChange={(event) => props.onChange(event)}
         />
     )
 }
