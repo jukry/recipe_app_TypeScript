@@ -28,6 +28,7 @@
 .comment-content {
     border-bottom: 1px solid var(--clr-accent-neutral);
     padding-bottom: 0.25em;
+    word-wrap: break-word;
 }
 .comment-poster-container {
     display: flex;
