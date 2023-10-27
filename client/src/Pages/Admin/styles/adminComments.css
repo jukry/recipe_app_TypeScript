@@ -1,0 +1,118 @@
+@import "../../../constants.css";
+
+#admin-comment-section-container {
+    margin: 0 auto;
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--clr-text);
+    gap: 0.5em;
+}
+#admin-comment-section-container > h3 {
+    font-size: 1.5em;
+}
+#admin-comment-page-container {
+    max-width: 250px;
+    width: 100%;
+}
+.admin-comment-container {
+    margin-bottom: 0.5em;
+    display: flex;
+    border-bottom: 1px solid var(--clr-accent-neutral);
+}
+.admin-comment-user {
+    font-weight: 700;
+}
+.admin-comment-poster-container {
+    display: flex;
+    align-items: center;
+}
+.admin-comment-date {
+    font-size: 0.8em;
+}
+.admin-comment-separator {
+    padding: 0 0.5em;
+}
+#admin-comment-nav-container {
+    display: flex;
+    padding: 0.1em 2em;
+    background-color: var(--clr-accent-neutral);
+    border-radius: 5px;
+    position: relative;
+    align-items: center;
+    box-shadow: 0px 0px 10px 2px #2425268a;
+    font-size: 1.25em;
+    font-weight: 700;
+    justify-content: center;
+}
+#admin-comment-nav-container button {
+    background-color: transparent;
+    border: none;
+    color: var(--clr-text);
+    font-family: monospace;
+    padding-bottom: 0.4em;
+}
+.admin-comment-wrapper {
+    flex-basis: 80%;
+}
+#admin-comment-nav-container p {
+    padding: 0.3em 1.5em;
+    border-right: 1px solid var(--clr-accent);
+    border-left: 1px solid var(--clr-accent);
+}
+#admin-comment-nav-back {
+    position: absolute;
+    left: 0;
+    padding: 0.25em;
+    font-size: 2em;
+}
+#admin-comment-nav-forward {
+    right: 0;
+    position: absolute;
+    padding: 0.25em;
+    font-size: 2em;
+}
+#admin-comments-container {
+    width: 100%;
+}
+.admin-comment-content {
+    padding-bottom: 0.25em;
+    word-wrap: break-word;
+}
+#admin-comment-filter-container {
+    flex-wrap: wrap;
+    display: flex;
+    max-width: 250px;
+    justify-content: space-evenly;
+}
+#admin-comment-filter-container input {
+    flex-basis: calc(50% - 4px);
+    border-radius: 2px;
+    border: none;
+    margin: 2px;
+    padding: 5px;
+}
+#comment-filter-reset-button {
+    border: none;
+    background-color: var(--clr-accent-neutral);
+    color: var(--clr-text);
+    border-radius: 5px;
+    padding: 0.5em;
+    font-size: 1em;
+    margin-top: 0.5em;
+    align-self: center;
+    align-items: center;
+    box-shadow: 0px 0px 10px 2px #2425268a;
+}
+#admin-delete-comment {
+    border: none;
+    background-color: var(--clr-accent-neutral);
+    color: var(--clr-text);
+    border-radius: 5px;
+    padding: 0.2em;
+    flex-basis: 20%;
+    align-self: center;
+}
