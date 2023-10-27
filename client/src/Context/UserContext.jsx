@@ -25,7 +25,9 @@ export const UserContextProvider = ({ children }) => {
     })
     const [isLoading, setIsLoading] = useState()
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-
+    const [adminMode, setAdminMode] = useState(
+        window.localStorage.getItem("amode") === "true" || false
+    )
     useEffect(() => {
         setIsLoading(true)
         async function getUserData() {
@@ -49,6 +51,10 @@ export const UserContextProvider = ({ children }) => {
         getUserData()
     }, [])
 
+    useEffect(() => {
+        window.localStorage.setItem("amode", adminMode)
+    }, [adminMode])
+
     return (
         <UserContext.Provider
             value={{
@@ -58,6 +64,8 @@ export const UserContextProvider = ({ children }) => {
                 setIsLoading,
                 ...state,
                 dispatch,
+                adminMode,
+                setAdminMode,
             }}
         >
             {children}
