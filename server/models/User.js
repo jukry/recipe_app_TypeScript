@@ -35,6 +35,10 @@ const user = new Schema(
                 ref: "Comment",
             },
         ],
+        role: {
+            type: String,
+            default: "User",
+        },
     },
     {
         timestamps: true,
