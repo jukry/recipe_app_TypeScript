@@ -23,6 +23,14 @@ const Register = lazy(() => import("./Pages/Register"))
 const Login = lazy(() => import("./Pages/Login"))
 const NotFound = lazy(() => import("./Components/NotFound"))
 const Forbidden = lazy(() => import("./Components/Forbidden"))
+const AdminLayout = lazy(() => import("./Pages/Admin/AdminLayout"))
+const AdminProtectedRoutes = lazy(() =>
+    import("./Components/AdminProtectedRoutes")
+)
+const AdminDashboard = lazy(() => import("./Pages/Admin/AdminDashboard"))
+const AdminUsers = lazy(() => import("./Pages/Admin/AdminUsers"))
+const AdminRecipes = lazy(() => import("./Pages/Admin/AdminRecipes"))
+const AdminComments = lazy(() => import("./Pages/Admin/AdminComments"))
 
 import { loader as recipeDetailsLoader } from "./Components/loaders/recipeDetailsEditLoader"
 import { action as recipeDetailsAction } from "./Components/actions/recipeDetailsEditAction"
@@ -120,6 +128,20 @@ function App() {
                                 return userSettingsActions({ request })
                             }}
                         />
+                    </Route>
+                </Route>
+                <Route
+                    element={
+                        <Suspense fallback={<Loader />}>
+                            <AdminProtectedRoutes />
+                        </Suspense>
+                    }
+                >
+                    <Route path="admin" element={<AdminLayout />}>
+                        <Route index element={<AdminDashboard />} />
+                        <Route path="recipes" element={<AdminRecipes />} />
+                        <Route path="users" element={<AdminUsers />} />
+                        <Route path="comments" element={<AdminComments />} />
                     </Route>
                 </Route>
                 <Route
