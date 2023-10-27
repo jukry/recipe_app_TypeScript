@@ -2,8 +2,7 @@ import { useContext } from "react"
 import { UserContext } from "../Context/UserContext"
 
 export const useLogout = () => {
-    const { dispatch } = useContext(UserContext)
-    const { setIsLoggedIn } = useContext(UserContext)
+    const { dispatch, setIsLoggedIn } = useContext(UserContext)
 
     const logout = async () => {
         const res = await fetch(
