@@ -1,7 +1,12 @@
-import React from "react"
-import { NavLink, Outlet } from "react-router-dom"
+import React, { useContext } from "react"
+import { NavLink, Navigate, Outlet } from "react-router-dom"
+import { UserContext } from "../../Context/UserContext"
 
 export default function AccountLayout() {
+    const { adminMode } = useContext(UserContext)
+    if (adminMode) {
+        return <Navigate to="/admin" />
+    }
     const activeStyle = {
         fontWeight: "bold",
         textDecoration: "underline",
