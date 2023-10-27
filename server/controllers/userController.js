@@ -57,15 +57,15 @@ const authenticateUser = async (req, res) => {
     }
 }
 const getUserData = async (req, res) => {
-    const { _id, email, recipes, favrecipes, lastlogins } = await User.findById(
-        req.user.id
-    )
+    const { _id, email, recipes, favrecipes, lastlogins, role } =
+        await User.findById(req.user.id)
     res.status(200).json({
         id: _id,
         email,
         recipes,
         favrecipes,
         lastlogins,
+        role,
     })
 }
 
@@ -157,6 +157,13 @@ const changeEmail = async (req, res) => {
         return res.status(200).json({ Message: newEmail })
     }
 }
+const getAllUsers = async (req, res) => {
+    const users = await User.find().select(
+        "email lastlogins recipes favrecipes createdAt role"
+    )
+    return res.status(200).json({ data: users })
+}
+
 export {
     registerUser,
     authenticateUser,
@@ -165,4 +172,5 @@ export {
     changePassword,
     deleteUser,
     changeEmail,
+    getAllUsers,
 }
