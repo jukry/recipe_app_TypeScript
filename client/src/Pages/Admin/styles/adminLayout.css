@@ -1,0 +1,30 @@
+@import "../../../constants.css";
+
+#admin-layout-container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 1000px;
+    padding: 0 1em;
+}
+#admin-nav {
+    display: flex;
+    gap: 0.5em;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 1em;
+    background-color: var(--clr-accent-neutral);
+    padding: 1em;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 50%);
+}
+@media screen and (min-width: 700px) {
+    #admin-nav {
+        display: flex;
+        gap: 1em;
+        align-items: center;
+        flex-direction: row;
+        margin: 1em 0;
+    }
+}
