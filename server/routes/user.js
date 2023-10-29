@@ -10,7 +10,7 @@ import {
     changeEmail,
     getAllUsers,
 } from "../controllers/userController.js"
-import protect from "../middleware/loginMiddleware.js"
+import { protect, adminProtect } from "../middleware/loginMiddleware.js"
 import {
     addFavRecipe,
     deleteFavRecipe,
@@ -26,5 +26,5 @@ userRouter.post("/user/favrecipes", protect, addFavRecipe)
 userRouter.delete("/user/favrecipes", protect, deleteFavRecipe)
 userRouter.post("/user/newpassword", protect, changePassword)
 userRouter.post("/user/changeemail", protect, changeEmail)
-userRouter.get("/all", getAllUsers) //TODO admin protected
+userRouter.get("/all", adminProtect, getAllUsers)
 export default userRouter
