@@ -9,7 +9,7 @@ import {
     updateRecipe,
     uploadRecipeImage,
 } from "../controllers/recipeController.js"
-import protect from "../middleware/loginMiddleware.js"
+import { protect } from "../middleware/loginMiddleware.js"
 import newRecipeLimiter from "../middleware/newRecipeLimiter.js"
 import multer from "multer"
 const storage = multer.memoryStorage()
