@@ -9,6 +9,8 @@ import {
     deleteUser,
     changeEmail,
     getAllUsers,
+    adminDeleteUser,
+    adminUpdateUserRole,
 } from "../controllers/userController.js"
 import { protect, adminProtect } from "../middleware/loginMiddleware.js"
 import {
@@ -27,4 +29,7 @@ userRouter.delete("/user/favrecipes", protect, deleteFavRecipe)
 userRouter.post("/user/newpassword", protect, changePassword)
 userRouter.post("/user/changeemail", protect, changeEmail)
 userRouter.get("/all", adminProtect, getAllUsers)
+userRouter.delete("/user/:id", adminProtect, adminDeleteUser)
+userRouter.patch("/user/:id", adminProtect, adminUpdateUserRole)
+
 export default userRouter
