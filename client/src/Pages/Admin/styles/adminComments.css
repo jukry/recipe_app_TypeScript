@@ -114,5 +114,7 @@
     border-radius: 5px;
     padding: 0.2em;
     flex-basis: 20%;
-    align-self: center;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    max-height: 75px;
 }
