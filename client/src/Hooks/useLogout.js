@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { UserContext } from "../Context/UserContext"
 
 export const useLogout = () => {
-    const { dispatch, setIsLoggedIn } = useContext(UserContext)
+    const { dispatch, setIsLoggedIn, setAdminMode } = useContext(UserContext)
 
     const logout = async () => {
         const res = await fetch(
@@ -17,6 +17,7 @@ export const useLogout = () => {
         if (res.ok) {
             dispatch({ type: "LOGOUT" })
             setIsLoggedIn(false)
+            setAdminMode(false)
         }
     }
     return { logout }
