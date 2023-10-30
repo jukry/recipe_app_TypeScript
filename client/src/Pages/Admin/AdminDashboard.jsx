@@ -16,11 +16,11 @@ export default function AdminDashboard() {
     return (
         <section id="admin-dashboard-container">
             <NavLink to="./recipes" id="recipes" className="data-wrapper">
-                <p className="data-amount">{userData?.length}</p>
+                <p className="data-amount">{recipeData?.length}</p>
                 <h3>Reseptiä</h3>
             </NavLink>
             <NavLink to="./users" id="users" className="data-wrapper">
-                <p className="data-amount">{recipeData?.length}</p>
+                <p className="data-amount">{userData?.length}</p>
                 <h3>Käyttäjää</h3>
             </NavLink>
             <NavLink to="./comments" id="comments" className="data-wrapper">
