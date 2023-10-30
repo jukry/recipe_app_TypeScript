@@ -39,10 +39,7 @@ export default function Fooditem(props) {
                 >
                     <div className="img-container">
                         <img
-                            src={
-                                data.images ||
-                                "../../public/pexels-jane-doan-1099680.jpg"
-                            }
+                            src={data.images || "pexels-jane-doan-1099680.jpg"}
                             alt={data.images ? "Kuva ateriasta" : "Vakiokuva"}
                             id={data.images ? "" : "fooditem-stock-image"}
                         />
