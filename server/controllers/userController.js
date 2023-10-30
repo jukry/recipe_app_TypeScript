@@ -2,6 +2,7 @@ import User from "../models/User.js"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import Recipe from "../models/Recipe.js"
+import Comment from "../models/Comment.js"
 const saltRounds = 10
 
 const registerUser = async (req, res) => {
@@ -57,6 +58,9 @@ const authenticateUser = async (req, res) => {
     }
 }
 const getUserData = async (req, res) => {
+    if (!req.user) {
+        return res.sendStatus(400)
+    }
     const { _id, email, recipes, favrecipes, lastlogins, role } =
         await User.findById(req.user.id)
     res.status(200).json({
@@ -135,6 +139,47 @@ const deleteUser = async (req, res) => {
     }
     return res.sendStatus(200)
 }
+
+const adminDeleteUser = async (req, res) => {
+    const { id, role, adminAmount } = req.body
+    const user = await User.findById(id)
+    if (adminAmount === 1 && role === "Admin") {
+        return res.status(401).json({
+            Message: "You are the last admin standing, cannot delete yourself",
+        })
+    }
+    if (!user) {
+        return res.status(404).json({ Message: "No such user" })
+    }
+
+    try {
+        await Comment.find({ user: id }).deleteMany()
+        await Recipe.find({ user: id }).deleteMany()
+        await user.deleteOne()
+        return res.status(200).json({ Message: "User deleted by admin" })
+    } catch (err) {
+        return res.status(400).json({ Message: err })
+    }
+}
+
+const adminUpdateUserRole = async (req, res) => {
+    const { id, role, newRole, adminAmount } = req.body
+    if (adminAmount === 1 && role === "Admin" && newRole === "User") {
+        return res
+            .status(401)
+            .json({ Message: "Cannot compute, you are the last admin left" })
+    }
+    if (!id || !role) {
+        return res.status(404).json({ Message: "Missing data" })
+    }
+    try {
+        await User.findById({ _id: id }).updateOne({ role: newRole }).exec()
+        return res.status(200).json({ Message: "User role updated by admin" })
+    } catch (err) {
+        return res.status(400).json({ Message: err })
+    }
+}
+
 const changeEmail = async (req, res) => {
     const oldEmail = req.user.email
     const { _id: id } = req.user
@@ -159,7 +204,7 @@ const changeEmail = async (req, res) => {
 }
 const getAllUsers = async (req, res) => {
     const users = await User.find().select(
-        "email lastlogins recipes favrecipes createdAt role"
+        "email lastlogins recipes favrecipes createdAt role comments"
     )
     return res.status(200).json({ data: users })
 }
@@ -173,4 +218,6 @@ export {
     deleteUser,
     changeEmail,
     getAllUsers,
+    adminDeleteUser,
+    adminUpdateUserRole,
 }
