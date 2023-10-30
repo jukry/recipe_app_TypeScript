@@ -382,3 +382,49 @@ export async function changeEmail(formData) {
         }
     )
 }
+export const handleDeleteFromAdmin = async (id, role, adminAmount) => {
+    return await fetch(
+        process.env.NODE_ENV === "production"
+            ? `${import.meta.env.VITE_USERDATA_ENDPOINT}/${id}`
+            : `${import.meta.env.VITE_USERDATA_ENDPOINT_DEV}/${id}`,
+        {
+            method: "DELETE",
+            mode: "cors",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id,
+                role: role,
+                adminAmount: adminAmount,
+            }),
+        }
+    )
+}
+export const handleRoleChangeFromAdmin = async (
+    newRole,
+    id,
+    role,
+    adminAmount
+) => {
+    return await fetch(
+        process.env.NODE_ENV === "production"
+            ? `${import.meta.env.VITE_USERDATA_ENDPOINT}/${id}`
+            : `${import.meta.env.VITE_USERDATA_ENDPOINT_DEV}/${id}`,
+        {
+            method: "PATCH",
+            mode: "cors",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id,
+                role: role,
+                newRole: newRole,
+                adminAmount: adminAmount,
+            }),
+        }
+    )
+}
