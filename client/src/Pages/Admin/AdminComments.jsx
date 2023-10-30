@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import fetchComments from "../../Hooks/fetchComments"
 import { commentTime } from "../../utils/utils"
 import "./styles/adminComments.css"
+import Paginate from "../../Components/Paginate"
 
 export default function AdminComments() {
     const queryResponseComments = useQuery(["allcomments"], fetchComments)
@@ -93,46 +94,6 @@ export default function AdminComments() {
                 )
             }
         })
-    const paginate = () => {
-        return (
-            <section id="admin-comment-nav-container">
-                <button
-                    onClick={(event) => {
-                        handlePagination(event)
-                    }}
-                    id="admin-comment-nav-back"
-                >
-                    {"<"}
-                </button>
-                <p>
-                    {currentPage} / {maxPages || 1}
-                </p>
-                <button
-                    onClick={(event) => handlePagination(event)}
-                    id="admin-comment-nav-forward"
-                >
-                    {">"}
-                </button>
-            </section>
-        )
-    }
-
-    const pagination = paginate()
-
-    const handlePagination = (event) => {
-        event.stopPropagation()
-        event.preventDefault()
-        const navButtonPressed = event.target.id
-        navButtonPressed === "admin-comment-nav-forward"
-            ? setCurrentPage((prev) => {
-                  if (prev < maxPages) return prev + 1
-                  else return prev
-              })
-            : setCurrentPage((prev) => {
-                  if (prev > 1) return prev - 1
-                  else return prev
-              })
-    }
     const handleDateFilter = (e) => {
         e.preventDefault()
         const filterTime = e.target.value
@@ -169,7 +130,14 @@ export default function AdminComments() {
             <h3>Kommentit</h3>
             {comments?.length > initialComments ? (
                 <section id="admin-comment-page-container">
-                    {pagination}
+                    <Paginate
+                        currentPage={currentPage}
+                        maxPages={maxPages}
+                        containerId="admin-comment-nav-container"
+                        backBtnId="admin-comment-nav-back"
+                        forwardBtnId="admin-comment-nav-forward"
+                        setCurrentPage={setCurrentPage}
+                    />
                 </section>
             ) : (
                 ""
