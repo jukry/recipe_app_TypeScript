@@ -9,13 +9,13 @@ import DeleteModal from "../../Components/DeleteModal"
 import {
     handleDeleteFromAdmin,
     handleRoleChangeFromAdmin,
+    sortUser,
 } from "../../utils/utils"
 export default function AdminUsers() {
     const queryResponseUsers = useQuery(["users"], fetchUsersData)
     const userData = queryResponseUsers?.data?.data ?? []
     const [currentPage, setCurrentPage] = useState(1)
     const initialUsers = 20
-    const maxPages = Math.ceil(userData.length / initialUsers)
     const [userSearchParams, setUserSearchParams] = useSearchParams()
     const [filter, setFilter] = useState(userSearchParams?.get("search") || "")
     const [sortFilter, setSortFilter] = useState("emailAsc")
@@ -30,70 +30,14 @@ export default function AdminUsers() {
     }).length
 
     const users = userData
-        ?.filter((user) => {
+
+        .sort((a, b) => {
+            return sortUser(sortFilter, a, b)
+        })
+        .filter((user) => {
             return user.email.toLowerCase().includes(filter.toLowerCase())
         })
-        .sort((a, b) => {
-            switch (sortFilter) {
-                case "emailDesc": {
-                    const emailA = a.email.toLowerCase()
-                    const emailB = b.email.toLowerCase()
-                    if (emailA < emailB) {
-                        return 1
-                    }
-                    if (emailA > emailB) {
-                        return -1
-                    }
-                    return 0
-                }
-                case "recipesAsc": {
-                    const recipesA = a.recipes.length
-                    const recipesB = b.recipes.length
-                    if (recipesA < recipesB) {
-                        return -1
-                    }
-                    if (recipesA > recipesB) {
-                        return 1
-                    }
-                    return 0
-                }
-                case "recipesDesc": {
-                    const recipesA = a.recipes.length
-                    const recipesB = b.recipes.length
-                    if (recipesA < recipesB) {
-                        return 1
-                    }
-                    if (recipesA > recipesB) {
-                        return -1
-                    }
-                    return 0
-                }
-                case "commentsAsc": {
-                    const commentsA = a.comments.length
-                    const commentsB = b.comments.length
-                    if (commentsA < commentsB) {
-                        return -1
-                    }
-                    if (commentsA > commentsB) {
-                        return 1
-                    }
-                    return 0
-                }
-                case "commentsDesc": {
-                    const commentsA = a.comments.length
-                    const commentsB = b.comments.length
-                    if (commentsA < commentsB) {
-                        return 1
-                    }
-                    if (commentsA > commentsB) {
-                        return -1
-                    }
-                    return 0
-                }
-                default:
-                    break
-            }
-        })
+
         .map((user) => {
             return (
                 <section className="admin-user-container" key={user._id}>
@@ -102,6 +46,12 @@ export default function AdminUsers() {
                             {user.email} <span>|</span> {user.role}
                         </h4>
                         <p>
+                            Käyttäjä luotu:{" "}
+                            {new Date(user?.createdAt)?.toLocaleDateString(
+                                "fi-FI"
+                            )}
+                        </p>
+                        <p>
                             Viimeksi kirjautunut:{" "}
                             {new Date(user?.lastlogins[0])?.toLocaleDateString(
                                 "fi-FI"
@@ -109,14 +59,16 @@ export default function AdminUsers() {
                         </p>
                         <p>
                             Omia reseptejä:{" "}
-                            <NavLink to={`../recipes?user=${user.email}`}>
+                            <NavLink to={`../recipes?email=${user.email}`}>
                                 {user.recipes.length}
                             </NavLink>
                         </p>
                         <p>
-                            Käyttäjällä kommentteja:{" "}
-                            <NavLink to={`../comments?user=${user.email}`}>
-                                {user.comments?.length}
+                            <NavLink
+                                to={`../comments?email=${user.email}`}
+                                className="navlink-to"
+                            >
+                                Käyttäjällä kommentteja: {user.comments?.length}
                             </NavLink>
                         </p>
                     </section>
@@ -160,6 +112,12 @@ export default function AdminUsers() {
                 </section>
             )
         })
+    const maxPages = Math.ceil(users.length / initialUsers)
+
+    const slicedUsers = users.slice(
+        (currentPage - 1) * initialUsers,
+        initialUsers * currentPage
+    )
 
     return (
         <section id="admin-users-container">
@@ -204,13 +162,21 @@ export default function AdminUsers() {
                 >
                     <option value="emailAsc">Sähköposti: nouseva</option>
                     <option value="emailDesc">Sähköposti: laskeva</option>
+                    <option value="createdAsc">
+                        Luontipäivämäärä: nouseva
+                    </option>
+                    <option value="createdDesc">
+                        Luontipäivämäärä: laskeva
+                    </option>
                     <option value="recipesAsc">Reseptit: nouseva</option>
                     <option value="recipesDesc">Reseptit: laskeva</option>
                     <option value="commentsAsc">Kommentit: nouseva</option>
                     <option value="commentsDesc">Kommentit: laskeva</option>
                 </select>
+                <p>Tuloksia: {slicedUsers.length}</p>
             </section>
-            <section id="admin-users-wrapper">{users}</section>
+
+            <section id="admin-users-wrapper">{slicedUsers}</section>
             {showDeleteModal &&
                 createPortal(
                     <DeleteModal
