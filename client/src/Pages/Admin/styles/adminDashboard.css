@@ -20,3 +20,18 @@
     scale: 1.01;
     transition: ease 0.2s all;
 }
+@media screen and (min-width: 700px) {
+    #admin-dashboard-container {
+        flex-direction: row;
+        gap: 1em;
+    }
+    .data-wrapper {
+        font-size: clamp(1, 1.5vw, 1.75em);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        min-height: 200px;
+        justify-content: center;
+    }
+}
