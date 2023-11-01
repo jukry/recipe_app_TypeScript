@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import React from "react"
-import fetchRecipes from "../../Hooks/fetchRecipes"
+import fetchAllRecipeData from "../../Hooks/fetchAllRecipeData"
 import fetchUsersData from "../../Hooks/fetchUsersData"
 import fetchComments from "../../Hooks/fetchComments"
 import "./styles/adminDashboard.css"
 import { NavLink } from "react-router-dom"
 
 export default function AdminDashboard() {
-    const queryResponseRecipes = useQuery(["recipes"], fetchRecipes)
+    const queryResponseRecipes = useQuery(["allrecipes"], fetchAllRecipeData)
     const queryResponseUsers = useQuery(["users"], fetchUsersData)
     const queryResponseComments = useQuery(["allcomments"], fetchComments)
     const recipeData = queryResponseRecipes?.data?.message ?? []
