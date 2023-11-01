@@ -102,12 +102,10 @@
 #admin-users-filter-container {
     display: flex;
     flex-direction: column;
+    font-size: clamp(0.8em, 1.5vw, 1.25em);
 }
 #admin-users-email-filter-container {
     display: flex;
-}
-#admin-user-filter-email-label {
-    font-size: 0.9em;
 }
 #admin-user-filter-email {
     width: 100%;
@@ -119,6 +117,7 @@
     margin-top: 5px;
 }
 #admin-users-sort {
+    font-size: 1em;
     width: 100%;
     border-radius: 5px;
     padding: 5px;
