@@ -83,7 +83,7 @@ const generateToken = (id) => {
 const getUserRecipes = async (req, res) => {
     const { _id } = req.user
     const userId = _id.toString()
-    const recipes = await Recipe.find({ user: userId }).exec()
+    const recipes = await Recipe.find({ "user._id": userId }).exec()
     return res.status(200).json({ data: recipes })
 }
 
@@ -153,8 +153,8 @@ const adminDeleteUser = async (req, res) => {
     }
 
     try {
-        await Comment.find({ user: id }).deleteMany()
-        await Recipe.find({ user: id }).deleteMany()
+        await Comment.find({ "user._id": id }).deleteMany()
+        await Recipe.find({ "user._id": id }).deleteMany()
         await user.deleteOne()
         return res.status(200).json({ Message: "User deleted by admin" })
     } catch (err) {
