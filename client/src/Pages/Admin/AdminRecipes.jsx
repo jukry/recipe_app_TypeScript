@@ -90,7 +90,6 @@ export default function AdminRecipes() {
 
     return (
         <section id="admin-recipes-container">
-            <BackButton></BackButton>
             <h3>Reseptit</h3>
             <section id="admin-recipes-pagination-container">
                 <Paginate
