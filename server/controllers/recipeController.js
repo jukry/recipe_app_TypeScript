@@ -1,5 +1,6 @@
 import Recipe from "../models/Recipe.js"
 import User from "../models/User.js"
+import Comment from "../models/Comment.js"
 import { v2 as cloudinary } from "cloudinary"
 
 const getAllRecipes = async (req, res) => {
@@ -21,6 +22,15 @@ const getAllRecipes = async (req, res) => {
         res.sendStatus(404)
     }
 }
+const adminGetAllRecipes = async (req, res) => {
+    try {
+        let recipes = await Recipe.find()
+        return res.status(200).json({ message: recipes })
+    } catch (error) {
+        console.log(error)
+        return res.sendStatus(404)
+    }
+}
 
 const getRandomRecipe = async (req, res) => {
     try {
@@ -34,11 +44,16 @@ const getRandomRecipe = async (req, res) => {
 
 const getRecipeById = async (req, res) => {
     const { id } = req.params
+    const recipeFound = await Recipe.findById(id).select(
+        "name description ingredients instructions comments images"
+    )
+    if (!recipeFound) {
+        return res.status(404).json({ Message: "No such recipe" })
+    }
     try {
-        const recipeById = await Recipe.findById(id)
-        res.status(200).json({ message: recipeById })
+        return res.status(200).json({ message: recipeFound })
     } catch (error) {
-        res.status(404).json({ message: "No such recipe" })
+        return res.status(400).json({ message: error })
     }
 }
 
@@ -110,7 +125,7 @@ const createRecipe = async (req, res) => {
 
     try {
         const createdRecipe = await Recipe.create({
-            user: userId,
+            user: { _id: userId, email: req.user.email },
             name: newRecipe.name,
             description: newRecipe.description,
             ingredients: newRecipe.ingredients,
@@ -138,7 +153,7 @@ const deleteRecipe = async (req, res) => {
         return res.status(404).json({ Message: `No recipe with id ${id}` })
     }
 
-    if (userId !== recipe.user.toString()) {
+    if (userId !== recipe.user._id.toString()) {
         return res.status(400).json({ Message: "Not authorized" })
     }
 
@@ -146,7 +161,10 @@ const deleteRecipe = async (req, res) => {
         //delete recipe
         await Recipe.findById(id).deleteOne()
         //get updated recipe array
-        const updated = await Recipe.find({ user: userId }).select("_id").exec()
+        const updated = await Recipe.find({ "user._id": userId })
+            .select("_id")
+            .exec()
+        console.log(updated)
         //update user's recipe array
         await User.findOneAndUpdate(
             { _id: userId },
@@ -161,6 +179,60 @@ const deleteRecipe = async (req, res) => {
                 },
             }
         ).exec()
+        //delete comments
+        await Comment.find({ recipe: id }).deleteMany()
+        return res.status(200).json(updated)
+    } catch (error) {
+        return res.status(400).json({ Message: "Bad request" })
+    }
+}
+
+const adminDeleteRecipe = async (req, res) => {
+    const { id, userId } = req.body
+    const recipe = await Recipe.findById(id)
+
+    if (!recipe) {
+        return res.status(404).json({ Message: "No recipe with such id" })
+    }
+    try {
+        //delete recipe
+        await Recipe.findById(id).deleteOne()
+
+        //get updated recipe array
+        const updated = await Recipe.find({ "user._id": userId })
+            .select("_id")
+            .exec()
+        //update user's recipe array
+        await User.findOneAndUpdate(
+            { _id: userId },
+            { $set: { recipes: updated } }
+        )
+        //delete recipe from user's who have it as favorite
+        await User.updateMany(
+            { favrecipes: id },
+            {
+                $pull: {
+                    favrecipes: id,
+                },
+            }
+        ).exec()
+        //delete comments
+        await Comment.find({ recipe: id }).deleteMany()
+
+        const updatedComments = await Comment.find({
+            "user._id": userId,
+        }).select("_id")
+        await User.findOneAndUpdate(
+            {
+                _id: userId,
+            },
+            {
+                $set: {
+                    comments: updatedComments,
+                },
+            }
+        )
+
         return res.status(200).json(updated)
     } catch (error) {
         return res.status(400).json({ Message: "Bad request" })
@@ -177,7 +249,7 @@ const updateRecipe = async (req, res) => {
         return res.status(404).json({ Message: `No recipe with id ${id}` })
     }
 
-    if (userId !== recipe.user.toString()) {
+    if (userId !== recipe.user._id.toString()) {
         return res.status(400).json({ Message: "Not authorized" })
     }
 
@@ -316,4 +388,6 @@ export {
     deleteRecipe,
     updateRecipe,
     uploadRecipeImage,
+    adminGetAllRecipes,
+    adminDeleteRecipe,
 }
