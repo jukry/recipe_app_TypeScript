@@ -6,6 +6,8 @@ import BackButton from "./BackButton"
 import RecipeComments from "./RecipeComments"
 import fetchRecipeComments from "../Hooks/fetchRecipeComments"
 import { postComment } from "../utils/utils"
+import { useContext } from "react"
+import { UserContext } from "../Context/UserContext"
 
 function RecipeDetails() {
     const params = useParams()
@@ -15,10 +17,12 @@ function RecipeDetails() {
         ["comments", params.id],
         fetchRecipeComments
     )
-
+    const {
+        user: { email },
+    } = useContext(UserContext)
     const mutation = useMutation({
         mutationFn: async ([_, comment, id, userId, setComment]) => {
-            const res = await postComment(comment, id, userId)
+            const res = await postComment(comment, id, userId, email)
             if (!res.ok) {
                 throw new Error(res.status)
             }
