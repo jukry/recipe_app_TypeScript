@@ -8,8 +8,10 @@ import {
     deleteRecipe,
     updateRecipe,
     uploadRecipeImage,
+    adminGetAllRecipes,
+    adminDeleteRecipe,
 } from "../controllers/recipeController.js"
-import { protect } from "../middleware/loginMiddleware.js"
+import { protect, adminProtect } from "../middleware/loginMiddleware.js"
 import newRecipeLimiter from "../middleware/newRecipeLimiter.js"
 import multer from "multer"
 const storage = multer.memoryStorage()
@@ -23,12 +25,16 @@ recipesRouter
 // get random recipe
 recipesRouter.get("/random", getRandomRecipe)
 
+recipesRouter.get("/all", adminProtect, adminGetAllRecipes)
+
 // route for id based request
 recipesRouter
     .route("/:id")
     .get(getRecipeById)
     .delete(protect, deleteRecipe)
     .patch(protect, updateRecipe)
+
+recipesRouter.route("/admin/:id").delete(adminProtect, adminDeleteRecipe)
 
 recipesRouter
     .route("/upload")
