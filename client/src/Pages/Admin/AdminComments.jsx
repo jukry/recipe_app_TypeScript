@@ -4,6 +4,7 @@ import fetchComments from "../../Hooks/fetchComments"
 import { commentTime } from "../../utils/utils"
 import "./styles/adminComments.css"
 import Paginate from "../../Components/Paginate"
+import { useSearchParams } from "react-router-dom"
 
 export default function AdminComments() {
     const queryResponseComments = useQuery(["allcomments"], fetchComments)
@@ -14,6 +15,13 @@ export default function AdminComments() {
         startDate: "",
         endDate: "",
     })
+    const [commentSearchParams, setCommentSearchParams] = useSearchParams()
+    const [emailFilter, setEmailFilter] = useState(
+        commentSearchParams.get("email") || ""
+    )
+    const [recipeIdFilter, setRecipeIdFilter] = useState(
+        commentSearchParams.get("recipeId") || ""
+    )
 
     const handleDelete = async (e, id) => {
         const res = await fetch(
@@ -45,6 +53,14 @@ export default function AdminComments() {
     const maxPages = Math.ceil(commentList.length / initialComments)
 
     const slicedList = commentList
+        .filter((comment) => {
+            return comment?.user?.email
+                ?.toLowerCase()
+                .includes(emailFilter.toLowerCase())
+        })
+        .filter((comment) => {
+            return comment.recipe.includes(recipeIdFilter)
+        })
         .slice(
             (currentPage - 1) * initialComments,
             initialComments * currentPage
@@ -77,6 +93,7 @@ export default function AdminComments() {
                                     {getCommentTime}
                                 </p>
                             </section>
+                            <p>Käyttäjä: {comment.user.email}</p>
 
                             <p className="admin-comment-content">
                                 {comment.content}
@@ -128,20 +145,16 @@ export default function AdminComments() {
     return (
         <section id="admin-comment-section-container">
             <h3>Kommentit</h3>
-            {comments?.length > initialComments ? (
-                <section id="admin-comment-page-container">
-                    <Paginate
-                        currentPage={currentPage}
-                        maxPages={maxPages}
-                        containerId="admin-comment-nav-container"
-                        backBtnId="admin-comment-nav-back"
-                        forwardBtnId="admin-comment-nav-forward"
-                        setCurrentPage={setCurrentPage}
-                    />
-                </section>
-            ) : (
-                ""
-            )}
+            <section id="admin-comment-page-container">
+                <Paginate
+                    currentPage={currentPage}
+                    maxPages={maxPages}
+                    containerId="admin-comment-nav-container"
+                    backBtnId="admin-comment-nav-back"
+                    forwardBtnId="admin-comment-nav-forward"
+                    setCurrentPage={setCurrentPage}
+                />
+            </section>
             <section id="admin-comment-filter-container">
                 <input
                     type="datetime-local"
@@ -169,6 +182,43 @@ export default function AdminComments() {
                 >
                     Poista suodatin
                 </button>
+                <label
+                    htmlFor="admin-comment-filter-email"
+                    id="admin-comment-filter-email-label"
+                >
+                    Suodata sähköpostilla
+                </label>
+                <input
+                    type="search"
+                    id="admin-comment-filter-email"
+                    value={emailFilter}
+                    onChange={(e) => {
+                        setEmailFilter(e.target.value)
+                        setCommentSearchParams((searchParams) => {
+                            searchParams.set("email", e.target.value)
+                            return searchParams
+                        })
+                    }}
+                />
+                <label
+                    htmlFor="admin-comment-filter-id"
+                    id="admin-comment-filter-id-label"
+                >
+                    Suodata reseptin ID:lla
+                </label>
+                <input
+                    type="search"
+                    id="admin-comment-filter-id"
+                    value={recipeIdFilter}
+                    onChange={(e) => {
+                        setRecipeIdFilter(e.target.value)
+                        setCommentSearchParams((searchParams) => {
+                            searchParams.set("recipeId", e.target.value)
+                            return searchParams
+                        })
+                    }}
+                />
+                <p>Tuloksia: {slicedList.length}</p>
             </section>
             {comments?.length > 0 ? (
                 <section id="admin-comments-container">{slicedList}</section>
