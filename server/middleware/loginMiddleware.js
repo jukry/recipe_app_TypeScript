@@ -2,7 +2,8 @@ import jwt from "jsonwebtoken"
 import User from "../models/User.js"
 
 const protect = async (req, res, next) => {
-    if (!req.headers.cookie) return res.json({ Message: "No token" })
+    if (!req.headers.cookie)
+        return res.status(401).json({ Message: "No token" })
     const cookies = req.headers.cookie?.split("; ")
     const token = cookies[0]?.split("=")[1]
     let acc = cookies[1]?.split("=")[1]
@@ -51,7 +52,8 @@ const protect = async (req, res, next) => {
     }
 }
 const adminProtect = async (req, res, next) => {
-    if (!req.headers.cookie) return res.json({ Message: "No token" })
+    if (!req.headers.cookie)
+        return res.status(401).json({ Message: "No token" })
     const cookies = req.headers.cookie?.split("; ")
     const token = cookies[0]?.split("=")[1]
     let acc = cookies[1]?.split("=")[1]
