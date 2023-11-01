@@ -3,7 +3,9 @@ import { Schema, model } from "mongoose"
 const comment = new Schema(
     {
         user: {
-            type: Schema.Types.ObjectId,
+            type: Object,
+            _id: Schema.Types.ObjectId,
+            email: String,
             ref: "User",
             required: true,
         },
