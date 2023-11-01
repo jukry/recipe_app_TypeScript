@@ -344,7 +344,7 @@ export function commentTime(timeDelta) {
               timeDelta / 60 / 24 / 30 / 12 //x years ago
           )} vuotta sitten`
 }
-export async function postComment(commentData, id, userId) {
+export async function postComment(commentData, id, userId, email) {
     return await fetch(
         process.env.NODE_ENV === "production"
             ? `${import.meta.env.VITE_COMMENTS_ENDPOINT}`
@@ -360,6 +360,7 @@ export async function postComment(commentData, id, userId) {
                 commentData,
                 id,
                 userId,
+                email,
             }),
         }
     )
@@ -427,4 +428,158 @@ export const handleRoleChangeFromAdmin = async (
             }),
         }
     )
+}
+
+export const handleRecipeDeleteFromAdmin = async (id, userId) => {
+    return await fetch(
+        process.env.NODE_ENV === "production"
+            ? `${import.meta.env.VITE_RECIPE_ENDPOINT}/admin/${id}`
+            : `${import.meta.env.VITE_RECIPE_ENDPOINT_DEV}/admin/${id}`,
+        {
+            method: "DELETE",
+            mode: "cors",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id,
+                userId,
+            }),
+        }
+    )
+}
+
+export const sortRecipes = (sortFilter, a, b) => {
+    switch (sortFilter) {
+        case "dateDesc": {
+            const dateA = new Date(a.createdAt)
+            const dateB = new Date(b.createdAt)
+            if (dateA < dateB) {
+                return 1
+            }
+            if (dateA > dateB) {
+                return -1
+            }
+            return 0
+        }
+        case "dateAsc": {
+            const dateA = new Date(a.createdAt)
+            const dateB = new Date(b.createdAt)
+            if (dateA < dateB) {
+                return -1
+            }
+            if (dateA > dateB) {
+                return 1
+            }
+            return 0
+        }
+        case "commentsAsc": {
+            const commentsA = a.comments.length
+            const commentsB = b.comments.length
+            if (commentsA < commentsB) {
+                return -1
+            }
+            if (commentsA > commentsB) {
+                return 1
+            }
+            return 0
+        }
+        case "commentsDesc": {
+            const commentsA = a.comments.length
+            const commentsB = b.comments.length
+            if (commentsA < commentsB) {
+                return 1
+            }
+            if (commentsA > commentsB) {
+                return -1
+            }
+            return 0
+        }
+        default:
+            break
+    }
+}
+export const sortUser = (sortFilter, a, b) => {
+    switch (sortFilter) {
+        case "emailDesc": {
+            const emailA = a.email.toLowerCase()
+            const emailB = b.email.toLowerCase()
+            if (emailA < emailB) {
+                return 1
+            }
+            if (emailA > emailB) {
+                return -1
+            }
+            return 0
+        }
+        case "recipesAsc": {
+            const recipesA = a.recipes.length
+            const recipesB = b.recipes.length
+            if (recipesA < recipesB) {
+                return -1
+            }
+            if (recipesA > recipesB) {
+                return 1
+            }
+            return 0
+        }
+        case "recipesDesc": {
+            const recipesA = a.recipes.length
+            const recipesB = b.recipes.length
+            if (recipesA < recipesB) {
+                return 1
+            }
+            if (recipesA > recipesB) {
+                return -1
+            }
+            return 0
+        }
+        case "commentsAsc": {
+            const commentsA = a.comments.length
+            const commentsB = b.comments.length
+            if (commentsA < commentsB) {
+                return -1
+            }
+            if (commentsA > commentsB) {
+                return 1
+            }
+            return 0
+        }
+        case "commentsDesc": {
+            const commentsA = a.comments.length
+            const commentsB = b.comments.length
+            if (commentsA < commentsB) {
+                return 1
+            }
+            if (commentsA > commentsB) {
+                return -1
+            }
+            return 0
+        }
+        case "createdAsc": {
+            const createdA = a.createdAt
+            const createdB = b.createdAt
+            if (createdA < createdB) {
+                return -1
+            }
+            if (createdA > createdB) {
+                return 1
+            }
+            return 0
+        }
+        case "createdDesc": {
+            const createdA = a.createdAt
+            const createdB = b.createdAt
+            if (createdA < createdB) {
+                return 1
+            }
+            if (createdA > createdB) {
+                return -1
+            }
+            return 0
+        }
+        default:
+            break
+    }
 }
