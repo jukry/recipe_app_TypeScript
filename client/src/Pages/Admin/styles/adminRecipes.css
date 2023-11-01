@@ -1,0 +1,103 @@
+@import "../../../constants.css";
+
+#admin-recipes-container {
+    margin: 0 auto;
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--clr-text);
+    gap: 0.5em;
+}
+#admin-recipes-container > h3 {
+    font-size: 1.5em;
+    text-align: center;
+}
+.admin-recipe-container {
+    border-bottom: 1px solid var(--clr-accent-neutral);
+    margin-bottom: 0.25em;
+    padding-bottom: 0.25em;
+    display: flex;
+    align-items: center;
+}
+#admin-recipes-pagination-container {
+    max-width: 250px;
+    width: 100%;
+}
+#admin-recipes-nav-container {
+    display: flex;
+    padding: 0.1em 2em;
+    background-color: var(--clr-accent-neutral);
+    border-radius: 5px;
+    position: relative;
+    align-items: center;
+    box-shadow: 0px 0px 10px 2px #2425268a;
+    font-size: 1.25em;
+    font-weight: 700;
+    justify-content: center;
+}
+#admin-recipes-nav-container button {
+    background-color: transparent;
+    border: none;
+    color: var(--clr-text);
+    font-family: monospace;
+    padding-bottom: 0.4em;
+}
+#admin-recipes-wrapper {
+    width: 100%;
+}
+#admin-recipes-nav-container p {
+    padding: 0.3em 1.5em;
+    border-right: 1px solid var(--clr-accent);
+    border-left: 1px solid var(--clr-accent);
+}
+#admin-recipes-nav-back {
+    position: absolute;
+    left: 0;
+    padding: 0.25em;
+    font-size: 2em;
+}
+#admin-recipes-nav-forward {
+    right: 0;
+    position: absolute;
+    padding: 0.25em;
+    font-size: 2em;
+}
+.admin-recipedata-container {
+    display: flex;
+    flex-basis: 80%;
+    flex-direction: column;
+    font-size: clamp(0.8em, 1.5vw, 1.25em);
+}
+#admin-recipes-filter-container {
+    display: flex;
+    flex-direction: column;
+    font-size: clamp(0.8em, 1.5vw, 1.25em);
+    justify-content: space-evenly;
+    max-width: 250px;
+}
+#admin-recipes-email-filter-container {
+    display: flex;
+    flex-direction: column;
+}
+#admin-recipes-email-filter-container input {
+    padding: 5px;
+    font-size: 1.25em;
+    border-radius: 5px;
+}
+#admin-recipes-sort {
+    font-size: 1em;
+    padding: 5px;
+    border-radius: 5px;
+}
+.admin-delete-recipe {
+    border: none;
+    background-color: var(--clr-accent-neutral);
+    color: var(--clr-text);
+    border-radius: 5px;
+    padding: 0.2em;
+    flex-basis: 20%;
+    height: 75px;
+    align-self: center;
+}
