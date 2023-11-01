@@ -6,7 +6,7 @@ const postComment = async (req, res) => {
     const recipeId = req.body.id
     const commentData = req.body.commentData
     const userId = req.body.userId
-
+    const email = req.body.email
     if (!userId) {
         return res.status(401).json({ Message: "Not authorized" })
     } else if (!recipeId) {
@@ -15,7 +15,7 @@ const postComment = async (req, res) => {
 
     try {
         const newComment = await Comment.create({
-            user: userId,
+            user: { _id: userId, email: email },
             recipe: recipeId,
             username: commentData.username,
             content: commentData.content,
@@ -38,18 +38,25 @@ const postComment = async (req, res) => {
 
 const getComments = async (req, res) => {
     const recipeId = req.params.id
-    //TODO
-    // sad path
-    const comments = await Comment.find({ recipe: recipeId }).sort({
-        createdAt: -1,
-    })
+    if (!recipeId) {
+        return res.status(400).json({ Message: "No recipe id given" })
+    }
+    try {
+        const comments = await Comment.find({ recipe: recipeId })
+            .sort({
+                createdAt: -1,
+            })
+            .select("recipe username content createdAt")
 
-    return res.status(200).json(comments)
+        return res.status(200).json(comments)
+    } catch (err) {
+        console.log(err)
+        return res.status(404).json({ Message: "No such recipe" })
+    }
 }
 const getAllComments = async (req, res) => {
     const comments = await Comment.find().sort({ createdAt: -1 })
-    //TODO
-    // sad path
+
     return res.status(200).json({ data: comments })
 }
 const deleteComment = async (req, res) => {
