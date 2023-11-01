@@ -10,6 +10,7 @@
     justify-content: center;
     color: var(--clr-text);
     gap: 0.5em;
+    font-size: clamp(0.8em, 1.5vw, 1.25em);
 }
 #admin-comment-section-container > h3 {
     font-size: 1.5em;
@@ -19,9 +20,11 @@
     width: 100%;
 }
 .admin-comment-container {
-    margin-bottom: 0.5em;
-    display: flex;
     border-bottom: 1px solid var(--clr-accent-neutral);
+    margin-bottom: 0.25em;
+    padding-bottom: 0.25em;
+    display: flex;
+    align-items: center;
 }
 .admin-comment-user {
     font-weight: 700;
@@ -86,7 +89,7 @@
     flex-wrap: wrap;
     display: flex;
     max-width: 250px;
-    justify-content: space-evenly;
+    flex-direction: column;
 }
 #admin-comment-filter-container input {
     flex-basis: calc(50% - 4px);
@@ -114,7 +117,11 @@
     border-radius: 5px;
     padding: 0.2em;
     flex-basis: 20%;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    max-height: 75px;
+    height: 75px;
+    align-self: center;
+}
+#admin-comment-filter-email,
+#admin-comment-filter-id {
+    flex-basis: 100% !important;
+    width: 100%;
 }
