@@ -119,7 +119,6 @@ header > a,
     color: var(--clr-text);
 }
 .results .img-container > img {
-    min-width: 250px;
     min-height: 250px;
     max-width: 100%;
     border-radius: 10px 10px 0 0;
@@ -356,5 +355,15 @@ input:checked + #slider-round:before {
     .top-nav-active {
         width: 100%;
         left: 0%;
+    }
+}
+@media screen and (min-width: 950px) {
+    .results {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+@media screen and (min-width: 700px) and (max-width: 950px) {
+    .results {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
