@@ -24,11 +24,11 @@ export default function Search() {
             return queryRecipes
         } else {
             const nameMatch = item.name
-                .toLowerCase()
+                ?.toLowerCase()
                 .includes(searchParam.toLowerCase())
-            const ingredientMatch = item.ingredients.some((ingredient) =>
-                ingredient.ingredient
-                    .toLowerCase()
+            const ingredientMatch = item?.ingredients?.some((ingredient) =>
+                ingredient?.ingredient
+                    ?.toLowerCase()
                     .includes(searchParam.toLowerCase())
             )
             return nameMatch || ingredientMatch
