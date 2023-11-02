@@ -58,9 +58,11 @@ export default function AdminUsers() {
                             )}
                         </p>
                         <p>
-                            Omia reseptejä:{" "}
-                            <NavLink to={`../recipes?email=${user.email}`}>
-                                {user.recipes.length}
+                            <NavLink
+                                to={`../recipes?email=${user.email}`}
+                                className="navlink-to"
+                            >
+                                Omia reseptejä: {user.recipes.length}
                             </NavLink>
                         </p>
                         <p>
