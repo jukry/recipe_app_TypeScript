@@ -95,7 +95,7 @@ const changePassword = async (req, res) => {
         return res.status(400).json({ Message: "Please fill all fields" })
     }
     if (newPassword !== newRePassword) {
-        return res.status(401).json({ Message: "Passwords do not match" })
+        return res.status(400).json({ Message: "Passwords do not match" })
     }
     const user = await User.findById(_id)
 
