@@ -35,7 +35,6 @@ const AdminComments = lazy(() => import("./Pages/Admin/AdminComments"))
 import { loader as recipeDetailsLoader } from "./Components/loaders/recipeDetailsEditLoader"
 import { action as recipeDetailsAction } from "./Components/actions/recipeDetailsEditAction"
 import { loader as favRecipesLoader } from "./Components/loaders/favRecipesLoader"
-import { action as userSettingsActions } from "./Pages/Account/actions/userSettingsAction"
 import { action as registerAction } from "./Pages/actions/registerAction"
 
 const queryClient = new QueryClient({
@@ -124,9 +123,6 @@ function App() {
                                     <UserSettings />
                                 </Suspense>
                             }
-                            action={async ({ request }) => {
-                                return userSettingsActions({ request })
-                            }}
                         />
                     </Route>
                 </Route>
