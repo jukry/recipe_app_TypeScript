@@ -1,0 +1,33 @@
+@import "../../constants.css";
+
+.notification-modal {
+    position: fixed;
+    top: 3em;
+    background-color: var(--clr-accent-danger);
+    color: var(--clr-text);
+    max-width: 250px;
+    z-index: 5;
+    text-align: center;
+    margin: 2em 0.6em;
+    font-size: 1em;
+    border-radius: 3px;
+    transition: right 0.75s cubic-bezier(0.54, -0.25, 0.69, 1.19);
+    right: -250px;
+}
+.notification-modal p {
+    padding: 0.5em;
+}
+.show-notification {
+    right: 0 !important;
+    transition: right 0.75s cubic-bezier(0.54, -0.25, 0.69, 1.19);
+}
+.progress {
+    height: 5px;
+    background-color: white;
+    width: 100%;
+    padding: 0;
+    border-radius: 3px;
+    bottom: 0px;
+    position: absolute;
+    transition: all 0.25s;
+}
