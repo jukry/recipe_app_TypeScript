@@ -183,8 +183,7 @@ const adminUpdateUserRole = async (req, res) => {
 const changeEmail = async (req, res) => {
     const oldEmail = req.user.email
     const { _id: id } = req.user
-    const { changeemail: newEmail, confirmemailpassword: password } =
-        req.body.formData
+    const { email: newEmail, password: password } = req.body.formData
 
     const user = await User.findById(id)
     const comparePassword = await bcrypt.compare(password, user.password)
