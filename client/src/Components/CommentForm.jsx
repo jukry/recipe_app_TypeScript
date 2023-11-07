@@ -31,7 +31,7 @@ function CommentForm(props) {
     })
 
     return !user.id ? (
-        <p>Kirjaudu sisään jos haluat kommentoida reseptiä</p> //TODO disable submit button if not logged in?
+        <p>Kirjaudu sisään jos haluat kommentoida reseptiä</p>
     ) : (
         <section id="comment-form-container">
             {comment?.content?.length > 0 ? (
