@@ -12,6 +12,25 @@ function AddNewRecipe() {
     function handleChange(e) {
         setRecipe((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
+
+    function handleIngredientDelete(e) {
+        const index = e.target.id.split("ingButton")[1]
+        setRecipe((prev) => {
+            delete prev[`amount${index}`]
+            delete prev[`ingredient${index}`]
+            return prev
+        })
+    }
+
+    function handleStepDelete(e) {
+        const index = e.target.id.split("stepButton")[1]
+        setRecipe((prev) => {
+            const step = `step${index}`
+            delete prev[step]
+            return prev
+        })
+    }
+
     function handleFileChange(e) {
         e.preventDefault()
         if (
@@ -83,6 +102,9 @@ function AddNewRecipe() {
                         handleFileChange,
                         previewFile,
                         file,
+                        setRecipe,
+                        handleIngredientDelete,
+                        handleStepDelete,
                     }}
                 />
                 <button disabled={isLoading}>
