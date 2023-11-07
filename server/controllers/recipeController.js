@@ -79,7 +79,6 @@ const createRecipe = async (req, res) => {
     const recipe = req.body
     const userId = req.user._id.toString()
     const user = req.user
-
     const newRecipe = {
         name: recipe.name,
         description: recipe.description,
@@ -90,17 +89,30 @@ const createRecipe = async (req, res) => {
     const instructions = []
     function iterateRecipe() {
         for (const [key, value] of Object.entries(recipe)) {
-            if (key.includes("amount") && value !== "") {
-                ingredients.push({ amount: value })
-            } else if (key.includes("ingredient") && value !== "") {
+            if (key.includes("amount")) {
+                const id = Number(key.split("amount")[1]) - 1
+                if (value == "") {
+                    ingredients.push({ amount: "", ingredient: "" })
+                }
+                if (ingredients[id]) {
+                    Object.assign(ingredients[id], {
+                        amount: value,
+                    })
+                } else {
+                    ingredients[id] = { amount: value, ingredient: "" }
+                }
+            } else if (key.includes("ingredient")) {
                 const id = Number(key.split("ingredient")[1]) - 1
 
                 try {
+                    if (value === "") {
+                        ingredients.push({ amount: "", ingredient: "" })
+                    }
                     if (!ingredients[id]) {
-                        ingredients.push({
-                            amount: " ",
+                        ingredients[id] = {
+                            amount: "",
                             ingredient: value,
-                        })
+                        }
                     } else {
                         Object.assign(ingredients[id], {
                             ingredient: value,
@@ -111,14 +123,22 @@ const createRecipe = async (req, res) => {
                     return res.status(200).json(err)
                 }
             } else if (key.includes("step") && value !== "") {
-                instructions.push(value)
+                const id = Number(key.split("step")[1]) - 1
+                instructions[id] = value
             }
         }
     }
     iterateRecipe()
-    Object.assign(newRecipe.ingredients, ingredients)
-    Object.assign(newRecipe.instructions, instructions)
-
+    Object.assign(
+        newRecipe.ingredients,
+        ingredients.filter(
+            (item) => item.ingredient !== "" || item.amount !== ""
+        )
+    )
+    Object.assign(
+        newRecipe.instructions,
+        instructions.filter((step) => step !== "")
+    )
     if (userId !== user._id.toString()) {
         return res.status(400).json({ Message: "Not authorized" })
     }
@@ -253,7 +273,7 @@ const updateRecipe = async (req, res) => {
         return res.status(400).json({ Message: "Not authorized" })
     }
 
-    //array for holding used ingredient indexes
+    //array for holding wanted ingredient indexes
     const arrOfIndexes = []
     function iterateRecipe() {
         if (updated.name !== recipe.name && updated.name !== "") {
@@ -327,7 +347,7 @@ const updateRecipe = async (req, res) => {
         }
     }
 
-    //create array from step indexes
+    //create array to hold wanted step indexes
     const stepIndexes = []
     const newSteps = Object.entries(updated)
         .filter((item) => {
