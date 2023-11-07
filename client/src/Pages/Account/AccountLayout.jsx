@@ -12,7 +12,7 @@ export default function AccountLayout() {
         textDecoration: "underline",
     }
     return (
-        <section className="account-container">
+        <div className="account-container">
             <nav className="account-nav">
                 <NavLink
                     style={({ isActive }) => (isActive ? activeStyle : null)}
@@ -47,6 +47,6 @@ export default function AccountLayout() {
                 </NavLink>
             </nav>
             <Outlet />
-        </section>
+        </div>
     )
 }

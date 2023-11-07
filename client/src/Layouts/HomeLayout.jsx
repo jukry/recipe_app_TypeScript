@@ -40,16 +40,16 @@ export default function HomeLayout() {
     }
 
     return (
-        <section className="container" id="container" onClick={handleNavClick}>
+        <div className="container" id="container" onClick={handleNavClick}>
             <Navbar
                 props={[showNav, showNavBar]}
                 handleNavClick={handleNavClick}
             />
-            <main>
+            <div>
                 <Outlet />
-            </main>
+            </div>
             <Footer />
             <ScrollRestoration />
-        </section>
+        </div>
     )
 }

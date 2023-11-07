@@ -55,6 +55,7 @@ header > a,
     flex-direction: column;
     line-height: 0.8em;
     text-align: left;
+    font-weight: 700;
 }
 .top-nav {
     display: flex;
@@ -148,7 +149,7 @@ header > a,
     background-size: cover;
     background-position: center;
 }
-#fooditem-stock-image {
+.fooditem-stock-image {
     filter: contrast(50%);
     opacity: 0.5;
 }
@@ -174,10 +175,6 @@ header > a,
     position: relative;
     height: 100%;
     margin-top: auto;
-}
-.recipe-info > h2,
-.recipe-info > p {
-    margin-right: 0.2em;
 }
 .recipe-info > * {
     font-size: clamp(1em, 1vw, 2em);
@@ -311,6 +308,17 @@ input:checked + #slider-round:before {
         padding: 0 1em;
     }
 }
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
 @media screen and (max-width: 700px) {
     #role-switch-container {
         position: relative;

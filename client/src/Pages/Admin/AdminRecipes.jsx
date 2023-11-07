@@ -7,7 +7,6 @@ import { NavLink, useSearchParams } from "react-router-dom"
 import { handleRecipeDeleteFromAdmin, sortRecipes } from "../../utils/utils"
 import DeleteModal from "../../Components/DeleteModal"
 import { createPortal } from "react-dom"
-import BackButton from "../../Components/BackButton"
 
 export default function AdminRecipes() {
     const queryResponseRecipes = useQuery(["allrecipes"], fetchAllRecipeData)
@@ -45,7 +44,7 @@ export default function AdminRecipes() {
         })
         .map((recipe) => {
             return (
-                <section className="admin-recipe-container" key={recipe._id}>
+                <div className="admin-recipe-container" key={recipe._id}>
                     <section className="admin-recipedata-container">
                         <h4>{recipe.name}</h4>
                         <p>Käyttäjä: {recipe.user.email}</p>
@@ -78,7 +77,7 @@ export default function AdminRecipes() {
                     >
                         Poista resepti
                     </button>
-                </section>
+                </div>
             )
         })
     const maxPages = Math.ceil(recipes.length / initialRecipes)
@@ -91,7 +90,7 @@ export default function AdminRecipes() {
     return (
         <section id="admin-recipes-container">
             <h3>Reseptit</h3>
-            <section id="admin-recipes-pagination-container">
+            <div id="admin-recipes-pagination-container">
                 <Paginate
                     currentPage={currentPage}
                     maxPages={maxPages}
@@ -100,9 +99,9 @@ export default function AdminRecipes() {
                     forwardBtnId="admin-recipes-nav-forward"
                     setCurrentPage={setCurrentPage}
                 />
-            </section>
-            <section id="admin-recipes-filter-container">
-                <section id="admin-recipes-email-filter-container">
+            </div>
+            <div id="admin-recipes-filter-container">
+                <div id="admin-recipes-email-filter-container">
                     <label
                         htmlFor="admin-recipe-filter-recipe-name"
                         id="admin-recipe-filter-recipe-name-label"
@@ -133,7 +132,7 @@ export default function AdminRecipes() {
                             setRecipesSearchParams({ email: e.target.value })
                         }}
                     />
-                </section>
+                </div>
                 <label
                     htmlFor="admin-recipes-sort"
                     id="admin-recipes-sort-label"
@@ -153,8 +152,8 @@ export default function AdminRecipes() {
                     <option value="commentsDesc">Kommentit: laskeva</option>
                 </select>
                 <p>Tuloksia: {recipes.length}</p>
-            </section>
-            <section id="admin-recipes-wrapper">{slicedRecipes}</section>
+            </div>
+            <div id="admin-recipes-wrapper">{slicedRecipes}</div>
             {showDeleteModal &&
                 createPortal(
                     <DeleteModal

@@ -44,10 +44,14 @@ export default function Login() {
                 className="login-form"
                 onSubmit={handleSubmit}
             >
+                <label htmlFor="email" className="visuallyhidden">
+                    Sähköpostiosoite
+                </label>
                 <input
                     required
                     type="email"
                     name="email"
+                    id="email"
                     placeholder="Sähköpostiosoite"
                     value={userData.email}
                     onChange={(e) =>
@@ -56,11 +60,16 @@ export default function Login() {
                             email: e.target.value,
                         }))
                     }
+                    autoComplete="email"
                 />
+                <label htmlFor="password" className="visuallyhidden">
+                    Salasana
+                </label>
                 <input
                     required
                     type="password"
                     name="password"
+                    id="password"
                     placeholder="Salasana"
                     value={userData.password}
                     onChange={(e) =>

@@ -26,7 +26,7 @@ export default function NotificationElement({
         }
     }, [progress, showNotification])
     return (
-        <section
+        <div
             className={`notification-modal ${
                 showNotification ? "show-notification" : "hide-notification"
             }`}
@@ -41,6 +41,6 @@ export default function NotificationElement({
         >
             <p>{text}</p>
             <div className="progress" style={{ width: `${progress}%` }}></div>
-        </section>
+        </div>
     )
 }

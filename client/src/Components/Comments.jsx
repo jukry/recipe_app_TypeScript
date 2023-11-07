@@ -59,8 +59,8 @@ export default function Comments({ comments }) {
             timeDelta = timeDelta / 60
             const getCommentTime = commentTime(timeDelta)
             return (
-                <section className="comment-container" key={comment._id}>
-                    <section className="comment-poster-container">
+                <div className="comment-container" key={comment._id}>
+                    <div className="comment-poster-container">
                         <p className="comment-user">{comment.username}</p>
                         <span className="comment-separator">|</span>
                         <p
@@ -71,9 +71,9 @@ export default function Comments({ comments }) {
                         >
                             {getCommentTime}
                         </p>
-                    </section>
+                    </div>
                     <p className="comment-content">{comment.content}</p>
-                </section>
+                </div>
             )
         })
     useEffect(() => {

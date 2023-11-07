@@ -4,7 +4,7 @@ import "../Pages/Account/styles/newRecipe.css"
 
 export default function RecipeDataInput({ props }) {
     return (
-        <section id="recipe-text-input">
+        <div id="recipe-text-input">
             <IngredientInput
                 type="text"
                 placeholder="Anna reseptin nimi"
@@ -23,6 +23,6 @@ export default function RecipeDataInput({ props }) {
                 onChange={props.handleChange}
                 required={true}
             />
-        </section>
+        </div>
     )
 }

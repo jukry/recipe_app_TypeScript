@@ -7,13 +7,13 @@ import RecipeImageInput from "./RecipeImageInput"
 
 export default function RecipeDataContainer({ props }) {
     return (
-        <section id="recipe-data-container">
+        <div id="recipe-data-container">
             <RecipeDataInput props={props} />
-            <section id="recipe-ingredient-steps-wrapper">
+            <div id="recipe-ingredient-steps-wrapper">
                 <IngredientInputWrapper props={props} />
                 <RecipeStepsInput props={props} />
                 <RecipeImageInput props={props} />
-            </section>
-        </section>
+            </div>
+        </div>
     )
 }

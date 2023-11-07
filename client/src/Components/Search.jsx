@@ -36,9 +36,9 @@ export default function Search() {
     })
 
     return (
-        <section className="results-container">
-            <div className="search-container">
-                <h1>Etsi reseptiä nimellä</h1>
+        <div className="results-container">
+            <section className="search-container">
+                <h1>Etsi reseptiä nimellä tai ainesosalla</h1>
                 <div className="input-wrapper">
                     <span className="search-icon">&#x1F50E;&#xFE0E;</span>
                     <form onSubmit={handleSubmit} id="search-form">
@@ -53,12 +53,12 @@ export default function Search() {
                         />
                     </form>
                 </div>
-            </div>
+            </section>
             {queryResponse.isLoading ? (
                 <Loader text={"Ladataan reseptejä"} />
             ) : (
                 <Results props={[recipes, searchParams]} />
             )}
-        </section>
+        </div>
     )
 }

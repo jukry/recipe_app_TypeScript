@@ -6,11 +6,11 @@ import ChangeEmail from "../../Components/ChangeEmail"
 
 function UserSettings() {
     return (
-        <section id="user-settings-container">
+        <div id="user-settings-container">
             <ChangePassword />
             <ChangeEmail />
             <DeleteUser />
-        </section>
+        </div>
     )
 }
 export default UserSettings

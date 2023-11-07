@@ -44,23 +44,23 @@ function RecipeDetails() {
     const comments = queryResponseComments?.data ?? []
     document.title = data.name
     return data !== undefined || data !== null ? (
-        <section className="recipe-wrapper">
+        <div className="recipe-wrapper">
             <BackButton />
-            <div className="recipe-hero">
+            <section className="recipe-hero">
                 {data.images && <img src={data.images} alt="Kuva ateriasta" />}
-                <h1>{data.name}</h1>
+                <h2>{data.name}</h2>
                 <h3>{data.description}</h3>
-            </div>
+            </section>
             <div className="recipe-data">
-                <div className="instructions">
+                <section className="instructions">
                     <h3>Valmistusohje</h3>
                     <ol>
                         {data?.instructions?.map((item, i) => {
                             return <li key={i}>{item}</li>
                         })}
                     </ol>
-                </div>
-                <div className="ingredients">
+                </section>
+                <section className="ingredients">
                     <h3>Ainesosat</h3>
                     {data?.ingredients?.map((item, i) => {
                         return (
@@ -70,10 +70,10 @@ function RecipeDetails() {
                             </div>
                         )
                     })}
-                </div>
+                </section>
             </div>
             <RecipeComments props={[comments, mutation]} />
-        </section>
+        </div>
     ) : (
         location.replace("/notfound")
     )

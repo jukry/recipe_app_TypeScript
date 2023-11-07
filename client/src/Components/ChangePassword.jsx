@@ -41,7 +41,6 @@ export default function ChangePassword() {
             <h3>Vaihda salasana</h3>
             <form
                 name="change-password"
-                replace="true"
                 id="password-form"
                 method="post"
                 onSubmit={handleSubmit}

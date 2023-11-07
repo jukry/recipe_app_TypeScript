@@ -10,6 +10,7 @@ export default function IngredientInput(props) {
             required={props.required}
             value={props.value}
             onChange={(event) => props.onChange(event)}
+            autoComplete="off"
         />
     )
 }

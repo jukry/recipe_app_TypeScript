@@ -72,12 +72,9 @@ export default function AdminComments() {
             const getCommentTime = commentTime(timeDelta)
             {
                 return (
-                    <section
-                        className="admin-comment-container"
-                        key={comment._id}
-                    >
-                        <section className="admin-comment-wrapper">
-                            <section className="admin-comment-poster-container">
+                    <div className="admin-comment-container" key={comment._id}>
+                        <div className="admin-comment-wrapper">
+                            <div className="admin-comment-poster-container">
                                 <p className="admin-comment-user">
                                     {comment.username}
                                 </p>
@@ -92,22 +89,22 @@ export default function AdminComments() {
                                 >
                                     {getCommentTime}
                                 </p>
-                            </section>
+                            </div>
                             <p>Käyttäjä: {comment.user.email}</p>
 
                             <p className="admin-comment-content">
                                 {comment.content}
                             </p>
-                        </section>
+                        </div>
                         <button
-                            id="admin-delete-comment"
+                            className="admin-delete-comment"
                             onClick={(event) =>
                                 handleDelete(event, comment._id)
                             }
                         >
                             Poista kommentti
                         </button>
-                    </section>
+                    </div>
                 )
             }
         })
@@ -145,7 +142,7 @@ export default function AdminComments() {
     return (
         <section id="admin-comment-section-container">
             <h3>Kommentit</h3>
-            <section id="admin-comment-page-container">
+            <div id="admin-comment-page-container">
                 <Paginate
                     currentPage={currentPage}
                     maxPages={maxPages}
@@ -154,8 +151,8 @@ export default function AdminComments() {
                     forwardBtnId="admin-comment-nav-forward"
                     setCurrentPage={setCurrentPage}
                 />
-            </section>
-            <section id="admin-comment-filter-container">
+            </div>
+            <div id="admin-comment-filter-container">
                 <input
                     type="datetime-local"
                     max={dateFilter.endDate}
@@ -219,9 +216,9 @@ export default function AdminComments() {
                     }}
                 />
                 <p>Tuloksia: {slicedList.length}</p>
-            </section>
+            </div>
             {comments?.length > 0 ? (
-                <section id="admin-comments-container">{slicedList}</section>
+                <div id="admin-comments-container">{slicedList}</div>
             ) : (
                 <p id="no-comments-text">Ei vielä kommentteja</p>
             )}

@@ -33,7 +33,7 @@ function CommentForm(props) {
     return !user.id ? (
         <p>Kirjaudu sisään jos haluat kommentoida reseptiä</p>
     ) : (
-        <section id="comment-form-container">
+        <div id="comment-form-container">
             {comment?.content?.length > 0 ? (
                 <p id="comment-length-field">
                     {comment?.content?.length}/1000 merkkiä
@@ -43,7 +43,6 @@ function CommentForm(props) {
             )}
             <form
                 method="post"
-                action=""
                 id="comment-form"
                 onSubmit={(event) => {
                     event.preventDefault()
@@ -87,7 +86,7 @@ function CommentForm(props) {
                     ""
                 )}
             </form>
-        </section>
+        </div>
     )
 }
 

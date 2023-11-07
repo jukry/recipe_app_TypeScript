@@ -42,7 +42,7 @@
 .ingredients {
     margin-bottom: 1em;
 }
-.recipe-data > div > h3 {
+.recipe-data > section > h3 {
     font-size: 2em;
     margin-bottom: 0.5em;
 }

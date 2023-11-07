@@ -40,7 +40,7 @@ export default function AdminUsers() {
 
         .map((user) => {
             return (
-                <section className="admin-user-container" key={user._id}>
+                <div className="admin-user-container" key={user._id}>
                     <section className="admin-userdata-container">
                         <h4>
                             {user.email} <span>|</span> {user.role}
@@ -74,7 +74,7 @@ export default function AdminUsers() {
                             </NavLink>
                         </p>
                     </section>
-                    <section className="admin-user-management-container">
+                    <div className="admin-user-management-container">
                         <button
                             className="admin-delete-user"
                             onClick={() => {
@@ -110,8 +110,8 @@ export default function AdminUsers() {
                             <option value="Admin">Admin</option>
                             <option value="User">Käyttäjä</option>
                         </select>
-                    </section>
-                </section>
+                    </div>
+                </div>
             )
         })
     const maxPages = Math.ceil(users.length / initialUsers)
@@ -124,7 +124,7 @@ export default function AdminUsers() {
     return (
         <section id="admin-users-container">
             <h3>Käyttäjät</h3>
-            <section id="admin-users-pagination-container">
+            <div id="admin-users-pagination-container">
                 <Paginate
                     currentPage={currentPage}
                     maxPages={maxPages}
@@ -133,9 +133,9 @@ export default function AdminUsers() {
                     forwardBtnId="admin-users-nav-forward"
                     setCurrentPage={setCurrentPage}
                 />
-            </section>
-            <section id="admin-users-filter-container">
-                <section id="admin-users-email-filter-container">
+            </div>
+            <div id="admin-users-filter-container">
+                <div id="admin-users-email-filter-container">
                     <label
                         htmlFor="admin-user-filter-email"
                         id="admin-user-filter-email-label"
@@ -151,7 +151,7 @@ export default function AdminUsers() {
                             setUserSearchParams({ search: e.target.value })
                         }}
                     />
-                </section>
+                </div>
                 <label htmlFor="admin-users-sort" id="admin-users-sort-label">
                     Lajittele tulokset
                 </label>
@@ -176,9 +176,9 @@ export default function AdminUsers() {
                     <option value="commentsDesc">Kommentit: laskeva</option>
                 </select>
                 <p>Tuloksia: {slicedUsers.length}</p>
-            </section>
+            </div>
 
-            <section id="admin-users-wrapper">{slicedUsers}</section>
+            <div id="admin-users-wrapper">{slicedUsers}</div>
             {showDeleteModal &&
                 createPortal(
                     <DeleteModal

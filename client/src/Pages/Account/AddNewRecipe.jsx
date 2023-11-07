@@ -87,10 +87,9 @@ function AddNewRecipe() {
         }
     }
     return (
-        <section id="new-recipe-container">
+        <div id="new-recipe-container">
             <form
                 method="post"
-                replace="true"
                 id="new-recipe-form"
                 encType="multipart/form-data"
                 onSubmit={handleSubmit}
@@ -111,7 +110,7 @@ function AddNewRecipe() {
                     {!isLoading ? "Lähetä resepti" : "Lähetetään..."}
                 </button>
             </form>
-        </section>
+        </div>
     )
 }
 export default AddNewRecipe

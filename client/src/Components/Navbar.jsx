@@ -21,11 +21,11 @@ export default function Navbar(props) {
                     to="/"
                     onClick={() => setCurrentRecipe(null)}
                 >
-                    <h1 className="logo">
+                    <span className="logo">
                         My <span>Recipes</span>
-                    </h1>
+                    </span>
                 </Link>
-                <section
+                <nav
                     className={`top-nav ${
                         showNav ? "top-nav-active" : "top-nav-disabled"
                     }`}
@@ -49,9 +49,9 @@ export default function Navbar(props) {
                     ) : (
                         ""
                     )}
-                </section>
+                </nav>
                 {user.role === "Admin" && (
-                    <section id="role-switch-container">
+                    <div id="role-switch-container">
                         <p>Käyttäjä: {adminMode ? "Admin" : "Käyttäjä"}</p>
                         <label htmlFor="role-switch" id="role-switch-wrapper">
                             <input
@@ -65,7 +65,7 @@ export default function Navbar(props) {
                             />
                             <span id="slider-round"></span>
                         </label>
-                    </section>
+                    </div>
                 )}
             </nav>
             <ShowMobileNavButton

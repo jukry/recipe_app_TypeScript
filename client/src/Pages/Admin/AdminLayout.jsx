@@ -13,7 +13,7 @@ export default function AdminLayout() {
         textDecoration: "underline",
     }
     return (
-        <section id="admin-layout-container">
+        <div id="admin-layout-container">
             <nav id="admin-nav">
                 <NavLink
                     style={({ isActive }) => (isActive ? activeStyle : null)}
@@ -42,6 +42,6 @@ export default function AdminLayout() {
                 </NavLink>
             </nav>
             <Outlet />
-        </section>
+        </div>
     )
 }

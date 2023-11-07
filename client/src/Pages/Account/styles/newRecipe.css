@@ -87,7 +87,6 @@
 }
 .new-recipe-ingredient {
     padding: 0.25em;
-    grid-column: 2 / 3;
 }
 .new-recipe-step {
     width: 100%;

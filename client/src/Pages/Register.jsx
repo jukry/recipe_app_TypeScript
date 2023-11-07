@@ -32,6 +32,7 @@ export default function Register() {
                     name="email"
                     placeholder="Sähköpostiosoite"
                     required
+                    autoComplete="email"
                 />
                 <input
                     type="password"

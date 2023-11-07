@@ -23,7 +23,7 @@ export default function Paginate({
               })
     }
     return (
-        <section id={containerId}>
+        <div id={containerId}>
             <button
                 onClick={(event) => {
                     handlePagination(event, setCurrentPage)
@@ -41,6 +41,6 @@ export default function Paginate({
             >
                 {">"}
             </button>
-        </section>
+        </div>
     )
 }

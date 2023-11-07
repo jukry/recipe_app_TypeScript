@@ -20,7 +20,7 @@ export default function RecipeStepsInput({ props }) {
                     }))
                     setExtraSteps(
                         extraSteps.concat(
-                            <section
+                            <div
                                 className="recipe-step-wrapper"
                                 key={`step${extraInputNumber}`}
                                 ref={(el) =>
@@ -51,14 +51,14 @@ export default function RecipeStepsInput({ props }) {
                                 >
                                     -
                                 </button>
-                            </section>
+                            </div>
                         )
                     )
                 }}
             >
                 Lisää vaihe
             </button>
-            <section
+            <div
                 className="recipe-step-wrapper"
                 ref={(el) => (stepsRef[0] = el)}
             >
@@ -73,8 +73,8 @@ export default function RecipeStepsInput({ props }) {
                     required={true}
                     key="step1"
                 />
-            </section>
-            <section
+            </div>
+            <div
                 className="recipe-step-wrapper"
                 ref={(el) => (stepsRef[1] = el)}
             >
@@ -99,8 +99,8 @@ export default function RecipeStepsInput({ props }) {
                 >
                     -
                 </button>
-            </section>
-            <section
+            </div>
+            <div
                 className="recipe-step-wrapper"
                 ref={(el) => (stepsRef[2] = el)}
             >
@@ -125,8 +125,8 @@ export default function RecipeStepsInput({ props }) {
                 >
                     -
                 </button>
-            </section>
-            <section
+            </div>
+            <div
                 className="recipe-step-wrapper"
                 ref={(el) => (stepsRef[3] = el)}
             >
@@ -152,7 +152,7 @@ export default function RecipeStepsInput({ props }) {
                 >
                     -
                 </button>
-            </section>
+            </div>
             {extraSteps}
         </fieldset>
     )

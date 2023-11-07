@@ -41,13 +41,15 @@ export default function Fooditem(props) {
                         <img
                             src={data.images || "pexels-jane-doan-1099680.jpg"}
                             alt={data.images ? "Kuva ateriasta" : "Vakiokuva"}
-                            id={data.images ? "" : "fooditem-stock-image"}
+                            className={
+                                data.images ? "" : "fooditem-stock-image"
+                            }
                         />
                     </div>
                     <div className="recipe-info">
                         <h2>{data.name}</h2>
                         <p>{data.description}</p>
-                        <button
+                        <p
                             className="fav-heart"
                             onClick={(event) => {
                                 event.stopPropagation()
@@ -62,26 +64,26 @@ export default function Fooditem(props) {
                             disabled={isLoading}
                         >
                             {favrecipes?.includes(data.id || data._id) ? (
-                                <p
+                                <span
                                     title="Poista resepti suosikeista"
-                                    id="isfav"
+                                    className="isfav"
                                     key={data.id || data._id}
                                 >
                                     &#x2665;
-                                </p>
+                                </span>
                             ) : (
-                                <p
+                                <span
                                     title="Lisää resepti suosikkeihin"
-                                    id="notfav"
+                                    className="notfav"
                                     key={data.id || data._id}
                                 >
                                     &#x2661;
-                                </p>
+                                </span>
                             )}
-                        </button>
+                        </p>
                     </div>
                 </Link>
-                <section className="recipe-management">
+                <div className="recipe-management">
                     {location.href.includes("account/myrecipes") ? (
                         <Link
                             to={`/recipe/edit/${data._id || data.id}`}
@@ -111,7 +113,7 @@ export default function Fooditem(props) {
                             <DeleteModal
                                 props={{
                                     text: "Haluatko poistaa reseptin ",
-                                    name: data.name,
+                                    name: data.name + "?",
                                     id: data._id,
                                 }}
                                 onDelete={(event) => {
@@ -131,7 +133,7 @@ export default function Fooditem(props) {
                             />,
                             document.getElementById("container")
                         )}
-                </section>
+                </div>
             </>
         )
     }

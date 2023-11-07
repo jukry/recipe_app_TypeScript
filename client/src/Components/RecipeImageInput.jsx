@@ -3,7 +3,7 @@ import "./Styles/recipeImageInput.css"
 
 export default function RecipeImageInput({ props }) {
     return (
-        <section id="image-upload-container">
+        <div id="image-upload-container">
             <label htmlFor="image-upload" id="image-upload-button">
                 Lisää kuva
             </label>
@@ -14,7 +14,7 @@ export default function RecipeImageInput({ props }) {
                 onChange={(event) => props.handleFileChange(event)}
             />
             {props.previewFile && (
-                <section id="preview-image-container">
+                <figure id="preview-image-container">
                     <p>{props.file.name}</p>
                     <img
                         src={props.previewFile}
@@ -27,8 +27,8 @@ export default function RecipeImageInput({ props }) {
                     >
                         Poista kuva
                     </button>
-                </section>
+                </figure>
             )}
-        </section>
+        </div>
     )
 }

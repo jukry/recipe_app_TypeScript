@@ -60,7 +60,7 @@ function RecipeDetailsEdit() {
                             setExtraStepNumber((prev) => prev + 1)
                             setExtraSteps(
                                 extraSteps.concat(
-                                    <section
+                                    <div
                                         className="recipe-step-wrapper-edit"
                                         key={extraStepNumber}
                                         ref={(el) =>
@@ -88,7 +88,7 @@ function RecipeDetailsEdit() {
                                         >
                                             -
                                         </button>
-                                    </section>
+                                    </div>
                                 )
                             )
                         }}
@@ -97,13 +97,13 @@ function RecipeDetailsEdit() {
                     </button>
                     {data?.instructions?.map((item, i) => {
                         return (
-                            <section
+                            <div
                                 className={`recipe-step-container-${
                                     i + 1
                                 } recipe-step-container`}
                                 key={i}
                             >
-                                <section
+                                <div
                                     className="recipe-step-wrapper-edit"
                                     ref={(el) => (stepsRef[i] = el)}
                                 >
@@ -131,9 +131,9 @@ function RecipeDetailsEdit() {
                                     ) : (
                                         ""
                                     )}
-                                </section>
+                                </div>
                                 {extraSteps}
-                            </section>
+                            </div>
                         )
                     })}
                 </div>

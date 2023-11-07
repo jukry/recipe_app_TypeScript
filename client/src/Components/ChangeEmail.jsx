@@ -46,7 +46,6 @@ export default function ChangeEmail() {
                 name="change-email"
                 id="change-email-form"
                 method="post"
-                replace="true"
                 onSubmit={handleSubmit}
             >
                 <label htmlFor="change-email">

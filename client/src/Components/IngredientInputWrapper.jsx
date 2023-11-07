@@ -23,7 +23,7 @@ export default function IngredientInputWrapper({ props }) {
                     }))
                     setExtraInputs(
                         extraInputs.concat(
-                            <section
+                            <div
                                 className="ingredient-wrapper"
                                 key={`ingInput${keyValue}`}
                                 ref={(el) =>
@@ -58,7 +58,7 @@ export default function IngredientInputWrapper({ props }) {
                                 >
                                     -
                                 </button>
-                            </section>
+                            </div>
                         )
                     )
                     setKeyValue((prev) => prev + 1)
@@ -66,7 +66,7 @@ export default function IngredientInputWrapper({ props }) {
             >
                 Lisää ainesosa
             </button>
-            <section
+            <div
                 className="ingredient-wrapper"
                 key={"ingInput1"}
                 ref={(el) => (ingredientsRef[0] = el)}
@@ -89,8 +89,8 @@ export default function IngredientInputWrapper({ props }) {
                     value={props.recipe?.ingredient1 || ""}
                     required={true}
                 />
-            </section>
-            <section
+            </div>
+            <div
                 className="ingredient-wrapper"
                 key={"ingInput2"}
                 ref={(el) => (ingredientsRef[1] = el)}
@@ -122,8 +122,8 @@ export default function IngredientInputWrapper({ props }) {
                 >
                     -
                 </button>
-            </section>
-            <section
+            </div>
+            <div
                 className="ingredient-wrapper"
                 key={"ingInput3"}
                 ref={(el) => (ingredientsRef[2] = el)}
@@ -155,8 +155,8 @@ export default function IngredientInputWrapper({ props }) {
                 >
                     -
                 </button>
-            </section>
-            <section
+            </div>
+            <div
                 className="ingredient-wrapper"
                 key={"ingInput4"}
                 ref={(el) => (ingredientsRef[3] = el)}
@@ -188,7 +188,7 @@ export default function IngredientInputWrapper({ props }) {
                 >
                     -
                 </button>
-            </section>
+            </div>
             {extraInputs}
         </fieldset>
     )
