@@ -2,7 +2,7 @@ import { Form, useNavigation, useParams } from "react-router-dom"
 import "./Styles/recipeDetailsEdit.css"
 import { useQuery } from "@tanstack/react-query"
 import fetchRecipeById from "../Hooks/fetchRecipeById.js"
-import { addRow, deleteIngredientRow, deleteStepRow } from "../utils/utils"
+import { useEffect, useRef, useState } from "react"
 
 function RecipeDetailsEdit() {
     const params = useParams()
@@ -10,7 +10,31 @@ function RecipeDetailsEdit() {
     const data = queryResponse?.data?.message ?? []
     const navigation = useNavigation()
     document.title = data.name
+    const ingredientsRef = useRef([])
+    const stepsRef = useRef([])
+    const [extraSteps, setExtraSteps] = useState([])
+    const [extraIngredients, setExtraIngredients] = useState([])
+    const [extraStepNumber, setExtraStepNumber] = useState(0)
+    const [extraIngredientNumber, setExtraIngredientNumber] = useState(0)
+    useEffect(() => {
+        if (data && queryResponse.isFetched) {
+            setExtraStepNumber(data.instructions.length + 1 + extraStepNumber)
+            setExtraIngredientNumber(
+                data.ingredients.length + 1 + extraIngredientNumber
+            )
+        }
+    }, [data])
+    function handleStepDelete(e) {
+        const index = e.target.id.split("delete-step-button-")[1]
+        stepsRef[index - 1].remove()
+    }
+    function handleIngredientDelete(e) {
+        const index = e.target.id.split("delete-ingredient-button-")[1]
 
+        console.log(index)
+        ingredientsRef[index - 1].remove()
+    }
+    console.log(ingredientsRef)
     return data !== undefined ? (
         <Form method="post" replace="true" className="recipe-wrapper-edit">
             <div className="recipe-hero-edit">
@@ -32,7 +56,42 @@ function RecipeDetailsEdit() {
                     <button
                         type="button"
                         id="button-add-step-edit"
-                        onClick={addRow}
+                        onClick={() => {
+                            setExtraStepNumber((prev) => prev + 1)
+                            setExtraSteps(
+                                extraSteps.concat(
+                                    <section
+                                        className="recipe-step-wrapper-edit"
+                                        key={extraStepNumber}
+                                        ref={(el) =>
+                                            (stepsRef[extraStepNumber - 1] = el)
+                                        }
+                                    >
+                                        <input
+                                            name={`step${extraStepNumber}`}
+                                            placeholder={`Vaihe ${extraStepNumber}`}
+                                            className="recipe-step-edit"
+                                            id={`step${extraStepNumber}`}
+                                            type="text"
+                                        ></input>
+                                        <button
+                                            className={`delete-button-${extraStepNumber} delete-step-button`}
+                                            type="button"
+                                            onClick={(e) => {
+                                                handleStepDelete(e)
+
+                                                setExtraStepNumber(
+                                                    (prev) => prev - 1
+                                                )
+                                            }}
+                                            id={`delete-step-button-${extraStepNumber}`}
+                                        >
+                                            -
+                                        </button>
+                                    </section>
+                                )
+                            )
+                        }}
                     >
                         Lisää vaihe
                     </button>
@@ -44,27 +103,36 @@ function RecipeDetailsEdit() {
                                 } recipe-step-container`}
                                 key={i}
                             >
-                                <input
-                                    name={`step${i + 1}`}
-                                    placeholder={`Vaihe ${i + 1}: ${item}`}
-                                    className="recipe-step-edit"
-                                    id={`step${i + 1}`}
-                                    type="text"
-                                ></input>
-                                {i >= 1 ? (
-                                    <button
-                                        className={`delete-button-${
-                                            i + 1
-                                        } delete-step-button`}
-                                        type="button"
-                                        onClick={deleteStepRow}
-                                        id={`delete-step-button-${i + 1}`}
-                                    >
-                                        -
-                                    </button>
-                                ) : (
-                                    ""
-                                )}
+                                <section
+                                    className="recipe-step-wrapper-edit"
+                                    ref={(el) => (stepsRef[i] = el)}
+                                >
+                                    <input
+                                        name={`step${i + 1}`}
+                                        placeholder={`Vaihe ${i + 1}: ${item}`}
+                                        className="recipe-step-edit"
+                                        id={`step${i + 1}`}
+                                        type="text"
+                                    ></input>
+                                    {i >= 1 ? (
+                                        <button
+                                            className={`delete-button-${
+                                                i + 1
+                                            } delete-step-button`}
+                                            type="button"
+                                            onClick={(e) => {
+                                                handleStepDelete(e)
+                                                stepsRef[i].remove()
+                                            }}
+                                            id={`delete-step-button-${i + 1}`}
+                                        >
+                                            -
+                                        </button>
+                                    ) : (
+                                        ""
+                                    )}
+                                </section>
+                                {extraSteps}
                             </section>
                         )
                     })}
@@ -74,7 +142,50 @@ function RecipeDetailsEdit() {
                     <button
                         type="button"
                         id="button-add-ingredient-edit"
-                        onClick={addRow}
+                        onClick={(e) => {
+                            setExtraIngredientNumber((prev) => prev + 1)
+                            setExtraIngredients(
+                                extraIngredients.concat(
+                                    <div
+                                        className={`ingr-line-edit-${extraIngredientNumber} ingr-line-edit`}
+                                        key={extraIngredientNumber}
+                                        id={`ingr-line-container-${extraIngredientNumber}`}
+                                        ref={(el) =>
+                                            (ingredientsRef[
+                                                extraIngredientNumber - 1
+                                            ] = el)
+                                        }
+                                    >
+                                        <input
+                                            name={`amount${extraIngredientNumber}`}
+                                            placeholder={`Aineosa ${extraIngredientNumber} määrä:`}
+                                            className="ingr-amount-edit"
+                                            id={`amount${extraIngredientNumber}`}
+                                        ></input>
+                                        <input
+                                            name={`ingredient${extraIngredientNumber}`}
+                                            placeholder={`Aineosa ${extraIngredientNumber}:`}
+                                            className="ingr-edit"
+                                            id={`ingredient${extraIngredientNumber}`}
+                                        ></input>
+                                        <button
+                                            className={`delete-ingredient-button-${extraIngredientNumber} delete-ingredient-button`}
+                                            type="button"
+                                            id={`delete-ingredient-button-${extraIngredientNumber}`}
+                                            onClick={(e) => {
+                                                handleIngredientDelete(e)
+
+                                                setExtraIngredientNumber(
+                                                    (prev) => prev - 1
+                                                )
+                                            }}
+                                        >
+                                            -
+                                        </button>
+                                    </div>
+                                )
+                            )
+                        }}
                     >
                         Lisää ainesosa
                     </button>
@@ -86,6 +197,7 @@ function RecipeDetailsEdit() {
                                 } ingr-line-edit`}
                                 key={i}
                                 id={`ingr-line-container-${i + 1}`}
+                                ref={(el) => (ingredientsRef[i] = el)}
                             >
                                 <input
                                     name={`amount${i + 1}`}
@@ -109,7 +221,14 @@ function RecipeDetailsEdit() {
                                             i + 1
                                         } delete-ingredient-button`}
                                         type="button"
-                                        onClick={deleteIngredientRow}
+                                        id={`delete-ingredient-button-${i + 1}`}
+                                        onClick={(e) => {
+                                            handleIngredientDelete(e)
+
+                                            setExtraIngredientNumber(
+                                                (prev) => prev - 1
+                                            )
+                                        }}
                                     >
                                         -
                                     </button>
@@ -119,6 +238,7 @@ function RecipeDetailsEdit() {
                             </div>
                         )
                     })}
+                    {extraIngredients}
                 </div>
             </div>
             <button
