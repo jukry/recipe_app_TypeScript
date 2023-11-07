@@ -37,7 +37,7 @@ export async function handleFavorite(data) {
     const id = data[1]
     const dispatch = data[2]
     const user = data[3]
-    const isfav = event.target.id
+    const isfav = event.target.className
     if (isfav === "isfav") {
         async function deleteFav() {
             return await fetch(
