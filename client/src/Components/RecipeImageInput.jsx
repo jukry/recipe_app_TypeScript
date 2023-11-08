@@ -4,7 +4,7 @@ import "./Styles/recipeImageInput.css"
 export default function RecipeImageInput({ props }) {
     return (
         <div id="image-upload-container">
-            <label htmlFor="image-upload" id="image-upload-button">
+            <label htmlFor="image-upload" id="image-upload-button" tabIndex={0}>
                 Lisää kuva
             </label>
             <input
