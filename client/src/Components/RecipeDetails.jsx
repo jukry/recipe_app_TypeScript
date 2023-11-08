@@ -48,26 +48,42 @@ function RecipeDetails() {
             <BackButton />
             <section className="recipe-hero">
                 {data.images && <img src={data.images} alt="Kuva ateriasta" />}
-                <h2>{data.name}</h2>
-                <h3>{data.description}</h3>
+                <h2 tabIndex={0}>{data.name}</h2>
+                <h3 tabIndex={0}>{data.description}</h3>
             </section>
             <div className="recipe-data">
                 <section className="instructions">
-                    <h3>Valmistusohje</h3>
+                    <h3 tabIndex={0}>Valmistusohje</h3>
                     <ol>
                         {data?.instructions?.map((item, i) => {
-                            return <li key={i}>{item}</li>
+                            return (
+                                <li key={i} tabIndex={0}>
+                                    {item}
+                                </li>
+                            )
                         })}
                     </ol>
                 </section>
                 <section className="ingredients">
-                    <h3>Ainesosat</h3>
+                    <h3 tabIndex={0}>Ainesosat</h3>
                     {data?.ingredients?.map((item, i) => {
                         return (
-                            <div className="ingr-line" key={i}>
-                                <p className="ingr-amount">{item.amount}</p>
-                                <p>{item.ingredient}</p>
-                            </div>
+                            <ul className="ingr-line" key={i}>
+                                <li className="ingr-item">
+                                    <span className="ingr-amount" tabIndex={0}>
+                                        <span className="visuallyhidden">
+                                            Ainesosan {i + 1} määrä
+                                        </span>
+                                        {item.amount}
+                                    </span>
+                                    <span tabIndex={0}>
+                                        <span className="visuallyhidden">
+                                            Ainesosa {i + 1}
+                                        </span>
+                                        {item.ingredient}
+                                    </span>
+                                </li>
+                            </ul>
                         )
                     })}
                 </section>
