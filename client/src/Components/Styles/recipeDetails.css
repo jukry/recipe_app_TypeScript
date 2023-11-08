@@ -46,13 +46,16 @@
     font-size: 2em;
     margin-bottom: 0.5em;
 }
-.ingr-line {
+.ingr-item {
     display: grid;
     grid-template-columns: repeat(2, minmax(50px, 300px));
-    border-bottom: 1px solid var(--clr-accent-neutral);
     word-break: break-word;
     padding: 0.25em 0;
     align-items: center;
+}
+.ingr-line {
+    border-bottom: 1px solid var(--clr-accent-neutral);
+    display: flex;
 }
 .ingr-amount {
     font-weight: 700;
