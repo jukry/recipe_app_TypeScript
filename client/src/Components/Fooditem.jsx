@@ -36,10 +36,11 @@ export default function Fooditem(props) {
                     className="food-item"
                     id={data.id || data._id}
                     key={data.id || data._id}
+                    aria-label={`Resepti ${data.name}`}
                 >
                     <div className="img-container">
                         <img
-                            src={data.images || "pexels-jane-doan-1099680.jpg"}
+                            src={data.images || "/pexels-jane-doan-1099680.jpg"}
                             alt={data.images ? "Kuva ateriasta" : "Vakiokuva"}
                             className={
                                 data.images ? "" : "fooditem-stock-image"
@@ -48,7 +49,11 @@ export default function Fooditem(props) {
                     </div>
                     <div className="recipe-info">
                         <h2>{data.name}</h2>
-                        <p>{data.description}</p>
+                        <div>
+                            <p className="recipe-description">
+                                {data.description}
+                            </p>
+                        </div>
                         <p
                             className="fav-heart"
                             onClick={(event) => {
@@ -67,7 +72,9 @@ export default function Fooditem(props) {
                                 <span
                                     title="Poista resepti suosikeista"
                                     className="isfav"
+                                    aria-label="Poista resepti suosikeista"
                                     key={data.id || data._id}
+                                    tabIndex={0}
                                 >
                                     &#x2665;
                                 </span>
@@ -75,7 +82,9 @@ export default function Fooditem(props) {
                                 <span
                                     title="Lisää resepti suosikkeihin"
                                     className="notfav"
+                                    aria-label="Lisää resepti suosikkeihin"
                                     key={data.id || data._id}
+                                    tabIndex={0}
                                 >
                                     &#x2661;
                                 </span>
@@ -89,6 +98,7 @@ export default function Fooditem(props) {
                             to={`/recipe/edit/${data._id || data.id}`}
                             className="edit-button"
                             title="Muokkaa reseptiä"
+                            aria-label="Muokkaa reseptiä"
                         >
                             &#9998;
                         </Link>
@@ -99,6 +109,7 @@ export default function Fooditem(props) {
                         <button
                             className="delete-button"
                             title="Poista resepti"
+                            aria-label="Poista resepti"
                             onClick={() => {
                                 setShowModal((prev) => !prev)
                             }}
