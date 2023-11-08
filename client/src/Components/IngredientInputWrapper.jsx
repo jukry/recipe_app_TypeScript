@@ -36,6 +36,7 @@ export default function IngredientInputWrapper({ props }) {
                                     className="new-recipe-ingredient-amount"
                                     name={`amount${extraInputNumber}`}
                                     onChange={props.handleChange}
+                                    id={`new-recipe-ingredient-amount${extraInputNumber}`}
                                 />
                                 <IngredientInput
                                     type="text"
@@ -43,9 +44,11 @@ export default function IngredientInputWrapper({ props }) {
                                     className="new-recipe-ingredient"
                                     name={`ingredient${extraInputNumber}`}
                                     onChange={props.handleChange}
+                                    id={`new-recipe-ingredient-ingredient${extraInputNumber}`}
                                 />
                                 <button
                                     className="delete-ingredient-button"
+                                    aria-label="Poista ainesosa"
                                     type="button"
                                     id={`ingButton${extraInputNumber}`}
                                     onClick={(e) => {
@@ -79,6 +82,7 @@ export default function IngredientInputWrapper({ props }) {
                     onChange={props.handleChange}
                     value={props.recipe?.amount1 || ""}
                     required={true}
+                    id="new-recipe-ingredient-amount1"
                 />
                 <IngredientInput
                     type="text"
@@ -88,6 +92,7 @@ export default function IngredientInputWrapper({ props }) {
                     onChange={props.handleChange}
                     value={props.recipe?.ingredient1 || ""}
                     required={true}
+                    id="new-recipe-ingredient1"
                 />
             </div>
             <div
@@ -102,6 +107,7 @@ export default function IngredientInputWrapper({ props }) {
                     name="amount2"
                     onChange={props.handleChange}
                     value={props.recipe?.amount2 || ""}
+                    id="new-recipe-ingredient-amount2"
                 />
                 <IngredientInput
                     type="text"
@@ -110,10 +116,12 @@ export default function IngredientInputWrapper({ props }) {
                     name="ingredient2"
                     onChange={props.handleChange}
                     value={props.recipe?.ingredient2 || ""}
+                    id="new-recipe-ingredient2"
                 />
                 <button
                     className="delete-ingredient-button"
                     type="button"
+                    aria-label="Poista ainesosa"
                     id="ingButton2"
                     onClick={(e) => {
                         props.handleIngredientDelete(e)
@@ -135,6 +143,7 @@ export default function IngredientInputWrapper({ props }) {
                     name="amount3"
                     onChange={props.handleChange}
                     value={props.recipe?.amount3 || ""}
+                    id="new-recipe-ingredient-amount3"
                 />
                 <IngredientInput
                     type="text"
@@ -143,10 +152,12 @@ export default function IngredientInputWrapper({ props }) {
                     name="ingredient3"
                     onChange={props.handleChange}
                     value={props.recipe?.ingredient3 || ""}
+                    id="new-recipe-ingredient3"
                 />
                 <button
                     className="delete-ingredient-button"
                     type="button"
+                    aria-label="Poista ainesosa"
                     id="ingButton3"
                     onClick={(e) => {
                         props.handleIngredientDelete(e)
@@ -168,6 +179,7 @@ export default function IngredientInputWrapper({ props }) {
                     name="amount4"
                     onChange={props.handleChange}
                     value={props.recipe?.amount4 || ""}
+                    id="new-recipe-ingredient-amount4"
                 />
                 <IngredientInput
                     type="text"
@@ -176,10 +188,12 @@ export default function IngredientInputWrapper({ props }) {
                     name="ingredient4"
                     onChange={props.handleChange}
                     value={props.recipe?.ingredient4 || ""}
+                    id="new-recipe-ingredient4"
                 />
                 <button
                     className="delete-ingredient-button"
                     type="button"
+                    aria-label="Poista ainesosa"
                     id="ingButton4"
                     onClick={(e) => {
                         props.handleIngredientDelete(e)
