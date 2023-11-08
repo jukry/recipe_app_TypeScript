@@ -29,15 +29,20 @@ export default function Paginate({
                     handlePagination(event, setCurrentPage)
                 }}
                 id={backBtnId}
+                aria-label="Vaihda edelliselle sivulle"
             >
                 {"<"}
             </button>
-            <p>
+            <p
+                tabIndex={0}
+                aria-label={`Nyt sivulla ${currentPage}, sivuja yhteensä ${maxPages}`}
+            >
                 {currentPage} / {maxPages || 1}
             </p>
             <button
                 onClick={(event) => handlePagination(event, setCurrentPage)}
                 id={forwardBtnId}
+                aria-label="Vaihda seuraavalle sivulle"
             >
                 {">"}
             </button>
