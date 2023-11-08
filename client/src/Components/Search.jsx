@@ -42,6 +42,12 @@ export default function Search() {
                 <div className="input-wrapper">
                     <span className="search-icon">&#x1F50E;&#xFE0E;</span>
                     <form onSubmit={handleSubmit} id="search-form">
+                        <label
+                            htmlFor="recipe-search"
+                            className="visuallyhidden"
+                        >
+                            Hae reseptiä
+                        </label>
                         <input
                             onChange={handleFilter}
                             type="text"
