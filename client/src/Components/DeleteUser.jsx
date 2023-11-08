@@ -12,7 +12,7 @@ export default function DeleteUser() {
     return (
         <>
             <section id="delete-user-container">
-                <h3>Poista käyttäjätilisi</h3>
+                <h3 tabIndex={0}>Poista käyttäjätilisi</h3>
                 <button
                     id="delete-user-button"
                     name="deleteUserButton"
