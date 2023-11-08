@@ -296,7 +296,6 @@ input:checked + #slider-round:before {
         transition: ease-out 0.5s top;
     }
     .nav-container {
-        position: relative;
         width: auto;
     }
     .header-hidden {
