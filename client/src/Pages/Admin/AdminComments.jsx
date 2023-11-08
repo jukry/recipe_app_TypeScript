@@ -75,13 +75,17 @@ export default function AdminComments() {
                     <div className="admin-comment-container" key={comment._id}>
                         <div className="admin-comment-wrapper">
                             <div className="admin-comment-poster-container">
-                                <p className="admin-comment-user">
+                                <p className="admin-comment-user" tabIndex={0}>
+                                    <span className="visuallyhidden">
+                                        Kommentin lähettäjä
+                                    </span>
                                     {comment.username}
                                 </p>
                                 <span className="admin-comment-separator">
                                     |
                                 </span>
                                 <p
+                                    tabIndex={0}
                                     className="admin-comment-date"
                                     title={new Date(
                                         comment.createdAt
@@ -90,9 +94,9 @@ export default function AdminComments() {
                                     {getCommentTime}
                                 </p>
                             </div>
-                            <p>Käyttäjä: {comment.user.email}</p>
+                            <p tabIndex={0}>Käyttäjä: {comment.user.email}</p>
 
-                            <p className="admin-comment-content">
+                            <p tabIndex={0} className="admin-comment-content">
                                 {comment.content}
                             </p>
                         </div>
@@ -141,7 +145,7 @@ export default function AdminComments() {
 
     return (
         <section id="admin-comment-section-container">
-            <h3>Kommentit</h3>
+            <h3 tabIndex={0}>Kommentit</h3>
             <div id="admin-comment-page-container">
                 <Paginate
                     currentPage={currentPage}
@@ -153,19 +157,27 @@ export default function AdminComments() {
                 />
             </div>
             <div id="admin-comment-filter-container">
+                <label htmlFor="start-date-filter" className="visuallyhidden">
+                    Rajaa kommenttien alkupäivämäärä
+                </label>
                 <input
                     type="datetime-local"
                     max={dateFilter.endDate}
                     id="start-date-filter"
                     onChange={(event) => handleDateFilter(event)}
                     value={dateFilter.startDate}
+                    aria-labelledby="start-date-filter"
                 />
+                <label htmlFor="end-date-filter" className="visuallyhidden">
+                    Rajaa kommenttien loppupäivämäärä
+                </label>
                 <input
                     type="datetime-local"
                     min={dateFilter.startDate}
                     id="end-date-filter"
                     onChange={(event) => handleDateFilter(event)}
                     value={dateFilter.endDate}
+                    aria-labelledby="end-date-filter"
                 />
                 <button
                     type="reset"
@@ -177,7 +189,7 @@ export default function AdminComments() {
                         }))
                     }}
                 >
-                    Poista suodatin
+                    Poista päivämääräsuodatin
                 </button>
                 <label
                     htmlFor="admin-comment-filter-email"
@@ -215,7 +227,7 @@ export default function AdminComments() {
                         })
                     }}
                 />
-                <p>Tuloksia: {slicedList.length}</p>
+                <p tabIndex={0}>Tuloksia: {slicedList.length}</p>
             </div>
             {comments?.length > 0 ? (
                 <div id="admin-comments-container">{slicedList}</div>

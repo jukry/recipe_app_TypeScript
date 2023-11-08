@@ -46,10 +46,13 @@ export default function AdminRecipes() {
             return (
                 <div className="admin-recipe-container" key={recipe._id}>
                     <section className="admin-recipedata-container">
-                        <h4>{recipe.name}</h4>
-                        <p>Käyttäjä: {recipe.user.email}</p>
-                        <p>Resepti id: {recipe._id}</p>
-                        <p>
+                        <h4 tabIndex={0}>
+                            <span className="visuallyhidden">Resepti</span>
+                            {recipe.name}
+                        </h4>
+                        <p tabIndex={0}>Käyttäjä: {recipe.user.email}</p>
+                        <p tabIndex={0}>Resepti id: {recipe._id}</p>
+                        <p tabIndex={0}>
                             Resepti luotu:{" "}
                             {new Date(recipe.createdAt).toLocaleDateString(
                                 "fi-FI"
@@ -89,7 +92,7 @@ export default function AdminRecipes() {
 
     return (
         <section id="admin-recipes-container">
-            <h3>Reseptit</h3>
+            <h3 tabIndex={0}>Reseptit</h3>
             <div id="admin-recipes-pagination-container">
                 <Paginate
                     currentPage={currentPage}
@@ -151,7 +154,7 @@ export default function AdminRecipes() {
                     <option value="commentsAsc">Kommentit: nouseva</option>
                     <option value="commentsDesc">Kommentit: laskeva</option>
                 </select>
-                <p>Tuloksia: {recipes.length}</p>
+                <p tabIndex={0}>Tuloksia: {recipes.length}</p>
             </div>
             <div id="admin-recipes-wrapper">{slicedRecipes}</div>
             {showDeleteModal &&

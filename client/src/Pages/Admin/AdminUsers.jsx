@@ -42,16 +42,23 @@ export default function AdminUsers() {
             return (
                 <div className="admin-user-container" key={user._id}>
                     <section className="admin-userdata-container">
-                        <h4>
-                            {user.email} <span>|</span> {user.role}
+                        <h4 tabIndex={0}>
+                            <span className="visuallyhidden">
+                                Käyttäjän sähköpostiosoite{" "}
+                            </span>
+                            {user.email} <span>|</span>{" "}
+                            <span className="visuallyhidden">
+                                Käyttäjän rooli
+                            </span>{" "}
+                            {user.role}
                         </h4>
-                        <p>
+                        <p tabIndex={0}>
                             Käyttäjä luotu:{" "}
                             {new Date(user?.createdAt)?.toLocaleDateString(
                                 "fi-FI"
                             )}
                         </p>
-                        <p>
+                        <p tabIndex={0}>
                             Viimeksi kirjautunut:{" "}
                             {new Date(user?.lastlogins[0])?.toLocaleDateString(
                                 "fi-FI"
@@ -88,9 +95,10 @@ export default function AdminUsers() {
                         >
                             Poista käyttäjä
                         </button>
-                        <p>Muuta roolia</p>
+                        <p id="aria-change-role">Muuta roolia</p>
                         <select
                             className="admin-change-user-role"
+                            aria-labelledby="aria-change-role"
                             onChange={async (event) => {
                                 const res = await handleRoleChangeFromAdmin(
                                     event.target.value,
@@ -123,7 +131,7 @@ export default function AdminUsers() {
 
     return (
         <section id="admin-users-container">
-            <h3>Käyttäjät</h3>
+            <h3 tabIndex={0}>Käyttäjät</h3>
             <div id="admin-users-pagination-container">
                 <Paginate
                     currentPage={currentPage}
@@ -175,7 +183,7 @@ export default function AdminUsers() {
                     <option value="commentsAsc">Kommentit: nouseva</option>
                     <option value="commentsDesc">Kommentit: laskeva</option>
                 </select>
-                <p>Tuloksia: {slicedUsers.length}</p>
+                <p tabIndex={0}>Tuloksia: {slicedUsers.length}</p>
             </div>
 
             <div id="admin-users-wrapper">{slicedUsers}</div>
