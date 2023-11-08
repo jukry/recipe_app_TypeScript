@@ -61,9 +61,15 @@ export default function Comments({ comments }) {
             return (
                 <div className="comment-container" key={comment._id}>
                     <div className="comment-poster-container">
-                        <p className="comment-user">{comment.username}</p>
+                        <p className="comment-user" tabIndex={0}>
+                            <span className="visuallyhidden">
+                                Kommentin lähettäjä
+                            </span>
+                            {comment.username}
+                        </p>
                         <span className="comment-separator">|</span>
                         <p
+                            tabIndex={0}
                             className="comment-date"
                             title={new Date(comment.createdAt).toLocaleString(
                                 "fi-FI"
@@ -72,7 +78,9 @@ export default function Comments({ comments }) {
                             {getCommentTime}
                         </p>
                     </div>
-                    <p className="comment-content">{comment.content}</p>
+                    <p className="comment-content" tabIndex={0}>
+                        {comment.content}
+                    </p>
                 </div>
             )
         })
@@ -87,7 +95,7 @@ export default function Comments({ comments }) {
 
     return (
         <section id="comment-section-container">
-            <h3>Kommentit</h3>
+            <h3 tabIndex={0}>Kommentit</h3>
             {comments?.length > 0 ? (
                 <section id="comments-container">{commentList}</section>
             ) : (
