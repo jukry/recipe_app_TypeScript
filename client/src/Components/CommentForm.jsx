@@ -50,7 +50,10 @@ function CommentForm(props) {
                 }}
                 disabled={isLoading}
             >
-                <label htmlFor="comment-box"></label>
+                <label
+                    htmlFor="comment-box"
+                    aria-roledescription="textbox"
+                ></label>
                 <textarea
                     name="commentbox"
                     id="comment-box"
@@ -62,6 +65,7 @@ function CommentForm(props) {
                     value={comment.content}
                     onChange={handleCommentChange}
                     required
+                    spellCheck={false}
                 ></textarea>
                 <label htmlFor="comment-username"></label>
                 <input
@@ -73,6 +77,7 @@ function CommentForm(props) {
                     onChange={handleCommentUsername}
                     required
                     maxLength={64}
+                    spellCheck={false}
                 />
                 <button type="submit" id="comment-submit-button">
                     Lisää kommentti
