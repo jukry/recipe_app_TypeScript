@@ -1,4 +1,4 @@
-import { NavLink, Link, useNavigate } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
 import ShowMobileNavButton from "./ShowMobileNavButton"
 import { useLogout } from "../Hooks/useLogout"
 import { useContext } from "react"
@@ -12,7 +12,7 @@ export default function Navbar(props) {
     const showNav = props.props[0]
     const showNavBar = props.props[1]
     const { logout } = useLogout()
-
+    //TODO create a nav for mobile only?
     return (
         <header className={!showNavBar ? "header-hidden" : "header-show"}>
             <nav className="nav-container">
@@ -20,6 +20,7 @@ export default function Navbar(props) {
                     className="logo-container"
                     to="/"
                     onClick={() => setCurrentRecipe(null)}
+                    tabIndex={0}
                 >
                     <span className="logo">
                         My <span>Recipes</span>
@@ -57,6 +58,10 @@ export default function Navbar(props) {
                             <input
                                 type="checkbox"
                                 id="role-switch"
+                                aria-label={`Vaihda käyttäjäroolia, valittuna ${
+                                    adminMode ? "admin" : "käyttäjä"
+                                }`}
+                                tabIndex={2}
                                 value={adminMode}
                                 checked={adminMode}
                                 onChange={() => {
