@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react"
 import "../Pages/Account/styles/newRecipe.css"
+import IngredientInput from "./IngredientInput"
 
 export default function RecipeStepsInput({ props }) {
     const [extraSteps, setExtraSteps] = useState([])
@@ -27,7 +28,7 @@ export default function RecipeStepsInput({ props }) {
                                     (stepsRef[extraInputNumber - 1] = el)
                                 }
                             >
-                                <input
+                                <IngredientInput
                                     type="text"
                                     placeholder="Kirjoita vaihe"
                                     className="new-recipe-step"
@@ -39,6 +40,7 @@ export default function RecipeStepsInput({ props }) {
                                 />
                                 <button
                                     className="delete-step-button"
+                                    aria-label="Poista reseptin vaihe"
                                     type="button"
                                     id={`stepButton${extraInputNumber}`}
                                     onClick={(e) => {
@@ -62,7 +64,7 @@ export default function RecipeStepsInput({ props }) {
                 className="recipe-step-wrapper"
                 ref={(el) => (stepsRef[0] = el)}
             >
-                <input
+                <IngredientInput
                     type="text"
                     placeholder="Kirjoita vaihe"
                     className="new-recipe-step"
@@ -78,7 +80,7 @@ export default function RecipeStepsInput({ props }) {
                 className="recipe-step-wrapper"
                 ref={(el) => (stepsRef[1] = el)}
             >
-                <input
+                <IngredientInput
                     type="text"
                     placeholder="Kirjoita vaihe"
                     className="new-recipe-step"
@@ -90,6 +92,7 @@ export default function RecipeStepsInput({ props }) {
                 />
                 <button
                     className="delete-step-button"
+                    aria-label="Poista reseptin vaihe"
                     type="button"
                     id="stepButton2"
                     onClick={(e) => {
@@ -104,7 +107,7 @@ export default function RecipeStepsInput({ props }) {
                 className="recipe-step-wrapper"
                 ref={(el) => (stepsRef[2] = el)}
             >
-                <input
+                <IngredientInput
                     type="text"
                     placeholder="Kirjoita vaihe"
                     className="new-recipe-step"
@@ -116,6 +119,7 @@ export default function RecipeStepsInput({ props }) {
                 />
                 <button
                     className="delete-step-button"
+                    aria-label="Poista reseptin vaihe"
                     type="button"
                     id="stepButton3"
                     onClick={(e) => {
@@ -130,7 +134,7 @@ export default function RecipeStepsInput({ props }) {
                 className="recipe-step-wrapper"
                 ref={(el) => (stepsRef[3] = el)}
             >
-                <input
+                <IngredientInput
                     type="text"
                     placeholder="Kirjoita vaihe"
                     className="new-recipe-step"
@@ -139,10 +143,10 @@ export default function RecipeStepsInput({ props }) {
                     value={props.recipe?.step4 || ""}
                     onChange={(event) => props.handleChange(event)}
                     key="step4"
-                    ref={(el) => (stepsRef[3] = el)}
                 />
                 <button
                     className="delete-step-button"
+                    aria-label="Poista reseptin vaihe"
                     type="button"
                     id="stepButton4"
                     onClick={(e) => {
