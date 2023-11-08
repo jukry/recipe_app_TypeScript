@@ -8,20 +8,22 @@ export default function AccountDashboard() {
 
     return (
         <section id="account-details">
-            <h3 id="username">Tervetuloa {user.email}</h3>
+            <h3 id="username" tabIndex={0}>
+                Tervetuloa {user.email}
+            </h3>
             {user.lastlogins.length === 2 ? (
-                <p id="lastlogin">
+                <p id="lastlogin" tabIndex={0}>
                     Edellinen kirjautuminen:{" "}
                     {new Date(user.lastlogins[0]).toLocaleString("fi-FI")}
                 </p>
             ) : (
                 ""
             )}
-            <p id="recipesamount">
+            <p id="recipesamount" tabIndex={0}>
                 Sinulla on {user.recipes.length}
                 {user.recipes.length === 1 ? " oma resepti" : " omaa reseptiä"}
             </p>
-            <p id="favrecipeamount">
+            <p id="favrecipeamount" tabIndex={0}>
                 Sinulla on {user.favrecipes.length}
                 {user.favrecipes.length === 1
                     ? " suosikkiresepti"
