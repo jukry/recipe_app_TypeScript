@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import "./styles/Login.css"
 import { Navigate, useNavigate } from "react-router-dom"
 import { UserContext } from "../Context/UserContext"
@@ -13,12 +13,19 @@ export default function Login() {
         password: "",
     })
     const [loginStatus, setLoginStatus] = useState()
+    const inputRef = useRef(null)
+
+    useEffect(() => {
+        //for accessibility
+        inputRef.current.focus()
+    }, [])
     const handleSubmit = async (e) => {
         e.preventDefault()
         const res = await login(userData.email, userData.password)
         if (!res.ok) {
             setLoginStatus(res.status)
             setIsLoading(false)
+            inputRef.current.focus()
             return loginStatus
         }
         return navigate("/account")
@@ -28,7 +35,7 @@ export default function Login() {
     }
     return (
         <div className="login-container">
-            <h2>Kirjaudu sisään</h2>
+            <h2 tabIndex={0}>Kirjaudu sisään</h2>
             {loginStatus && (
                 <h3 className="check-login-input">
                     {loginStatus === 400
@@ -45,7 +52,11 @@ export default function Login() {
                 onSubmit={handleSubmit}
             >
                 <label htmlFor="email" className="visuallyhidden">
-                    Sähköpostiosoite
+                    {loginStatus === 400
+                        ? "Tarkista syöttämäsi tiedot"
+                        : loginStatus === 401
+                        ? "Sähköposti tai salasana väärin"
+                        : ""}
                 </label>
                 <input
                     required
@@ -61,9 +72,14 @@ export default function Login() {
                         }))
                     }
                     autoComplete="email"
+                    ref={inputRef}
                 />
                 <label htmlFor="password" className="visuallyhidden">
-                    Salasana
+                    {loginStatus === 400
+                        ? "Tarkista syöttämäsi tiedot"
+                        : loginStatus === 401
+                        ? "Sähköposti tai salasana väärin"
+                        : ""}
                 </label>
                 <input
                     required
