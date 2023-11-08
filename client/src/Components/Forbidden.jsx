@@ -6,7 +6,7 @@ export default function Forbidden() {
     return (
         <div id="forbidden-container">
             <section id="forbidden-wrapper">
-                <h2>Hups, tänne sinulla ei ole oikeutta</h2>
+                <h2 tabIndex={0}>Hups, tänne sinulla ei ole oikeutta</h2>
                 <BackButton text="etusivulle" />
             </section>
         </div>
