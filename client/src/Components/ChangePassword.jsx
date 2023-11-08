@@ -12,7 +12,7 @@ export default function ChangePassword() {
         newRePassword: "",
     })
     const [notificationText, setNotificationText] = useState("")
-
+    document.title = "Käyttäjäasetukset"
     async function handleSubmit(e) {
         e.preventDefault()
         setIsLoading(true)
@@ -38,7 +38,7 @@ export default function ChangePassword() {
 
     return (
         <section id="change-password-container">
-            <h3>Vaihda salasana</h3>
+            <h3 tabIndex={0}>Vaihda salasana</h3>
             <form
                 name="change-password"
                 id="password-form"
