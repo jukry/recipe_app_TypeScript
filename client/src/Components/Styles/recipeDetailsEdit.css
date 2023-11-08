@@ -8,7 +8,7 @@
     align-items: center;
 }
 .recipe-hero-edit {
-    margin: 0 auto;
+    margin-top: 1em;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -37,6 +37,7 @@
     justify-content: center;
     margin: 2em 0;
     max-width: 500px;
+    width: 100%;
 }
 #instructions-edit {
     background-color: var(--clr-accent-neutral);
@@ -71,14 +72,12 @@
 #recipe-description-edit {
     text-align: left;
 }
-#instructions-edit > ol > li {
-    padding: 0.2em;
-}
 #ingredients-edit {
     margin-bottom: 1em;
     display: flex;
     flex-direction: column;
     position: relative;
+    padding: 1em 2em 1em 1em;
 }
 #ingredients-edit > h3 {
     padding-top: 0.5em;
@@ -89,7 +88,7 @@
 }
 .ingr-line-edit {
     display: grid;
-    grid-template-columns: repeat(2, minmax(50px, 300px));
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
     word-break: break-word;
     align-items: center;
 }
@@ -128,24 +127,30 @@
 }
 .delete-step-button {
     position: absolute;
-    right: 10px;
-    min-width: 30px;
-    min-height: 30px;
+    right: 15px;
+    min-width: 25px;
+    min-height: 25px;
     background-color: var(--clr-accent);
     border: none;
     font-size: 1em;
     color: var(--clr-text);
+    align-self: center;
 }
 .recipe-step-edit {
     width: 100%;
 }
 .delete-ingredient-button {
+    grid-column: -1 / -1;
     position: absolute;
-    right: 10px;
-    min-width: 30px;
-    min-height: 30px;
+    right: 0px;
+    min-width: 25px;
+    min-height: 25px;
     background-color: var(--clr-accent-neutral);
     border: none;
     font-size: 1em;
     color: var(--clr-text);
+    align-self: center;
+}
+.recipe-step-wrapper-edit {
+    display: flex;
 }
