@@ -41,7 +41,7 @@ export default function ChangeEmail() {
 
     return (
         <section id="change-email-container">
-            <h3>Vaihda sähköpostiosoite</h3>
+            <h3 tabIndex={0}>Vaihda sähköpostiosoite</h3>
             <form
                 name="change-email"
                 id="change-email-form"
