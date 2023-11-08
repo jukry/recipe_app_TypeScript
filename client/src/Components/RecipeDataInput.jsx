@@ -10,6 +10,7 @@ export default function RecipeDataInput({ props }) {
                 placeholder="Anna reseptin nimi"
                 className="new-recipe-name"
                 name="name"
+                id="new-recipe-name"
                 value={props.recipe?.name || ""}
                 onChange={props.handleChange}
                 required={true}
@@ -18,6 +19,7 @@ export default function RecipeDataInput({ props }) {
                 type="text"
                 placeholder="Anna reseptin kuvaus"
                 className="new-recipe-description"
+                id="new-recipe-description"
                 name="description"
                 value={props.recipe?.description || ""}
                 onChange={props.handleChange}
