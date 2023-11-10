@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 import fetchRecipeById from "../Hooks/fetchRecipeById.js"
 import { useEffect, useRef, useState } from "react"
 import IngredientInput from "./IngredientInput.jsx"
+import RecipeTagsInputEdit from "./RecipeTagsInputEdit.jsx"
 
 function RecipeDetailsEdit() {
     const params = useParams()
@@ -17,12 +18,15 @@ function RecipeDetailsEdit() {
     const [extraIngredients, setExtraIngredients] = useState([])
     const [extraStepNumber, setExtraStepNumber] = useState(0)
     const [extraIngredientNumber, setExtraIngredientNumber] = useState(0)
+    const [tags, setTags] = useState([])
+
     useEffect(() => {
         if (data && queryResponse.isFetched) {
             setExtraStepNumber(data.instructions.length + 1 + extraStepNumber)
             setExtraIngredientNumber(
                 data.ingredients.length + 1 + extraIngredientNumber
             )
+            setTags(data.tags)
         }
     }, [data])
     function handleStepDelete(e) {
@@ -31,11 +35,8 @@ function RecipeDetailsEdit() {
     }
     function handleIngredientDelete(e) {
         const index = e.target.id.split("delete-ingredient-button-")[1]
-
-        console.log(index)
         ingredientsRef[index - 1].remove()
     }
-    console.log(ingredientsRef)
     return data !== undefined ? (
         <Form method="post" replace="true" className="recipe-wrapper-edit">
             <div className="recipe-hero-edit">
@@ -51,6 +52,7 @@ function RecipeDetailsEdit() {
                     placeholder={`Reseptin kuvaus: ${data.description}`}
                 />
             </div>
+            <RecipeTagsInputEdit props={[tags, setTags]} />
             <div className="recipe-data-edit">
                 <div id="instructions-edit">
                     <h3>Valmistusohje</h3>
