@@ -43,10 +43,15 @@ export default function Search() {
             const filterMatch = tagParams?.every((tag) => {
                 return item.tags.includes(tag)
             })
-            return (
-                (tagParams.length === 0 || filterMatch) &&
-                (nameMatch || ingredientMatch)
-            )
+            if (tagParams.length > 0) {
+                if (searchParam === null) {
+                    return filterMatch
+                } else {
+                    return filterMatch && (nameMatch || ingredientMatch)
+                }
+            } else {
+                return nameMatch || ingredientMatch
+            }
         }
     })
 
