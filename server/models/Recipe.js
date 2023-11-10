@@ -37,6 +37,7 @@ const recipe = new Schema({
         required: false,
     },
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+    tags: { type: [String] },
 })
 
 const Recipe = model("recipe", recipe) //model
