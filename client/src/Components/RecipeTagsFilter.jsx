@@ -29,7 +29,6 @@ export default function RecipeTagsFilter({ props }) {
                                     setTagFilterParams(() => [...tags])
                                     setSearchParams((prev) => {
                                         prev.append("tags", tag)
-                                        console.log(prev.getAll("tags"))
                                         return prev
                                     })
                                 } else {
@@ -37,7 +36,6 @@ export default function RecipeTagsFilter({ props }) {
                                     setTagFilterParams(() => [...tags])
                                     setSearchParams((prev) => {
                                         prev.delete("tags", tag)
-                                        console.log(prev.getAll("tags"))
                                         return prev
                                     })
                                 }
