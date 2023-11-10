@@ -53,7 +53,10 @@ function CommentForm(props) {
                 <label
                     htmlFor="comment-box"
                     aria-roledescription="textbox"
-                ></label>
+                    className="visuallyhidden"
+                >
+                    Kirjoita kommenttisi
+                </label>
                 <textarea
                     name="commentbox"
                     id="comment-box"
@@ -67,7 +70,9 @@ function CommentForm(props) {
                     required
                     spellCheck={false}
                 ></textarea>
-                <label htmlFor="comment-username"></label>
+                <label htmlFor="comment-username" className="visuallyhidden">
+                    Anna käyttäjänimi
+                </label>
                 <input
                     id="comment-username"
                     type="text"
