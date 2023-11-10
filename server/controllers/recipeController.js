@@ -14,6 +14,7 @@ const getAllRecipes = async (req, res) => {
                 ingredients: item.ingredients,
                 instructions: item.instructions,
                 images: item.images,
+                tags: item.tags,
             }
         })
         res.status(200).json({ message: recipes })
@@ -45,7 +46,7 @@ const getRandomRecipe = async (req, res) => {
 const getRecipeById = async (req, res) => {
     const { id } = req.params
     const recipeFound = await Recipe.findById(id).select(
-        "name description ingredients instructions comments images"
+        "name description ingredients instructions comments images tags"
     )
     if (!recipeFound) {
         return res.status(404).json({ Message: "No such recipe" })
@@ -84,6 +85,7 @@ const createRecipe = async (req, res) => {
         description: recipe.description,
         ingredients: [],
         instructions: [],
+        tags: recipe.tags,
     }
     const ingredients = []
     const instructions = []
@@ -151,6 +153,7 @@ const createRecipe = async (req, res) => {
             ingredients: newRecipe.ingredients,
             instructions: newRecipe.instructions,
             images: recipe.images[0],
+            tags: newRecipe.tags,
         })
         await User.findOneAndUpdate(
             { _id: userId }, //filter
@@ -184,7 +187,6 @@ const deleteRecipe = async (req, res) => {
         const updated = await Recipe.find({ "user._id": userId })
             .select("_id")
             .exec()
-        console.log(updated)
         //update user's recipe array
         await User.findOneAndUpdate(
             { _id: userId },
@@ -264,7 +266,6 @@ const updateRecipe = async (req, res) => {
     const updated = req.body.formData
     const userId = req.user.id
     const recipe = await Recipe.findById(id)
-
     if (!recipe) {
         return res.status(404).json({ Message: `No recipe with id ${id}` })
     }
@@ -285,8 +286,15 @@ const updateRecipe = async (req, res) => {
         ) {
             recipe.description = updated.description
         }
-        //create object from amount + ingredient
+        //create object from amount + ingredient and array from tags
         for (const [key, value] of Object.entries(updated)) {
+            if (key.includes("tag")) {
+                if (recipe.tags.includes(value)) {
+                    recipe.tags.splice(recipe.tags.indexOf(value), 1)
+                } else {
+                    recipe.tags.push(value)
+                }
+            }
             if (key.includes("amount")) {
                 const ingredientId = Number(key.split("amount")[1]) - 1
                 if (
@@ -392,6 +400,7 @@ const updateRecipe = async (req, res) => {
                 description: recipe.description,
                 ingredients: recipe.ingredients,
                 instructions: recipe.instructions,
+                tags: recipe.tags,
             },
         })
         return res.status(200).json({ Message: "Recipe updated" })
