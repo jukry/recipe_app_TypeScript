@@ -99,7 +99,9 @@ export default function Comments({ comments }) {
             {comments?.length > 0 ? (
                 <section id="comments-container">{commentList}</section>
             ) : (
-                <p id="no-comments-text">Ei vielä kommentteja</p>
+                <p id="no-comments-text" tabIndex={0}>
+                    Ei vielä kommentteja
+                </p>
             )}
             {comments?.length > initialComments ? (
                 <section id="comment-page-container" ref={ref}>
