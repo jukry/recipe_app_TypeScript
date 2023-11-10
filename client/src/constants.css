@@ -7,4 +7,5 @@
     --clr-text: white;
     --clr-accent-neutral: hsl(159, 23%, 36%);
     --clr-accent-danger: hsl(340, 100%, 12%);
+    --clr-accent-monochromatic: hsl(160, 100%, 22%);
 }
