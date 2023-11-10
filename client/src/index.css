@@ -282,6 +282,22 @@ input:checked + #slider-round:before {
     -ms-transform: translateX(26px);
     transform: translateX(26px);
 }
+#filter-tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 15px;
+    justify-content: center;
+}
+#filter-tag-container h3 {
+    flex-basis: 100%;
+}
+.recipe-filter-tag {
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+.recipe-filter-tag-selected {
+    background-color: var(--clr-accent);
+}
 @media screen and (max-width: 500px) {
     header {
         display: flex;
@@ -362,6 +378,9 @@ input:checked + #slider-round:before {
     .top-nav-active {
         width: 100%;
         left: 0%;
+    }
+    #filter-tag-container {
+        justify-content: space-between;
     }
 }
 @media screen and (min-width: 950px) {
