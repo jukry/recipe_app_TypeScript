@@ -51,6 +51,17 @@ function RecipeDetails() {
                 <h2 tabIndex={0}>{data.name}</h2>
                 <h3 tabIndex={0}>{data.description}</h3>
             </section>
+            <div id="recipe-tags">
+                <div id="tag-container">
+                    {data?.tags?.map((tag) => {
+                        return (
+                            <span key={tag} tabIndex={0} className="recipe-tag">
+                                {tag}
+                            </span>
+                        )
+                    })}
+                </div>
+            </div>
             <div className="recipe-data">
                 <section className="instructions">
                     <h3 tabIndex={0}>Valmistusohje</h3>
