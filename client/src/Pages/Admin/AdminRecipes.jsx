@@ -160,7 +160,7 @@ export default function AdminRecipes() {
             {showDeleteModal &&
                 createPortal(
                     <DeleteModal
-                        props={{
+                        data={{
                             text: "Haluatko varmasti poistaa reseptin ",
                             name: recipeToDelete.name,
                         }}

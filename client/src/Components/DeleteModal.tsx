@@ -2,7 +2,7 @@ import { useEffect, useRef, MutableRefObject, MouseEventHandler } from "react"
 import "./Styles/deleteModal.css"
 
 export default function DeleteModal(props: {
-    props: { text: string; name: string | null }
+    data: { text: string; name: string | null }
     onClose: MouseEventHandler<HTMLDivElement | HTMLButtonElement>
     onDelete: MouseEventHandler<HTMLButtonElement>
 }) {
@@ -20,7 +20,7 @@ export default function DeleteModal(props: {
             <div className="delete-modal">
                 <section className="modal-wrapper">
                     <h4 tabIndex={0} ref={deleteRef}>
-                        {props.props.text} {props.props.name}
+                        {props.data.text} {props.data.name}
                     </h4>
                     <div id="delete-buttons-container">
                         <button id="delete-yes" onClick={props.onDelete}>

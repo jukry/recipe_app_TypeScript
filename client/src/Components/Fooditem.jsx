@@ -122,10 +122,9 @@ export default function Fooditem(props) {
                     {showModal &&
                         createPortal(
                             <DeleteModal
-                                props={{
+                                data={{
                                     text: "Haluatko poistaa reseptin ",
                                     name: data.name + "?",
-                                    id: data._id,
                                 }}
                                 onDelete={(event) => {
                                     if (event.target.id === "delete-yes") {

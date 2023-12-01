@@ -190,7 +190,7 @@ export default function AdminUsers() {
             {showDeleteModal &&
                 createPortal(
                     <DeleteModal
-                        props={{
+                        data={{
                             text: "Haluatko varmasti poistaa käyttäjän ",
                             name: userToDelete.email,
                         }}
