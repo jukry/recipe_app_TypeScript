@@ -1,8 +1,8 @@
-# My first full stack project, MERN Recipe App
+# Recipe App in TypeScript
 
 ## Overview
 
-Recipe app for my personal use and to showcase my skills.
+Refactoring my recipe app in TypeScript.
 
 ### Installation
 
