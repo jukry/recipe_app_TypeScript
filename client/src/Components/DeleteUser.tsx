@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { deleteUser } from "../utils/utils"
 import "./Styles/deleteUser.css"
 import { useNavigation } from "react-router-dom"
@@ -8,7 +8,10 @@ import DeleteModal from "./DeleteModal"
 export default function DeleteUser() {
     const navigation = useNavigation()
     const [showModal, setShowModal] = useState(false)
-
+    const container: HTMLElement | null = document.getElementById("container")
+    if (!container) {
+        throw new Error("No container")
+    }
     return (
         <>
             <section id="delete-user-container">
@@ -27,22 +30,24 @@ export default function DeleteUser() {
             {showModal &&
                 createPortal(
                     <DeleteModal
-                        props={{
+                        data={{
                             text: "Oletko varma että haluat poistaa käyttäjätietosi?",
                         }}
                         onDelete={(event) => {
-                            if (event.target.id === "delete-yes") {
+                            const target = event.target as HTMLButtonElement
+                            if (target?.id === "delete-yes") {
                                 deleteUser()
                             }
                         }}
                         onClose={(event) => {
-                            if (event.target.className !== "delete-modal") {
+                            const target = event.target as HTMLButtonElement
+                            if (target?.className !== "delete-modal") {
                                 event.preventDefault()
                                 setShowModal(false)
                             }
                         }}
                     />,
-                    document.getElementById("container")
+                    container
                 )}
         </>
     )
