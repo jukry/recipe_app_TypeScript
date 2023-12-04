@@ -1,7 +1,13 @@
-import React from "react"
+import { MouseEventHandler } from "react"
 import "./Styles/mobileNavButton.css"
 
-export default function ShowMobileNavButton({ showNav, handleNavClick }) {
+export default function ShowMobileNavButton({
+    showNav,
+    handleNavClick,
+}: {
+    showNav: boolean
+    handleNavClick: MouseEventHandler<HTMLDivElement>
+}) {
     return (
         <div
             onClick={(e) => handleNavClick(e)}
