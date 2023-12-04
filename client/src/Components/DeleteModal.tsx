@@ -2,11 +2,10 @@ import { useEffect, useRef, MutableRefObject, MouseEventHandler } from "react"
 import "./Styles/deleteModal.css"
 
 export default function DeleteModal(props: {
-    data: { text: string; name: string | null }
+    data: { text: string; name?: string | null }
     onClose: MouseEventHandler<HTMLDivElement | HTMLButtonElement>
     onDelete: MouseEventHandler<HTMLButtonElement>
 }) {
-    console.log(props)
     const deleteRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
     useEffect(() => {
         //for accessibility
