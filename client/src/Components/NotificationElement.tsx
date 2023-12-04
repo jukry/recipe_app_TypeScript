@@ -8,21 +8,29 @@ export default function NotificationElement({
     text,
     onClickClose = true,
     setProgress,
+}: {
+    showNotification: boolean
+    setShowNotification: React.Dispatch<React.SetStateAction<boolean>>
+    progress: number
+    text: string
+    onClickClose: boolean
+    setProgress: React.Dispatch<React.SetStateAction<number>>
 }) {
     useEffect(() => {
+        let progressTimeout: ReturnType<typeof setTimeout>
         if (showNotification && progress < 100) {
-            setTimeout(() => {
+            progressTimeout = setTimeout(() => {
                 setProgress((prev) => prev + 1)
             }, 50)
         }
         if (progress === 100) {
             setShowNotification(false)
-            setTimeout(() => {
+            progressTimeout = setTimeout(() => {
                 setProgress(0)
             }, 500)
         }
         return () => {
-            clearTimeout()
+            clearTimeout(progressTimeout)
         }
     }, [progress, showNotification])
     return (
