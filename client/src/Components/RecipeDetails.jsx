@@ -8,6 +8,7 @@ import fetchRecipeComments from "../Hooks/fetchRecipeComments"
 import { postComment } from "../utils/utils"
 import { useContext } from "react"
 import { UserContext } from "../Context/UserContext"
+import "./Styles/recipeTagsInput.css"
 
 function RecipeDetails() {
     const params = useParams()
