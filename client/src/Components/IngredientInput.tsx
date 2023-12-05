@@ -1,6 +1,15 @@
-import React from "react"
+import { ChangeEventHandler } from "react"
 
-export default function IngredientInput(props) {
+export default function IngredientInput(props: {
+    id: string
+    placeholder: string
+    type: string
+    className: string
+    name: string
+    required: boolean
+    value: string
+    onChange: ChangeEventHandler<HTMLInputElement>
+}) {
     return (
         <>
             <label htmlFor={props.id} className="visuallyhidden">
