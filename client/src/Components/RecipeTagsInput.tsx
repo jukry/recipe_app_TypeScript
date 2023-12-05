@@ -3,14 +3,14 @@ import "./Styles/recipeTagsInput.css"
 import recipetags from "../utils/recipetags"
 
 export default function RecipeTagsInput({
-    props: { recipe, setRecipe },
+    props: [recipe, setRecipe],
 }: {
-    props: {
+    props: [
         recipe: {
-            tags: string[]
-        }
+            tags?: string[]
+        },
         setRecipe: React.Dispatch<React.SetStateAction<{}>>
-    }
+    ]
 }) {
     const renderTags = () => {
         return recipetags.map((tag: string) => {
@@ -28,7 +28,7 @@ export default function RecipeTagsInput({
                             id={tag}
                             className="visuallyhidden"
                             aria-checked={recipe?.tags?.includes(tag)}
-                            onChange={(e) => {
+                            onChange={() => {
                                 const tags = recipe?.tags || []
                                 if (!recipe?.tags?.includes(tag)) {
                                     tags.push(tag)
