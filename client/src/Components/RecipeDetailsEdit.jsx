@@ -3,7 +3,7 @@ import "./Styles/recipeDetailsEdit.css"
 import { useQuery } from "@tanstack/react-query"
 import fetchRecipeById from "../Hooks/fetchRecipeById.js"
 import { useEffect, useRef, useState } from "react"
-import IngredientInput from "./IngredientInput.jsx"
+import IngredientInput from "./IngredientInput.tsx"
 import RecipeTagsInputEdit from "./RecipeTagsInputEdit.jsx"
 
 function RecipeDetailsEdit() {
