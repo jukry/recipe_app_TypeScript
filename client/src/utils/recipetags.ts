@@ -1,4 +1,4 @@
-const recipetags = [
+const recipetags: string[] = [
     "Vegaaninen",
     "Kananmunaton",
     "Maidoton",
