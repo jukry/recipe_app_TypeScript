@@ -2,11 +2,18 @@ import React, { Fragment } from "react"
 import "./Styles/recipeTagsInput.css"
 import recipetags from "../utils/recipetags.js"
 
-export default function RecipeTagsInput({ props }) {
-    const [recipe, setRecipe] = props
-
+export default function RecipeTagsInput({
+    props: { recipe, setRecipe },
+}: {
+    props: {
+        recipe: {
+            tags: string[]
+        }
+        setRecipe: React.Dispatch<React.SetStateAction<{}>>
+    }
+}) {
     const renderTags = () => {
-        return recipetags.map((tag) => {
+        return recipetags.map((tag: string) => {
             return (
                 <Fragment key={tag}>
                     <label
