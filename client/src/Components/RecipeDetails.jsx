@@ -54,11 +54,17 @@ function RecipeDetails() {
             <div id="recipe-tags">
                 <div id="tag-container">
                     {data?.tags?.map((tag) => {
-                        return (
-                            <span key={tag} tabIndex={0} className="recipe-tag">
-                                {tag}
-                            </span>
-                        )
+                        if (tag) {
+                            return (
+                                <span
+                                    key={tag}
+                                    tabIndex={0}
+                                    className="recipe-tag"
+                                >
+                                    {tag}
+                                </span>
+                            )
+                        }
                     })}
                 </div>
             </div>
