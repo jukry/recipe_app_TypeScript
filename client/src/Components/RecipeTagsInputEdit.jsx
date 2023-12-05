@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 import "./Styles/recipeTagsInputEdit.css"
-import recipetags from "../utils/recipetags.js"
+import recipetags from "../utils/recipetags"
 
 export default function RecipeTagsInputEdit({ props }) {
     const [tags, setTags] = props

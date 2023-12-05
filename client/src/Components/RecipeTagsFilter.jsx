@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import recipetags from "../utils/recipetags.js"
+import recipetags from "../utils/recipetags"
 
 export default function RecipeTagsFilter({ props }) {
     const [tagFilterParams, setTagFilterParams, setSearchParams] = props
