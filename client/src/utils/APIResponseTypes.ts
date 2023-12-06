@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react"
+import { ChangeEvent, MouseEvent } from "react"
 
 export interface IUser {
     id: string
@@ -13,9 +13,10 @@ export interface IUser {
 export type RecipeProps = {
     props: {
         recipe: {}
-        file: Blob | undefined
+        file: File | undefined
         handleChange: (e: ChangeEvent<HTMLInputElement>) => void
         handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void
+        handleFileDelete: (e: MouseEvent<HTMLButtonElement>) => void
         handleIngredientDelete: (e: ChangeEvent<HTMLInputElement>) => void
         handleStepDelete: (e: ChangeEvent<HTMLInputElement>) => void
         previewFile: string | undefined
