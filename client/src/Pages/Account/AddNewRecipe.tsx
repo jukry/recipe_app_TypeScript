@@ -1,17 +1,16 @@
 import "./styles/newRecipe.css"
 import RecipeDataContainer from "../../Components/RecipeDataContainer"
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, MouseEvent, useState } from "react"
 
 function AddNewRecipe() {
     document.title = "Lisää uusi resepti"
     const [recipe, setRecipe] = useState({})
-    const [file, setFile] = useState<Blob | undefined>()
+    const [file, setFile] = useState<File | undefined>()
     const [previewFile, setPreviewFile] = useState<string | undefined>()
     const [isLoading, setIsLoading] = useState(false)
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         setRecipe((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
-    console.log(recipe)
     function handleIngredientDelete(e: ChangeEvent<HTMLInputElement>) {
         const index = e?.target?.id.split("ingButton")[1]
         setRecipe((prev: {}) => {
@@ -37,28 +36,23 @@ function AddNewRecipe() {
         if (!e.target.files) {
             return
         }
-        const imageFile: Blob = e.target.files[0]
-        if (
-            e.target.files?.length === 0 ||
-            e.target.id === "delete-image-button"
-        ) {
-            setFile(undefined)
-            setPreviewFile(undefined)
-            return
-        }
+        const imageFile: File = e.target.files[0]
         const URLImageObject = URL.createObjectURL(imageFile)
         setFile(imageFile)
         setPreviewFile(URLImageObject)
-        console.log(URLImageObject)
+    }
+
+    function handleFileDelete(e: MouseEvent) {
+        setFile(undefined)
+        setPreviewFile(undefined)
+        return
     }
 
     async function handleSubmit(e: FormEvent) {
         setIsLoading(true)
         e.preventDefault()
         const formData = new FormData()
-        console.log(file)
         if (file) {
-            console.log("IF FILE")
             formData.append("imageUpload", file)
         }
 
@@ -94,7 +88,7 @@ function AddNewRecipe() {
         if (!recipeRes.ok) {
             return recipeRes.status
         } else {
-            //location.replace("/account/myrecipes")
+            location.replace("/account/myrecipes")
         }
     }
     return (
@@ -115,15 +109,8 @@ function AddNewRecipe() {
                         setRecipe: setRecipe,
                         handleIngredientDelete: handleIngredientDelete,
                         handleStepDelete: handleStepDelete,
+                        handleFileDelete: handleFileDelete,
                     }}
-                    /* recipe={recipe}
-                    handleChange={handleChange}
-                    handleFileChange={handleFileChange}
-                    previewFile={previewFile}
-                    file={file}
-                    setRecipe={setRecipe}
-                    handleIngredientDelete={handleIngredientDelete}
-                    handleStepDelete={handleStepDelete} */
                 />
                 <button disabled={isLoading}>
                     {!isLoading ? "Lähetä resepti" : "Lähetetään..."}
