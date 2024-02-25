@@ -1,11 +1,13 @@
-import React, { useRef, useState } from "react"
+import { ReactElement, useRef, useState, BaseSyntheticEvent } from "react"
 import "../Pages/Account/styles/newRecipe.css"
 import IngredientInput from "./IngredientInput"
+import { RecipeProps } from "../utils/APIResponseTypes"
 
-export default function RecipeStepsInput({ props }) {
-    const [extraSteps, setExtraSteps] = useState([])
-    const [extraInputNumber, setExtraInputNumber] = useState(5)
-    const stepsRef = useRef([])
+export default function RecipeStepsInput({ props }: RecipeProps) {
+    const [extraSteps, setExtraSteps] = useState<Array<ReactElement>>([])
+    const [extraInputNumber, setExtraInputNumber] = useState<number>(5)
+    const stepsRef = useRef<(HTMLDivElement | null)[]>([])
+    console.log(props.recipe)
 
     return (
         <fieldset id="recipe-steps">
@@ -19,13 +21,15 @@ export default function RecipeStepsInput({ props }) {
                         ...prev,
                         [`step${extraInputNumber}`]: "",
                     }))
+                    console.log("CLICK")
                     setExtraSteps(
                         extraSteps.concat(
                             <div
                                 className="recipe-step-wrapper"
                                 key={`step${extraInputNumber}`}
                                 ref={(el) =>
-                                    (stepsRef[extraInputNumber - 1] = el)
+                                    (stepsRef.current[extraInputNumber - 1] =
+                                        el)
                                 }
                             >
                                 <IngredientInput
@@ -43,12 +47,17 @@ export default function RecipeStepsInput({ props }) {
                                     aria-label="Poista reseptin vaihe"
                                     type="button"
                                     id={`stepButton${extraInputNumber}`}
-                                    onClick={(e) => {
+                                    onClick={(e: BaseSyntheticEvent) => {
+                                        const id = e.target.id
                                         const indexToDelete =
-                                            e.target.id.split("stepButton")[1] -
-                                            1
-                                        props.handleStepDelete(e)
-                                        stepsRef[indexToDelete].remove()
+                                            id.split("stepButton")[1] - 1
+                                        props.handleStepDelete(id)
+                                        const currentStepRef =
+                                            stepsRef.current[indexToDelete]
+                                        if (!currentStepRef) {
+                                            return null
+                                        }
+                                        currentStepRef.remove()
                                     }}
                                 >
                                     -
@@ -62,7 +71,7 @@ export default function RecipeStepsInput({ props }) {
             </button>
             <div
                 className="recipe-step-wrapper"
-                ref={(el) => (stepsRef[0] = el)}
+                ref={(el) => (stepsRef.current[0] = el)}
             >
                 <IngredientInput
                     type="text"
@@ -70,7 +79,7 @@ export default function RecipeStepsInput({ props }) {
                     className="new-recipe-step"
                     id="step-1"
                     name="step1"
-                    value={props.recipe?.step1 || ""}
+                    value={props.recipe?.instructions?.step1}
                     onChange={(event) => props.handleChange(event)}
                     required={true}
                     key="step1"
@@ -78,7 +87,7 @@ export default function RecipeStepsInput({ props }) {
             </div>
             <div
                 className="recipe-step-wrapper"
-                ref={(el) => (stepsRef[1] = el)}
+                ref={(el) => (stepsRef.current[1] = el)}
             >
                 <IngredientInput
                     type="text"
@@ -86,7 +95,7 @@ export default function RecipeStepsInput({ props }) {
                     className="new-recipe-step"
                     id="step-2"
                     name="step2"
-                    value={props.recipe?.step2 || ""}
+                    value={props.recipe?.instructions?.step2}
                     onChange={(event) => props.handleChange(event)}
                     key="step2"
                 />
@@ -95,9 +104,15 @@ export default function RecipeStepsInput({ props }) {
                     aria-label="Poista reseptin vaihe"
                     type="button"
                     id="stepButton2"
-                    onClick={(e) => {
-                        stepsRef[1].remove()
-                        props.handleStepDelete(e)
+                    onClick={(e: BaseSyntheticEvent) => {
+                        const id = e.target.id
+                        const indexToDelete = id.split("stepButton")[1] - 1
+                        props.handleStepDelete(id)
+                        const currentStepRef = stepsRef.current[indexToDelete]
+                        if (!currentStepRef) {
+                            return null
+                        }
+                        currentStepRef.remove()
                     }}
                 >
                     -
@@ -105,7 +120,7 @@ export default function RecipeStepsInput({ props }) {
             </div>
             <div
                 className="recipe-step-wrapper"
-                ref={(el) => (stepsRef[2] = el)}
+                ref={(el) => (stepsRef.current[2] = el)}
             >
                 <IngredientInput
                     type="text"
@@ -113,7 +128,7 @@ export default function RecipeStepsInput({ props }) {
                     className="new-recipe-step"
                     id="step-3"
                     name="step3"
-                    value={props.recipe?.step3 || ""}
+                    value={props.recipe?.instructions?.step3}
                     onChange={(event) => props.handleChange(event)}
                     key="step3"
                 />
@@ -122,9 +137,15 @@ export default function RecipeStepsInput({ props }) {
                     aria-label="Poista reseptin vaihe"
                     type="button"
                     id="stepButton3"
-                    onClick={(e) => {
-                        stepsRef[2].remove()
-                        props.handleStepDelete(e)
+                    onClick={(e: BaseSyntheticEvent) => {
+                        const id = e.target.id
+                        const indexToDelete = id.split("stepButton")[1] - 1
+                        props.handleStepDelete(id)
+                        const currentStepRef = stepsRef.current[indexToDelete]
+                        if (!currentStepRef) {
+                            return null
+                        }
+                        currentStepRef.remove()
                     }}
                 >
                     -
@@ -132,7 +153,7 @@ export default function RecipeStepsInput({ props }) {
             </div>
             <div
                 className="recipe-step-wrapper"
-                ref={(el) => (stepsRef[3] = el)}
+                ref={(el) => (stepsRef.current[3] = el)}
             >
                 <IngredientInput
                     type="text"
@@ -140,7 +161,7 @@ export default function RecipeStepsInput({ props }) {
                     className="new-recipe-step"
                     id="step-4"
                     name="step4"
-                    value={props.recipe?.step4 || ""}
+                    value={props.recipe?.instructions?.step4}
                     onChange={(event) => props.handleChange(event)}
                     key="step4"
                 />
@@ -149,9 +170,15 @@ export default function RecipeStepsInput({ props }) {
                     aria-label="Poista reseptin vaihe"
                     type="button"
                     id="stepButton4"
-                    onClick={(e) => {
-                        stepsRef[3].remove()
-                        props.handleStepDelete(e)
+                    onClick={(e: BaseSyntheticEvent) => {
+                        const id = e.target.id
+                        const indexToDelete = id.split("stepButton")[1] - 1
+                        props.handleStepDelete(id)
+                        const currentStepRef = stepsRef.current[indexToDelete]
+                        if (!currentStepRef) {
+                            return null
+                        }
+                        currentStepRef.remove()
                     }}
                 >
                     -
