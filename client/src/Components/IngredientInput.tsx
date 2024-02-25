@@ -2,13 +2,13 @@ import { ChangeEventHandler } from "react"
 
 export default function IngredientInput(props: {
     id: string
-    placeholder: string
+    placeholder?: string
     type: string
     className: string
     name: string
-    required: boolean
-    value: string
-    onChange: ChangeEventHandler<HTMLInputElement>
+    required?: boolean
+    value?: string
+    onChange?: ChangeEventHandler<HTMLInputElement>
 }) {
     return (
         <>
@@ -23,7 +23,10 @@ export default function IngredientInput(props: {
                 id={props.id}
                 required={props.required}
                 value={props.value}
-                onChange={(event) => props.onChange(event)}
+                onChange={(event) => {
+                    if (!props.onChange) return
+                    props.onChange(event)
+                }}
                 autoComplete="off"
             />
         </>
