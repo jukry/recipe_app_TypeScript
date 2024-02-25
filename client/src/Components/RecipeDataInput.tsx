@@ -1,8 +1,8 @@
-import React from "react"
 import IngredientInput from "./IngredientInput"
 import "../Pages/Account/styles/newRecipe.css"
+import { RecipeProps } from "../utils/APIResponseTypes"
 
-export default function RecipeDataInput({ props }) {
+export default function RecipeDataInput({ props }: RecipeProps) {
     return (
         <div id="recipe-text-input">
             <IngredientInput
