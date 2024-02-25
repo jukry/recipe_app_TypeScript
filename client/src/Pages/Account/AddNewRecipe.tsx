@@ -1,10 +1,11 @@
 import "./styles/newRecipe.css"
 import RecipeDataContainer from "../../Components/RecipeDataContainer"
 import { ChangeEvent, FormEvent, MouseEvent, useState } from "react"
+import { INewRecipe } from "../../utils/APIResponseTypes"
 
 function AddNewRecipe() {
     document.title = "Lisää uusi resepti"
-    const [recipe, setRecipe] = useState({})
+    const [recipe, setRecipe] = useState<INewRecipe>({})
     const [file, setFile] = useState<File | undefined>()
     const [previewFile, setPreviewFile] = useState<string | undefined>()
     const [isLoading, setIsLoading] = useState(false)
@@ -22,8 +23,8 @@ function AddNewRecipe() {
         })
     }
 
-    function handleStepDelete(e: ChangeEvent<HTMLInputElement>) {
-        const index = e.target.id.split("stepButton")[1]
+    function handleStepDelete(e: string) {
+        const index = e.split("stepButton")[1]
         setRecipe((prev: {}) => {
             const step = `step${index}`
             delete prev[step as keyof {}]
