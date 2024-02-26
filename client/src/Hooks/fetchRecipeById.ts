@@ -1,4 +1,8 @@
-const fetchRecipeById = async ({ queryKey }) => {
+const fetchRecipeById = async ({
+    queryKey,
+}: {
+    queryKey: [string, string]
+}) => {
     const id = queryKey[1]
     const apiResponse = await fetch(
         process.env.NODE_ENV === "production"
