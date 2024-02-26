@@ -1,3 +1,4 @@
+import { UseMutationResult } from "@tanstack/react-query"
 import { ChangeEvent, Dispatch, MouseEvent, SetStateAction } from "react"
 
 export type User = {
@@ -17,7 +18,7 @@ export interface IRecipeDetails {
     description: string
     images: string
     tags: string[]
-    ingredients: { ingredient: string }[]
+    ingredients: { ingredient: string; amount: string }[]
     instructions: string[]
     comments: string[]
 }
@@ -28,7 +29,7 @@ export interface IRecipe {
     description: string
     images: string
     tags: string[]
-    ingredients: {}[]
+    ingredients: { ingredient: string; amount: string }[]
     instructions: string[]
     comments: string[]
     user: {
@@ -85,3 +86,40 @@ export interface IRecipesShownContext {
     setCurrentRecipe?: React.Dispatch<React.SetStateAction<string | null>>
     setRecipesShown?: React.Dispatch<React.SetStateAction<number>>
 }
+
+export interface IComment {
+    content: string
+    username: string
+    createdAt: Date
+    _id: string
+    recipe: string
+}
+
+export type CommentMutation = UseMutationResult<
+    {
+        res: Response
+        setComment: React.Dispatch<
+            React.SetStateAction<{
+                content: string
+                username: string
+            }>
+        >
+    },
+    unknown,
+    {
+        event?: any
+        comment: {
+            content: string
+            username: string
+        }
+        id: string
+        userId: string
+        setComment: React.Dispatch<
+            React.SetStateAction<{
+                content: string
+                username: string
+            }>
+        >
+    },
+    unknown
+>
