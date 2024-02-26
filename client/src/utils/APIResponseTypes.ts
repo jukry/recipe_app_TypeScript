@@ -1,32 +1,32 @@
 import { ChangeEvent, Dispatch, MouseEvent, SetStateAction } from "react"
 
-export type User =
-    | {
-          id: string
-          email: string
-          favrecipes: string[]
-          lastlogins: string[]
-          recipes: string[]
-          role: string
-          comments?: string[]
-      }
-    | {}
+export type User = {
+    id?: string
+    email?: string
+    favrecipes?: string[]
+    lastlogins?: string[]
+    recipes?: string[]
+    role?: string
+    comments?: string[]
+}
 
 export interface IRecipeDetails {
-    _id: string
+    _id?: string
+    id?: string
     name: string
     description: string
-    images: string[]
+    images: string
     tags: string[]
     ingredients: { ingredient: string }[]
     instructions: string[]
     comments: string[]
 }
 export interface IRecipe {
-    _id: string
+    _id?: string
+    id?: string
     name: string
     description: string
-    images: string[]
+    images: string
     tags: string[]
     ingredients: {}[]
     instructions: string[]
@@ -77,3 +77,11 @@ type UserContextAction = {
     payload?: User | boolean
 }
 export type DispatchActions = UserContextAction
+
+export interface IRecipesShownContext {
+    initialRecipes: number
+    currentRecipe: string | null
+    recipesShown?: number
+    setCurrentRecipe?: React.Dispatch<React.SetStateAction<string | null>>
+    setRecipesShown?: React.Dispatch<React.SetStateAction<number>>
+}
