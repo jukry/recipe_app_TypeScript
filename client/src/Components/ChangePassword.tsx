@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { FormEvent, useState } from "react"
 import NotificationElement from "./NotificationElement"
 import { changePassword } from "../utils/utils"
 
@@ -13,7 +13,7 @@ export default function ChangePassword() {
     })
     const [notificationText, setNotificationText] = useState("")
     document.title = "Käyttäjäasetukset"
-    async function handleSubmit(e) {
+    async function handleSubmit(e: FormEvent) {
         e.preventDefault()
         setIsLoading(true)
         const res = await changePassword(passwordData)
