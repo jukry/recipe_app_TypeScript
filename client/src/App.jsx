@@ -11,7 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Suspense, lazy } from "react"
 import Loader from "./Components/Loader"
 import AccountDashboard from "./Pages/Account/AccountDashboard"
-const RecipeDetails = lazy(() => import("./Components/RecipeDetails"))
+const RecipeDetails = lazy(() => import("./Components/RecipeDetails.tsx"))
 const ProtectedRoutes = lazy(() => import("./Components/ProtectedRoutes"))
 const AccountLayout = lazy(() => import("./Pages/Account/AccountLayout"))
 const RecipeDetailsEdit = lazy(() => import("./Components/RecipeDetailsEdit"))
