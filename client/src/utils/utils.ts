@@ -61,7 +61,7 @@ export async function handleFavorite(data) {
         const newFavRecipes = message.Message
         dispatch({
             type: "UPDATEFAV",
-            payload: [{ ...user, favrecipes: newFavRecipes }],
+            payload: { ...user, favrecipes: newFavRecipes },
         })
     } else {
         async function addFav() {
@@ -86,7 +86,7 @@ export async function handleFavorite(data) {
         const newFavRecipes = message.Message
         dispatch({
             type: "UPDATEFAV",
-            payload: [{ ...user, favrecipes: newFavRecipes }],
+            payload: { ...user, favrecipes: newFavRecipes },
         })
     }
 }
