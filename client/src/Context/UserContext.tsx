@@ -15,18 +15,24 @@ export const userReducer = (
 ): IUserContext => {
     switch (action.type) {
         case "UPDATEFAV":
-            return { user: action?.payload }
+            return { user: action?.payload as User }
         case "DELETERECIPE":
-            return { user: action.payload }
+            return { user: action.payload as User }
         case "LOGIN":
             return { user: action.payload as User }
         case "LOGOUT":
-            return { user: {} }
+            return { user: {}, isLoggedIn: false }
         case "UPDATEUSER":
-            return { user: action.payload }
+            return { user: action.payload as User }
         default:
             return state
     }
+}
+
+const initialState: IUserContext = {
+    user: {},
+    isLoggedIn: false,
+    isLoading: false,
 }
 
 export const UserContextProvider = ({
@@ -34,9 +40,7 @@ export const UserContextProvider = ({
 }: {
     children: ReactElement
 }) => {
-    const [state, dispatch] = useReducer(userReducer, {
-        user: {},
-    })
+    const [state, dispatch] = useReducer(userReducer, initialState)
     const [isLoading, setIsLoading] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [adminMode, setAdminMode] = useState(
