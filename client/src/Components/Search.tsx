@@ -1,24 +1,28 @@
 import Results from "./Results"
 import { useSearchParams } from "react-router-dom"
-import { useState } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import fetchRecipes from "../Hooks/fetchRecipes"
 import Loader from "./Loader"
 import RecipeTagsFilter from "./RecipeTagsFilter"
+import { IRecipeDetails } from "../utils/APIResponseTypes"
 
 export default function Search() {
     const [searchParams, setSearchParams] = useSearchParams()
-    const [search, setSearch] = useState(searchParams?.get("search") || "")
+    const [search, setSearch] = useState<string>(
+        searchParams?.get("search") || ""
+    )
     const [tagFilterParams, setTagFilterParams] = useState(
         searchParams?.getAll("tags") || []
     )
-    const queryResponse = useQuery(["recipes"], fetchRecipes)
-    const queryRecipes = queryResponse?.data?.message ?? []
-
-    function handleSubmit(e) {
+    const queryResponse = useQuery(["recipes"], async () =>
+        fetchRecipes({ queryKey: "recipes" })
+    )
+    const queryRecipes: IRecipeDetails[] = queryResponse?.data?.message ?? []
+    function handleSubmit(e: FormEvent) {
         e.preventDefault()
     }
-    function handleFilter(e) {
+    function handleFilter(e: ChangeEvent<HTMLInputElement>) {
         setSearch(e.target.value)
         setSearchParams((prev) => {
             prev.set("search", e.target.value)
@@ -34,11 +38,11 @@ export default function Search() {
         } else {
             const nameMatch = item.name
                 ?.toLowerCase()
-                .includes(searchParam?.toLowerCase())
+                .includes(searchParam?.toLowerCase() as string)
             const ingredientMatch = item?.ingredients?.some((ingredient) =>
                 ingredient?.ingredient
                     ?.toLowerCase()
-                    .includes(searchParam?.toLowerCase())
+                    .includes(searchParam?.toLowerCase() as string)
             )
             const filterMatch = tagParams?.every((tag) => {
                 return item.tags.includes(tag)
@@ -80,11 +84,9 @@ export default function Search() {
                     </form>
                 </div>
                 <RecipeTagsFilter
-                    props={[
-                        tagFilterParams,
-                        setTagFilterParams,
-                        setSearchParams,
-                    ]}
+                    tagFilterParams={tagFilterParams}
+                    setTagFilterParams={setTagFilterParams}
+                    setSearchParams={setSearchParams}
                 />
             </section>
             {queryResponse.isLoading ? (
