@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { BaseSyntheticEvent, useEffect, useRef, useState } from "react"
 import "./Styles/comments.css"
 import { commentTime } from "../utils/utils"
+import { IComment } from "../utils/APIResponseTypes"
 
-export default function Comments({ comments }) {
+export default function Comments({ comments }: { comments: IComment[] }) {
     const initialComments = 8
     const [currentPage, setCurrentPage] = useState(1)
     const ref = useRef(null)
@@ -35,7 +36,7 @@ export default function Comments({ comments }) {
     }
 
     const pagination = paginate()
-    const handlePagination = (event) => {
+    const handlePagination = (event: BaseSyntheticEvent) => {
         event.stopPropagation()
         event.preventDefault()
         const navButtonPressed = event.target.id
@@ -55,8 +56,8 @@ export default function Comments({ comments }) {
             initialComments * currentPage
         )
         .map((comment) => {
-            let timeDelta = (Date.now() - new Date(comment.createdAt)) / 1000
-            timeDelta = timeDelta / 60
+            const commentCreatedAt = new Date(comment.createdAt).getTime()
+            let timeDelta = new Date().getTime() - commentCreatedAt
             const getCommentTime = commentTime(timeDelta)
             return (
                 <div className="comment-container" key={comment._id}>
@@ -84,13 +85,12 @@ export default function Comments({ comments }) {
                 </div>
             )
         })
+    const handleScrollIntoView = () => {
+        const navBack = document.getElementById("comment-nav-back")
+        navBack?.scrollIntoView({ behavior: "instant" })
+    }
     useEffect(() => {
-        if (
-            pagesArr?.length - currentPage === 1 &&
-            event?.target?.id === "comment-nav-back"
-        ) {
-            ref.current?.scrollIntoView({ behavior: "instant" })
-        }
+        handleScrollIntoView()
     }, [currentPage])
 
     return (
