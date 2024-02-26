@@ -18,7 +18,7 @@ export interface IRecipeDetails {
     description: string
     images: string[]
     tags: string[]
-    ingredients: {}[]
+    ingredients: { ingredient: string }[]
     instructions: string[]
     comments: string[]
 }
