@@ -135,34 +135,29 @@ export async function deleteUser() {
     return location.replace("/")
 }
 
-export function commentTime(timeDelta) {
-    return timeDelta * 60 < 60 // < 1 minute ago
+export function commentTime(timeDelta: number) {
+    const minutes = timeDelta / 60000
+    return minutes < 1 // < 1 minute ago
         ? "Juuri nyt"
-        : timeDelta >= 1 && timeDelta < 2 // 1 minute ago
+        : minutes < 2 // 1 minute ago
         ? "1 minuutti sitten"
-        : timeDelta < 60 //x minutes ago
-        ? `${Math.round(timeDelta)} minuuttia sitten`
-        : timeDelta / 60 < 24 //x hours ago
-        ? `${Math.round(timeDelta / 60)} tuntia sitten`
-        : timeDelta / 60 >= 24 && //1 day ago
-          timeDelta / 60 <= 48
-        ? `${Math.round(timeDelta / 60 / 24)} päivä sitten`
-        : timeDelta / 60 >= 48 && //2-30 days ago
-          timeDelta / 60 / 24 < 30
-        ? `${Math.round(timeDelta / 60 / 24)} päivää sitten`
-        : timeDelta / 60 / 24 >= 30 && // 1 month ago
-          timeDelta / 60 / 24 < 60
-        ? `${Math.round(timeDelta / 60 / 24 / 30)} kuukausi sitten`
-        : timeDelta / 60 / 24 >= 60 && //x months ago
-          timeDelta / 60 / 24 < 365
-        ? `${Math.round(timeDelta / 60 / 24 / 30)} kuukautta sitten`
-        : timeDelta / 60 / 24 >= 365 && //1 year ago
-          timeDelta / 60 / 24 < 730
+        : minutes < 60 //x minutes ago
+        ? `${Math.round(minutes)} minuuttia sitten`
+        : minutes / 60 < 24 //x hours ago
+        ? `${Math.round(minutes / 60)} tuntia sitten`
+        : minutes / 60 < 48 //1 day ago
+        ? `${Math.round(minutes / 60 / 24)} päivä sitten`
+        : minutes / 60 / 24 < 30 //2-30 days ago
+        ? `${Math.round(minutes / 60 / 24)} päivää sitten`
+        : minutes / 60 / 24 < 60 // 1 month ago
+        ? `${Math.round(minutes / 60 / 24 / 30)} kuukausi sitten`
+        : minutes / 60 / 24 < 365 //x months ago
+        ? `${Math.round(minutes / 60 / 24 / 30)} kuukautta sitten`
+        : minutes / 60 / 24 < 730 //1 year ago
         ? "1 vuosi sitten"
-        : `${Math.floor(
-              timeDelta / 60 / 24 / 30 / 12 //x years ago
-          )} vuotta sitten`
+        : `${Math.floor(minutes / 60 / 24 / 30 / 12)} vuotta sitten` //x years ago
 }
+
 export async function postComment(commentData, id, userId, email) {
     return await fetch(
         process.env.NODE_ENV === "production"
