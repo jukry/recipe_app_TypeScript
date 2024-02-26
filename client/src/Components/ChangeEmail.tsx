@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { FormEvent, useState } from "react"
 import { useUpdateUser } from "../Hooks/useUpdateUser"
 import { changeEmail } from "../utils/utils"
 import NotificationElement from "./NotificationElement"
@@ -14,7 +14,7 @@ export default function ChangeEmail() {
     const [progress, setProgress] = useState(0)
     const [notificationText, setNotificationText] = useState("")
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e: FormEvent) {
         e.preventDefault()
         setIsLoading(true)
         const res = await changeEmail(emailData)
