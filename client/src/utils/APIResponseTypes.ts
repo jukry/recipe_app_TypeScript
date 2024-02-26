@@ -1,14 +1,16 @@
-import { ChangeEvent, MouseEvent } from "react"
+import { ChangeEvent, Dispatch, MouseEvent, SetStateAction } from "react"
 
-export interface IUser {
-    id: string
-    email: string
-    favrecipes: string[]
-    lastlogins: string[]
-    recipes: string[]
-    role: string
-    comments: string[]
-}
+export type User =
+    | {
+          id: string
+          email: string
+          favrecipes: string[]
+          lastlogins: string[]
+          recipes: string[]
+          role: string
+          comments?: string[]
+      }
+    | {}
 
 export interface IRecipeDetails {
     _id: string
@@ -62,3 +64,16 @@ export type RecipeProps = {
         setRecipe: React.Dispatch<React.SetStateAction<{}>>
     }
 }
+
+export interface IUserContext {
+    user?: User
+    isLoggedIn?: boolean
+    isLoading?: boolean
+    dispatch?: Dispatch<SetStateAction<DispatchActions>>
+}
+
+type UserContextAction = {
+    type: string
+    payload?: User | boolean
+}
+export type DispatchActions = UserContextAction
