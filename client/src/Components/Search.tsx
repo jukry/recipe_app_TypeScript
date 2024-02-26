@@ -92,7 +92,7 @@ export default function Search() {
             {queryResponse.isLoading ? (
                 <Loader text={"Ladataan reseptejä"} />
             ) : (
-                <Results props={[recipes, searchParams]} />
+                <Results recipes={recipes} searchParams={searchParams} />
             )}
         </div>
     )
