@@ -1,7 +1,10 @@
 import { ReactElement, createContext, useState } from "react"
+import { IRecipesShownContext } from "../utils/APIResponseTypes"
 
-export const RecipesShownContext = createContext({})
-
+export const RecipesShownContext = createContext<IRecipesShownContext>({
+    initialRecipes: 8,
+    currentRecipe: null,
+})
 export const RecipesShownContextProvider = ({
     children,
 }: {
