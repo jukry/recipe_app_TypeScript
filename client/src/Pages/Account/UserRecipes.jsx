@@ -36,7 +36,7 @@ function UserRecipes({ props }) {
             const recipeMap = res.map((item) => item._id)
             dispatch({
                 type: "DELETERECIPE",
-                payload: [{ ...user, recipes: recipeMap }],
+                payload: { ...user, recipes: recipeMap },
             })
         },
     })
