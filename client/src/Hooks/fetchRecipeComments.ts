@@ -1,5 +1,9 @@
-const fetchRecipeComments = async ({ queryKey }) => {
-    const id = queryKey[1]
+const fetchRecipeComments = async ({
+    queryParams,
+}: {
+    queryParams: [string, string]
+}) => {
+    const id = queryParams[1]
     const apiResponse = await fetch(
         process.env.NODE_ENV === "production"
             ? `${import.meta.env.VITE_COMMENTS_ENDPOINT}/${id}`
