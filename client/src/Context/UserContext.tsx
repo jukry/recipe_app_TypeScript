@@ -1,15 +1,25 @@
-import { createContext, useEffect, useReducer, useState } from "react"
+import {
+    ReactElement,
+    createContext,
+    useEffect,
+    useReducer,
+    useState,
+} from "react"
+import { DispatchActions, IUserContext, User } from "../utils/APIResponseTypes"
 
-export const UserContext = createContext()
+export const UserContext = createContext({})
 
-export const userReducer = (state, action) => {
+export const userReducer = (
+    state: IUserContext,
+    action: DispatchActions
+): IUserContext => {
     switch (action.type) {
         case "UPDATEFAV":
-            return { user: action.payload[0] }
+            return { user: action?.payload }
         case "DELETERECIPE":
-            return { user: action.payload[0] }
-        case "LOGIN":
             return { user: action.payload }
+        case "LOGIN":
+            return { user: action.payload as User }
         case "LOGOUT":
             return { user: {} }
         case "UPDATEUSER":
@@ -19,11 +29,15 @@ export const userReducer = (state, action) => {
     }
 }
 
-export const UserContextProvider = ({ children }) => {
+export const UserContextProvider = ({
+    children,
+}: {
+    children: ReactElement
+}) => {
     const [state, dispatch] = useReducer(userReducer, {
         user: {},
     })
-    const [isLoading, setIsLoading] = useState()
+    const [isLoading, setIsLoading] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [adminMode, setAdminMode] = useState(
         window.localStorage.getItem("amode") === "true" || false
@@ -52,7 +66,7 @@ export const UserContextProvider = ({ children }) => {
     }, [])
 
     useEffect(() => {
-        window.localStorage.setItem("amode", adminMode)
+        window.localStorage.setItem("amode", adminMode.toString())
     }, [adminMode])
 
     return (
