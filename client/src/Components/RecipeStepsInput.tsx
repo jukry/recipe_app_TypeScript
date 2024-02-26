@@ -7,7 +7,6 @@ export default function RecipeStepsInput({ props }: RecipeProps) {
     const [extraSteps, setExtraSteps] = useState<Array<ReactElement>>([])
     const [extraInputNumber, setExtraInputNumber] = useState<number>(5)
     const stepsRef = useRef<(HTMLDivElement | null)[]>([])
-    console.log(props.recipe)
 
     return (
         <fieldset id="recipe-steps">
@@ -21,7 +20,6 @@ export default function RecipeStepsInput({ props }: RecipeProps) {
                         ...prev,
                         [`step${extraInputNumber}`]: "",
                     }))
-                    console.log("CLICK")
                     setExtraSteps(
                         extraSteps.concat(
                             <div
