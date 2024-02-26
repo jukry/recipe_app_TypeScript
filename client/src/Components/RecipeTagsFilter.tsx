@@ -1,8 +1,12 @@
 import React, { Fragment } from "react"
 import recipetags from "../utils/recipetags"
 
-export default function RecipeTagsFilter({ props }) {
-    const [tagFilterParams, setTagFilterParams, setSearchParams] = props
+export default function RecipeTagsFilter(props: {
+    tagFilterParams: string[]
+    setTagFilterParams: React.Dispatch<React.SetStateAction<string[]>>
+    setSearchParams: React.Dispatch<React.SetStateAction<URLSearchParams>>
+}) {
+    const { tagFilterParams, setTagFilterParams, setSearchParams } = props
 
     const renderRecipeTagsFilter = () => {
         return recipetags.map((tag) => {
