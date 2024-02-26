@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom"
 import "./Styles/backButton.css"
 
-export default function BackButton(props: { text: string }) {
+export default function BackButton(props: { text?: string }) {
     const location = useLocation()
     return (
         <Link
