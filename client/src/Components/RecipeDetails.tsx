@@ -6,37 +6,65 @@ import BackButton from "./BackButton"
 import RecipeComments from "./RecipeComments"
 import fetchRecipeComments from "../Hooks/fetchRecipeComments"
 import { postComment } from "../utils/utils"
-import { useContext } from "react"
+import React, { useContext } from "react"
 import { UserContext } from "../Context/UserContext"
 import "./Styles/recipeTagsInput.css"
+import {
+    CommentMutation,
+    IRecipeDetails,
+    IUserContext,
+} from "../utils/APIResponseTypes"
 
 function RecipeDetails() {
     const params = useParams()
-    const queryResponse = useQuery(["recipe", params.id], fetchRecipeById)
-    const data = queryResponse?.data?.message ?? []
-    const queryResponseComments = useQuery(
-        ["comments", params.id],
-        fetchRecipeComments
+    const queryResponse = useQuery(["recipe", params.id], async () =>
+        fetchRecipeById({ queryKey: ["recipe", params.id as string] })
     )
-    const {
-        user: { email },
-    } = useContext(UserContext)
-    const mutation = useMutation({
-        mutationFn: async ([_, comment, id, userId, setComment]) => {
-            const res = await postComment(comment, id, userId, email)
+    const data: IRecipeDetails = queryResponse?.data?.message ?? []
+    const queryResponseComments = useQuery(["comments", params.id], async () =>
+        fetchRecipeComments({ queryParams: ["comments", params.id as string] })
+    )
+    const { user } = useContext<IUserContext>(UserContext)
+    const mutation: CommentMutation = useMutation({
+        mutationFn: async ({
+            event: _,
+            comment,
+            id,
+            userId,
+            setComment,
+        }: {
+            event?: any
+            comment: { content: string; username: string }
+            id: string
+            userId: string
+            setComment: React.Dispatch<
+                React.SetStateAction<{ content: string; username: string }>
+            >
+        }) => {
+            console.log(comment, id, userId, user?.email)
+            const res = await postComment(comment, id, userId, user?.email)
+            console.log(res)
             if (!res.ok) {
-                throw new Error(res.status)
+                throw new Error(res.statusText)
             }
-            return [res, setComment]
+            return { res, setComment }
         },
-        onSuccess: async ([res, setComment]) => {
-            const commentBox = document.getElementById("comment-box")
-            const usernameBox = document.getElementById("comment-username")
+        onSuccess: async ({ res, setComment }) => {
+            const commentBox = document.getElementById(
+                "comment-box"
+            ) as HTMLTextAreaElement
+            const usernameBox = document.getElementById(
+                "comment-username"
+            ) as HTMLInputElement
+            if (!commentBox || !usernameBox) {
+                return null
+            }
+            console.log(res)
             commentBox.value = ""
             usernameBox.value = ""
             setComment({
-                content: "",
-                username: "",
+                content: "asd",
+                username: "asd",
             })
             queryResponseComments.refetch()
         },
@@ -106,7 +134,7 @@ function RecipeDetails() {
                     })}
                 </section>
             </div>
-            <RecipeComments props={[comments, mutation]} />
+            <RecipeComments comments={comments} handleSubmit={mutation} />
         </div>
     ) : (
         location.replace("/notfound")
