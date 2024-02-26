@@ -1,27 +1,38 @@
 import { useContext, useEffect } from "react"
-import Fooditem from "./Fooditem"
+import Fooditem from "./Fooditem.jsx"
 import { RecipesShownContext } from "../Context/RecipesShownContext"
+import { IRecipeDetails } from "../utils/APIResponseTypes.js"
 
-export default function Results(props) {
-    const recipeData = props.props[0]
+export default function Results(props: {
+    recipes: IRecipeDetails[]
+    searchParams: URLSearchParams
+}) {
+    const recipeData = props.recipes
     const { recipesShown, setRecipesShown } = useContext(RecipesShownContext)
     const { currentRecipe } = useContext(RecipesShownContext)
-    const searchParams = props.props[1]
+    const searchParams = props.searchParams
     document.title = "Reseptit"
-    function scrollToId(itemId) {
-        document.getElementById(itemId).scrollIntoView({
+    function scrollToId(itemId: string) {
+        document?.getElementById(itemId)?.scrollIntoView({
             behavior: "instant",
         })
     }
+    const firstRowRecipe = recipeData
+        .slice(0, window.innerWidth <= 950 ? 2 : 4)
+        .some((recipe) => recipe.id === currentRecipe)
     useEffect(() => {
-        if (currentRecipe) scrollToId(currentRecipe)
+        if (currentRecipe && !firstRowRecipe && window.innerWidth <= 950)
+            scrollToId(currentRecipe)
     }, [])
 
     const foodItem = recipeData.slice(0, recipesShown).map((item) => {
-        return <Fooditem props={[item, searchParams]} key={item.id} />
+        return (
+            <Fooditem item={item} searchParams={searchParams} key={item.id} />
+        )
     })
 
     function loadMore() {
+        if (!setRecipesShown) return null
         setRecipesShown((prev) => prev + 8)
     }
 
@@ -33,7 +44,7 @@ export default function Results(props) {
                 ) : (
                     foodItem
                 )}
-                {recipeData.length > recipesShown ? (
+                {recipeData.length > (recipesShown as number) ? (
                     <button onClick={loadMore} id="load-more-button">
                         Lisää reseptejä
                     </button>
