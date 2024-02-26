@@ -1,4 +1,4 @@
-const fetchUserRecipes = async ({ queryKey }) => {
+const fetchUserRecipes = async ({ queryKey }: { queryKey: string }) => {
     const apiResponse = await fetch(
         process.env.NODE_ENV === "production"
             ? import.meta.env.VITE_USER_RECIPES_ENDPOINT
