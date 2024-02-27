@@ -397,3 +397,12 @@ export const sortUser = (sortFilter, a, b) => {
             break
     }
 }
+
+export function handleCapsLockDetection(event: KeyboardEvent): boolean {
+    if (!event.getModifierState) return false
+    if (event?.getModifierState("CapsLock")) {
+        return true
+    } else {
+        return false
+    }
+}
