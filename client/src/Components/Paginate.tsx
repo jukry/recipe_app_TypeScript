@@ -1,4 +1,4 @@
-import React from "react"
+import { BaseSyntheticEvent, Dispatch } from "react"
 
 export default function Paginate({
     currentPage,
@@ -7,8 +7,18 @@ export default function Paginate({
     backBtnId,
     forwardBtnId,
     setCurrentPage,
+}: {
+    currentPage: number
+    maxPages: number
+    containerId: string
+    backBtnId: string
+    forwardBtnId: string
+    setCurrentPage: Dispatch<React.SetStateAction<number>>
 }) {
-    const handlePagination = (event, setCurrentPage) => {
+    const handlePagination = (
+        event: BaseSyntheticEvent,
+        setCurrentPage: Dispatch<React.SetStateAction<number>>
+    ) => {
         event.stopPropagation()
         event.preventDefault()
         const navButtonPressed = event.target.id
