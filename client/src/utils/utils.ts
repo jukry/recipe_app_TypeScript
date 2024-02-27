@@ -1,3 +1,4 @@
+import { BaseSyntheticEvent } from "react"
 import { redirect } from "react-router-dom"
 
 export async function getUserData({ request }) {
@@ -401,6 +402,29 @@ export const sortUser = (sortFilter, a, b) => {
 export function handleCapsLockDetection(event: KeyboardEvent): boolean {
     if (!event.getModifierState) return false
     if (event?.getModifierState("CapsLock")) {
+        return true
+    } else {
+        return false
+    }
+}
+export function validatePassword(event: BaseSyntheticEvent) {
+    const passwordInput = event.target.value
+    const passwordLength = passwordInput.length
+    const specials = /[!@#$%^&*]/
+    const hasSpecial = specials.test(passwordInput)
+    const lowerCase = /[a-z]/
+    const hasLowerCase = lowerCase.test(passwordInput)
+    const upperCase = /[A-Z]/
+    const hasUpperCase = upperCase.test(passwordInput)
+    const numbers = /[0-9]/
+    const hasNumbers = numbers.test(passwordInput)
+    if (
+        passwordLength >= 8 &&
+        hasSpecial &&
+        hasLowerCase &&
+        hasUpperCase &&
+        hasNumbers
+    ) {
         return true
     } else {
         return false
