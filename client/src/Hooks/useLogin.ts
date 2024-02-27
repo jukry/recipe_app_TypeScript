@@ -1,9 +1,12 @@
 import { useContext } from "react"
 import { UserContext } from "../Context/UserContext"
+import { IUserContext } from "../utils/APIResponseTypes"
 
 export const useLogin = () => {
-    const { dispatch, setIsLoggedIn, setIsLoading } = useContext(UserContext)
-    const login = async (email, password) => {
+    const { dispatch, setIsLoggedIn, setIsLoading } =
+        useContext<IUserContext>(UserContext)
+    const login = async (email: string, password: string) => {
+        if (!setIsLoggedIn || !setIsLoading || !dispatch) return null
         setIsLoading(true)
         const res = await fetch(
             process.env.NODE_ENV === "production"
