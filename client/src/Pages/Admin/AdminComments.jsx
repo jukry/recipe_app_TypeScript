@@ -66,8 +66,7 @@ export default function AdminComments() {
             initialComments * currentPage
         )
         .map((comment) => {
-            let timeDelta =
-                (Date.now() - new Date(comment.createdAt)) / 1000 / 60 // delta in minutes
+            let timeDelta = Date.now() - new Date(comment.createdAt) // delta in milliseconds
 
             const getCommentTime = commentTime(timeDelta)
             {
