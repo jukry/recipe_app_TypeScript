@@ -43,7 +43,16 @@ export interface INewRecipe {
     description?: string
     images?: string[]
     tags?: string[]
-    ingredients?: {}[]
+    ingredients?: {
+        ingredient1: string
+        amount1: string
+        ingredient2: string
+        amount2: string
+        ingredient3: string
+        amount3: string
+        ingredient4: string
+        amount4: string
+    }
     instructions?: {
         step1?: string
         step2?: string
@@ -59,7 +68,7 @@ export type RecipeProps = {
         handleChange: (e: ChangeEvent<HTMLInputElement>) => void
         handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void
         handleFileDelete: (e: MouseEvent<HTMLButtonElement>) => void
-        handleIngredientDelete: (e: ChangeEvent<HTMLInputElement>) => void
+        handleIngredientDelete: (e: string) => void
         handleStepDelete: (e: string) => void
         previewFile: string | undefined
         setRecipe: React.Dispatch<React.SetStateAction<{}>>
