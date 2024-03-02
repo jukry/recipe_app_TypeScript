@@ -1,13 +1,18 @@
-import React, { useRef, useState } from "react"
+import React, {
+    BaseSyntheticEvent,
+    ReactElement,
+    useRef,
+    useState,
+} from "react"
 import IngredientInput from "./IngredientInput"
 import "../Pages/Account/styles/newRecipe.css"
+import { RecipeProps } from "../utils/APIResponseTypes"
 
-export default function IngredientInputWrapper({ props }) {
-    const [extraInputs, setExtraInputs] = useState([])
+export default function IngredientInputWrapper({ props }: RecipeProps) {
+    const [extraInputs, setExtraInputs] = useState<Array<ReactElement>>([])
     const [extraInputNumber, setExtraInputNumber] = useState(5)
     const [keyValue, setKeyValue] = useState(5)
-    const ingredientsRef = useRef([])
-
+    const ingredientsRef = useRef<(HTMLDivElement | null)[]>([])
     return (
         <fieldset id="ingredients">
             <legend>Anna reseptin ainesosat</legend>
@@ -27,7 +32,9 @@ export default function IngredientInputWrapper({ props }) {
                                 className="ingredient-wrapper"
                                 key={`ingInput${keyValue}`}
                                 ref={(el) =>
-                                    (ingredientsRef[extraInputNumber - 1] = el)
+                                    (ingredientsRef.current[
+                                        extraInputNumber - 1
+                                    ] = el)
                                 }
                             >
                                 <IngredientInput
@@ -51,12 +58,20 @@ export default function IngredientInputWrapper({ props }) {
                                     aria-label="Poista ainesosa"
                                     type="button"
                                     id={`ingButton${extraInputNumber}`}
-                                    onClick={(e) => {
+                                    onClick={(e: BaseSyntheticEvent) => {
+                                        const id = e.target.id
                                         const indexToDelete =
                                             e.target.id.split("ingButton")[1] -
                                             1
-                                        props.handleIngredientDelete(e)
-                                        ingredientsRef[indexToDelete].remove()
+                                        props.handleIngredientDelete(id)
+                                        const currentIngredientRef =
+                                            ingredientsRef.current[
+                                                indexToDelete
+                                            ]
+                                        if (!currentIngredientRef) {
+                                            return null
+                                        }
+                                        currentIngredientRef.remove()
                                     }}
                                 >
                                     -
@@ -72,7 +87,7 @@ export default function IngredientInputWrapper({ props }) {
             <div
                 className="ingredient-wrapper"
                 key={"ingInput1"}
-                ref={(el) => (ingredientsRef[0] = el)}
+                ref={(el) => (ingredientsRef.current[0] = el)}
             >
                 <IngredientInput
                     type="text"
@@ -80,7 +95,7 @@ export default function IngredientInputWrapper({ props }) {
                     className="new-recipe-ingredient-amount"
                     name="amount1"
                     onChange={props.handleChange}
-                    value={props.recipe?.amount1 || ""}
+                    value={props.recipe?.ingredients?.amount1}
                     required={true}
                     id="new-recipe-ingredient-amount1"
                 />
@@ -90,7 +105,7 @@ export default function IngredientInputWrapper({ props }) {
                     className="new-recipe-ingredient"
                     name="ingredient1"
                     onChange={props.handleChange}
-                    value={props.recipe?.ingredient1 || ""}
+                    value={props.recipe?.ingredients?.ingredient1}
                     required={true}
                     id="new-recipe-ingredient1"
                 />
@@ -98,7 +113,7 @@ export default function IngredientInputWrapper({ props }) {
             <div
                 className="ingredient-wrapper"
                 key={"ingInput2"}
-                ref={(el) => (ingredientsRef[1] = el)}
+                ref={(el) => (ingredientsRef.current[1] = el)}
             >
                 <IngredientInput
                     type="text"
@@ -106,7 +121,7 @@ export default function IngredientInputWrapper({ props }) {
                     className="new-recipe-ingredient-amount"
                     name="amount2"
                     onChange={props.handleChange}
-                    value={props.recipe?.amount2 || ""}
+                    value={props.recipe?.ingredients?.amount2}
                     id="new-recipe-ingredient-amount2"
                 />
                 <IngredientInput
@@ -115,7 +130,7 @@ export default function IngredientInputWrapper({ props }) {
                     className="new-recipe-ingredient"
                     name="ingredient2"
                     onChange={props.handleChange}
-                    value={props.recipe?.ingredient2 || ""}
+                    value={props.recipe?.ingredients?.ingredient2}
                     id="new-recipe-ingredient2"
                 />
                 <button
@@ -123,9 +138,13 @@ export default function IngredientInputWrapper({ props }) {
                     type="button"
                     aria-label="Poista ainesosa"
                     id="ingButton2"
-                    onClick={(e) => {
-                        props.handleIngredientDelete(e)
-                        ingredientsRef[1].remove()
+                    onClick={(e: BaseSyntheticEvent) => {
+                        const id = e.target.id
+                        props.handleIngredientDelete(id)
+                        if (!ingredientsRef.current[1]) {
+                            return null
+                        }
+                        ingredientsRef.current[1].remove()
                     }}
                 >
                     -
@@ -134,7 +153,7 @@ export default function IngredientInputWrapper({ props }) {
             <div
                 className="ingredient-wrapper"
                 key={"ingInput3"}
-                ref={(el) => (ingredientsRef[2] = el)}
+                ref={(el) => (ingredientsRef.current[2] = el)}
             >
                 <IngredientInput
                     type="text"
@@ -142,7 +161,7 @@ export default function IngredientInputWrapper({ props }) {
                     className="new-recipe-ingredient-amount"
                     name="amount3"
                     onChange={props.handleChange}
-                    value={props.recipe?.amount3 || ""}
+                    value={props.recipe?.ingredients?.amount3}
                     id="new-recipe-ingredient-amount3"
                 />
                 <IngredientInput
@@ -151,7 +170,7 @@ export default function IngredientInputWrapper({ props }) {
                     className="new-recipe-ingredient"
                     name="ingredient3"
                     onChange={props.handleChange}
-                    value={props.recipe?.ingredient3 || ""}
+                    value={props.recipe?.ingredients?.ingredient3}
                     id="new-recipe-ingredient3"
                 />
                 <button
@@ -159,9 +178,13 @@ export default function IngredientInputWrapper({ props }) {
                     type="button"
                     aria-label="Poista ainesosa"
                     id="ingButton3"
-                    onClick={(e) => {
-                        props.handleIngredientDelete(e)
-                        ingredientsRef[2].remove()
+                    onClick={(e: BaseSyntheticEvent) => {
+                        const id = e.target.id
+                        props.handleIngredientDelete(id)
+                        if (!ingredientsRef.current[2]) {
+                            return null
+                        }
+                        ingredientsRef.current[2].remove()
                     }}
                 >
                     -
@@ -170,7 +193,7 @@ export default function IngredientInputWrapper({ props }) {
             <div
                 className="ingredient-wrapper"
                 key={"ingInput4"}
-                ref={(el) => (ingredientsRef[3] = el)}
+                ref={(el) => (ingredientsRef.current[3] = el)}
             >
                 <IngredientInput
                     type="text"
@@ -178,7 +201,7 @@ export default function IngredientInputWrapper({ props }) {
                     className="new-recipe-ingredient-amount"
                     name="amount4"
                     onChange={props.handleChange}
-                    value={props.recipe?.amount4 || ""}
+                    value={props.recipe?.ingredients?.amount4}
                     id="new-recipe-ingredient-amount4"
                 />
                 <IngredientInput
@@ -187,7 +210,7 @@ export default function IngredientInputWrapper({ props }) {
                     className="new-recipe-ingredient"
                     name="ingredient4"
                     onChange={props.handleChange}
-                    value={props.recipe?.ingredient4 || ""}
+                    value={props.recipe?.ingredients?.ingredient4}
                     id="new-recipe-ingredient4"
                 />
                 <button
@@ -195,9 +218,13 @@ export default function IngredientInputWrapper({ props }) {
                     type="button"
                     aria-label="Poista ainesosa"
                     id="ingButton4"
-                    onClick={(e) => {
-                        props.handleIngredientDelete(e)
-                        ingredientsRef[3].remove()
+                    onClick={(e: BaseSyntheticEvent) => {
+                        const id = e.target.id
+                        props.handleIngredientDelete(id)
+                        if (!ingredientsRef.current[3]) {
+                            return null
+                        }
+                        ingredientsRef.current[3].remove()
                     }}
                 >
                     -
