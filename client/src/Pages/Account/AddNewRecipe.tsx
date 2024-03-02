@@ -12,8 +12,8 @@ function AddNewRecipe() {
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         setRecipe((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
-    function handleIngredientDelete(e: ChangeEvent<HTMLInputElement>) {
-        const index = e?.target?.id.split("ingButton")[1]
+    function handleIngredientDelete(e: string) {
+        const index = e?.split("ingButton")[1]
         setRecipe((prev: {}) => {
             const amountProperty: string = `amount${index}`
             const ingredientProperty: string = `ingredient${index}`
