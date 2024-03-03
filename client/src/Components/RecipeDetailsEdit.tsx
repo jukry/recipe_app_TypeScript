@@ -1,24 +1,35 @@
 import { Form, useNavigation, useParams } from "react-router-dom"
 import "./Styles/recipeDetailsEdit.css"
 import { useQuery } from "@tanstack/react-query"
-import fetchRecipeById from "../Hooks/fetchRecipeById.js"
-import { useEffect, useRef, useState } from "react"
-import IngredientInput from "./IngredientInput.tsx"
-import RecipeTagsInputEdit from "./RecipeTagsInputEdit.jsx"
+import fetchRecipeById from "../Hooks/fetchRecipeById"
+import {
+    BaseSyntheticEvent,
+    ReactElement,
+    useEffect,
+    useRef,
+    useState,
+} from "react"
+import IngredientInput from "./IngredientInput"
+import RecipeTagsInputEdit from "./RecipeTagsInputEdit"
+import { IRecipe } from "../utils/APIResponseTypes"
 
 function RecipeDetailsEdit() {
     const params = useParams()
-    const queryResponse = useQuery(["recipe", params.id], fetchRecipeById)
-    const data = queryResponse?.data?.message ?? []
+    const queryResponse = useQuery(["recipe", params.id], async () =>
+        fetchRecipeById({ queryKey: ["recipe", params.id as string] })
+    )
+    const data: IRecipe = queryResponse?.data?.message ?? []
     const navigation = useNavigation()
     document.title = data.name
-    const ingredientsRef = useRef([])
-    const stepsRef = useRef([])
-    const [extraSteps, setExtraSteps] = useState([])
-    const [extraIngredients, setExtraIngredients] = useState([])
+    const ingredientsRef = useRef<(HTMLDivElement | null)[]>([])
+    const stepsRef = useRef<(HTMLDivElement | null)[]>([])
+    const [extraSteps, setExtraSteps] = useState<Array<ReactElement>>([])
+    const [extraIngredients, setExtraIngredients] = useState<
+        Array<ReactElement>
+    >([])
     const [extraStepNumber, setExtraStepNumber] = useState(0)
     const [extraIngredientNumber, setExtraIngredientNumber] = useState(0)
-    const [tags, setTags] = useState([])
+    const [tags, setTags] = useState<string[]>([])
 
     useEffect(() => {
         if (data && queryResponse.isFetched) {
@@ -29,30 +40,36 @@ function RecipeDetailsEdit() {
             setTags(data.tags)
         }
     }, [data])
-    function handleStepDelete(e) {
-        const index = e.target.id.split("delete-step-button-")[1]
-        stepsRef[index - 1].remove()
+    function handleStepDelete(e: string) {
+        const index = parseInt(e.split("delete-step-button-")[1])
+        const currentStepsRef = stepsRef.current[index - 1]
+        if (!currentStepsRef) return null
+        currentStepsRef.remove()
     }
-    function handleIngredientDelete(e) {
-        const index = e.target.id.split("delete-ingredient-button-")[1]
-        ingredientsRef[index - 1].remove()
+    function handleIngredientDelete(e: string) {
+        const index = parseInt(e.split("delete-ingredient-button-")[1])
+        const currentIngredientsRef = ingredientsRef.current[index - 1]
+        if (!currentIngredientsRef) return null
+        currentIngredientsRef.remove()
     }
     return data !== undefined ? (
-        <Form method="post" replace="true" className="recipe-wrapper-edit">
+        <Form method="post" className="recipe-wrapper-edit">
             <div className="recipe-hero-edit">
                 {data.images && <img src={data.images} alt="Kuva ateriasta" />}
                 <IngredientInput
                     name="name"
                     id="recipe-name"
                     placeholder={`Reseptin nimi: ${data.name}`}
+                    type="text"
                 />
                 <IngredientInput
                     name="description"
                     id="recipe-description"
                     placeholder={`Reseptin kuvaus: ${data.description}`}
+                    type="text"
                 />
             </div>
-            <RecipeTagsInputEdit props={[tags, setTags]} />
+            <RecipeTagsInputEdit tags={tags} setTags={setTags} />
             <div className="recipe-data-edit">
                 <div id="instructions-edit">
                     <h3>Valmistusohje</h3>
@@ -67,7 +84,9 @@ function RecipeDetailsEdit() {
                                         className="recipe-step-wrapper-edit"
                                         key={extraStepNumber}
                                         ref={(el) =>
-                                            (stepsRef[extraStepNumber - 1] = el)
+                                            (stepsRef.current[
+                                                extraStepNumber - 1
+                                            ] = el)
                                         }
                                     >
                                         <IngredientInput
@@ -80,8 +99,10 @@ function RecipeDetailsEdit() {
                                         <button
                                             className={`delete-button-${extraStepNumber} delete-step-button`}
                                             type="button"
-                                            onClick={(e) => {
-                                                handleStepDelete(e)
+                                            onClick={(
+                                                e: BaseSyntheticEvent
+                                            ) => {
+                                                handleStepDelete(e.target.id)
 
                                                 setExtraStepNumber(
                                                     (prev) => prev - 1
@@ -108,7 +129,7 @@ function RecipeDetailsEdit() {
                             >
                                 <div
                                     className="recipe-step-wrapper-edit"
-                                    ref={(el) => (stepsRef[i] = el)}
+                                    ref={(el) => (stepsRef.current[i] = el)}
                                 >
                                     <IngredientInput
                                         name={`step${i + 1}`}
@@ -123,9 +144,10 @@ function RecipeDetailsEdit() {
                                                 i + 1
                                             } delete-step-button`}
                                             type="button"
-                                            onClick={(e) => {
-                                                handleStepDelete(e)
-                                                stepsRef[i].remove()
+                                            onClick={(
+                                                e: BaseSyntheticEvent
+                                            ) => {
+                                                handleStepDelete(e.target.id)
                                             }}
                                             id={`delete-step-button-${i + 1}`}
                                         >
@@ -135,10 +157,10 @@ function RecipeDetailsEdit() {
                                         ""
                                     )}
                                 </div>
-                                {extraSteps}
                             </div>
                         )
                     })}
+                    {extraSteps}
                 </div>
                 <div id="ingredients-edit">
                     <h3>Ainesosat</h3>
@@ -154,7 +176,7 @@ function RecipeDetailsEdit() {
                                         key={extraIngredientNumber}
                                         id={`ingr-line-container-${extraIngredientNumber}`}
                                         ref={(el) =>
-                                            (ingredientsRef[
+                                            (ingredientsRef.current[
                                                 extraIngredientNumber - 1
                                             ] = el)
                                         }
@@ -164,19 +186,25 @@ function RecipeDetailsEdit() {
                                             placeholder={`Aineosa ${extraIngredientNumber} määrä:`}
                                             className="ingr-amount-edit"
                                             id={`amount${extraIngredientNumber}`}
+                                            type="text"
                                         />
                                         <IngredientInput
                                             name={`ingredient${extraIngredientNumber}`}
                                             placeholder={`Aineosa ${extraIngredientNumber}:`}
                                             className="ingr-edit"
                                             id={`ingredient${extraIngredientNumber}`}
+                                            type="text"
                                         />
                                         <button
                                             className={`delete-ingredient-button-${extraIngredientNumber} delete-ingredient-button`}
                                             type="button"
                                             id={`delete-ingredient-button-${extraIngredientNumber}`}
-                                            onClick={(e) => {
-                                                handleIngredientDelete(e)
+                                            onClick={(
+                                                e: BaseSyntheticEvent
+                                            ) => {
+                                                handleIngredientDelete(
+                                                    e.target.id
+                                                )
 
                                                 setExtraIngredientNumber(
                                                     (prev) => prev - 1
@@ -200,7 +228,7 @@ function RecipeDetailsEdit() {
                                 } ingr-line-edit`}
                                 key={i}
                                 id={`ingr-line-container-${i + 1}`}
-                                ref={(el) => (ingredientsRef[i] = el)}
+                                ref={(el) => (ingredientsRef.current[i] = el)}
                             >
                                 <IngredientInput
                                     name={`amount${i + 1}`}
@@ -209,6 +237,7 @@ function RecipeDetailsEdit() {
                                     }`}
                                     className="ingr-amount-edit"
                                     id={`amount${i + 1}`}
+                                    type="text"
                                 />
                                 <IngredientInput
                                     name={`ingredient${i + 1}`}
@@ -217,6 +246,7 @@ function RecipeDetailsEdit() {
                                     }`}
                                     className="ingr-edit"
                                     id={`ingredient${i + 1}`}
+                                    type="text"
                                 />
                                 {i >= 1 ? (
                                     <button
@@ -225,8 +255,8 @@ function RecipeDetailsEdit() {
                                         } delete-ingredient-button`}
                                         type="button"
                                         id={`delete-ingredient-button-${i + 1}`}
-                                        onClick={(e) => {
-                                            handleIngredientDelete(e)
+                                        onClick={(e: BaseSyntheticEvent) => {
+                                            handleIngredientDelete(e.target.id)
 
                                             setExtraIngredientNumber(
                                                 (prev) => prev - 1
