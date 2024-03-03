@@ -1,7 +1,10 @@
 import { useContext } from "react"
 import { UserContext } from "../Context/UserContext"
 import { IUserContext } from "../utils/APIResponseTypes"
-import { ILogoutHook } from "../Components/Navbar"
+
+interface ILogoutHook {
+    logout: () => Promise<Response>
+}
 
 export const useLogout = (): ILogoutHook | null => {
     const { dispatch, setIsLoggedIn, setAdminMode } =
