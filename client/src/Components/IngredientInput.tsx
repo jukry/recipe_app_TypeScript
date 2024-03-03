@@ -4,7 +4,7 @@ export default function IngredientInput(props: {
     id: string
     placeholder?: string
     type: string
-    className: string
+    className?: string
     name: string
     required?: boolean
     value?: string
