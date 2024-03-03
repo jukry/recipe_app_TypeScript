@@ -1,17 +1,23 @@
 import { NavLink, Link } from "react-router-dom"
 import ShowMobileNavButton from "./ShowMobileNavButton"
 import { useLogout } from "../Hooks/useLogout"
-import { useContext } from "react"
+import { BaseSyntheticEvent, useContext } from "react"
 import { UserContext } from "../Context/UserContext"
 import { RecipesShownContext } from "../Context/RecipesShownContext"
+import { IRecipesShownContext, IUserContext } from "../utils/APIResponseTypes"
 
-export default function Navbar(props) {
+export default function Navbar(props: {
+    props: [boolean, boolean]
+    handleNavClick: (e: BaseSyntheticEvent) => void
+}) {
     const { isLoggedIn, user, adminMode, setAdminMode } =
-        useContext(UserContext)
-    const { setCurrentRecipe } = useContext(RecipesShownContext)
+        useContext<IUserContext>(UserContext)
+    const { setCurrentRecipe } =
+        useContext<IRecipesShownContext>(RecipesShownContext)
     const showNav = props.props[0]
     const showNavBar = props.props[1]
-    const { logout } = useLogout()
+    const useLogoutHook = useLogout()
+    if (!useLogoutHook) return null
     //TODO create a nav for mobile only?
     return (
         <header className={!showNavBar ? "header-hidden" : "header-show"}>
@@ -19,7 +25,10 @@ export default function Navbar(props) {
                 <Link
                     className="logo-container"
                     to="/"
-                    onClick={() => setCurrentRecipe(null)}
+                    onClick={() => {
+                        if (!setCurrentRecipe) return null
+                        setCurrentRecipe(null)
+                    }}
                     tabIndex={0}
                 >
                     <span className="logo">
@@ -32,7 +41,7 @@ export default function Navbar(props) {
                     }`}
                 >
                     <NavLink to="/">Reseptit</NavLink>
-                    {user.role === "Admin" && adminMode ? (
+                    {user?.role === "Admin" && adminMode ? (
                         <NavLink to="admin">Hallintapaneeli</NavLink>
                     ) : (
                         <NavLink to="account">Oma tili</NavLink>
@@ -41,7 +50,10 @@ export default function Navbar(props) {
                     {!isLoggedIn ? (
                         <NavLink to="login">Kirjaudu sisään</NavLink>
                     ) : (
-                        <NavLink to="/" onClick={async () => await logout()}>
+                        <NavLink
+                            to="/"
+                            onClick={async () => await useLogoutHook.logout()}
+                        >
                             Kirjaudu ulos
                         </NavLink>
                     )}
@@ -51,7 +63,7 @@ export default function Navbar(props) {
                         ""
                     )}
                 </nav>
-                {user.role === "Admin" && (
+                {user?.role === "Admin" && (
                     <div id="role-switch-container">
                         <p>Käyttäjä: {adminMode ? "Admin" : "Käyttäjä"}</p>
                         <label htmlFor="role-switch" id="role-switch-wrapper">
@@ -62,9 +74,10 @@ export default function Navbar(props) {
                                     adminMode ? "admin" : "käyttäjä"
                                 }`}
                                 tabIndex={2}
-                                value={adminMode}
+                                value={adminMode?.valueOf.toString()}
                                 checked={adminMode}
                                 onChange={() => {
+                                    if (!setAdminMode) return null
                                     setAdminMode((prev) => !prev)
                                 }}
                             />

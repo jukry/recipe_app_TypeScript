@@ -1,4 +1,3 @@
-import React from "react"
 import "./styles/usersettings.css"
 import ChangePassword from "../../Components/ChangePassword"
 import DeleteUser from "../../Components/DeleteUser"

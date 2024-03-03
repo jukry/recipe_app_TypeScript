@@ -20,7 +20,7 @@ export interface IRecipeDetails {
     tags: string[]
     ingredients: { ingredient: string; amount: string }[]
     instructions: string[]
-    comments: string[]
+    comments?: string[]
 }
 export interface IRecipe {
     _id?: string
@@ -82,6 +82,8 @@ export interface IUserContext {
     dispatch?: Dispatch<SetStateAction<DispatchActions>>
     setIsLoggedIn?: Dispatch<SetStateAction<boolean>>
     setIsLoading?: Dispatch<SetStateAction<boolean>>
+    adminMode?: boolean
+    setAdminMode?: Dispatch<SetStateAction<boolean>>
 }
 
 type UserContextAction = {
