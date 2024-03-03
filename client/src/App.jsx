@@ -17,7 +17,9 @@ const AccountLayout = lazy(() => import("./Pages/Account/AccountLayout"))
 const RecipeDetailsEdit = lazy(() =>
     import("./Components/RecipeDetailsEdit.tsx")
 )
-const FavoriteRecipes = lazy(() => import("./Pages/Account/FavoriteRecipes"))
+const FavoriteRecipes = lazy(() =>
+    import("./Pages/Account/FavoriteRecipes.tsx")
+)
 const UserRecipes = lazy(() => import("./Pages/Account/UserRecipes"))
 const AddNewRecipe = lazy(() => import("./Pages/Account/AddNewRecipe"))
 const UserSettings = lazy(() => import("./Pages/Account/UserSettings"))
