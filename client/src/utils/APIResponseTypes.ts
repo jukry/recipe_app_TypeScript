@@ -20,7 +20,7 @@ export interface IRecipeDetails {
     tags: string[]
     ingredients: { ingredient: string; amount: string }[]
     instructions: string[]
-    comments: string[]
+    comments?: string[]
 }
 export interface IRecipe {
     _id?: string
