@@ -63,8 +63,8 @@ function RecipeDetails() {
             commentBox.value = ""
             usernameBox.value = ""
             setComment({
-                content: "asd",
-                username: "asd",
+                content: "",
+                username: "",
             })
             queryResponseComments.refetch()
         },

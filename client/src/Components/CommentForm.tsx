@@ -9,8 +9,8 @@ function CommentForm(props: { handleSubmit: CommentMutation }) {
     const { id } = useParams()
     const { user } = useContext<IUserContext>(UserContext)
     const [comment, setComment] = useState({
-        content: "asd",
-        username: "asd",
+        content: "",
+        username: "",
     })
     const mutation = props.handleSubmit
     const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
