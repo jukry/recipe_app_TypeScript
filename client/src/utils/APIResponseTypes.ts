@@ -82,6 +82,8 @@ export interface IUserContext {
     dispatch?: Dispatch<SetStateAction<DispatchActions>>
     setIsLoggedIn?: Dispatch<SetStateAction<boolean>>
     setIsLoading?: Dispatch<SetStateAction<boolean>>
+    adminMode?: boolean
+    setAdminMode?: Dispatch<SetStateAction<boolean>>
 }
 
 type UserContextAction = {
