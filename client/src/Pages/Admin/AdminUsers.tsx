@@ -112,8 +112,8 @@ export default function AdminUsers() {
                             onChange={async (event) => {
                                 const res = await handleRoleChangeFromAdmin(
                                     event.target.value,
-                                    user._id,
-                                    user.role,
+                                    user._id as string,
+                                    user.role as string,
                                     adminAmount
                                 )
 
