@@ -34,7 +34,6 @@ export default function AdminRecipes() {
         _id: "",
         userId: "",
     })
-    console.log(recipeData)
     const recipes = recipeData
         .sort((a, b) => {
             return sortRecipes(sortFilter, a, b)
@@ -71,7 +70,7 @@ export default function AdminRecipes() {
                                 to={`../comments?recipeId=${recipe._id}`}
                                 className="navlink-to"
                             >
-                                Kommentit: {recipe.comments.length}
+                                Kommentit: {recipe?.comments?.length}
                             </NavLink>
                         </p>
                     </section>
@@ -91,7 +90,7 @@ export default function AdminRecipes() {
                 </div>
             )
         })
-    const maxPages = Math.ceil(recipes.length / initialRecipes)
+    const maxPages = Math.ceil(recipes?.length / initialRecipes)
 
     const slicedRecipes = recipes.slice(
         (currentPage - 1) * initialRecipes,
