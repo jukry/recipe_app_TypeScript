@@ -395,7 +395,7 @@ export const sortUser = (sortFilter, a, b) => {
             return 0
         }
         default:
-            break
+            return 0
     }
 }
 
