@@ -90,7 +90,7 @@ export interface IUserContext {
     setAdminMode?: Dispatch<SetStateAction<boolean>>
 }
 
-type UserContextAction = {
+export type UserContextAction = {
     type: string
     payload?: User | boolean
 }
