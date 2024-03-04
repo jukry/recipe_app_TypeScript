@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { BaseSyntheticEvent, useEffect, useState } from "react"
 import { Outlet, ScrollRestoration } from "react-router-dom"
 import Footer from "../Components/Footer"
 import Navbar from "../Components/Navbar"
@@ -23,7 +23,7 @@ export default function HomeLayout() {
         }
     }, [position])
 
-    function handleNavClick(e) {
+    function handleNavClick(e: BaseSyntheticEvent) {
         if (showNav) {
             setShowNav(() => {
                 return false
