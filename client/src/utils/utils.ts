@@ -312,7 +312,7 @@ export const sortRecipes = (sortFilter, a, b) => {
             return 0
         }
         default:
-            break
+            return 0
     }
 }
 export const sortUser = (sortFilter, a, b) => {
