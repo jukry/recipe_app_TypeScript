@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import React, { useState } from "react"
+import React, { BaseSyntheticEvent, useState } from "react"
 import fetchUsersData from "../../Hooks/fetchUsersData"
 import { NavLink, useSearchParams } from "react-router-dom"
 import "./styles/adminUsers.css"
@@ -11,9 +11,16 @@ import {
     handleRoleChangeFromAdmin,
     sortUser,
 } from "../../utils/utils"
+import { User } from "../../utils/APIResponseTypes"
 export default function AdminUsers() {
-    const queryResponseUsers = useQuery(["users"], fetchUsersData)
-    const userData = queryResponseUsers?.data?.data ?? []
+    const container: HTMLElement | null = document.getElementById("container")
+    if (!container) {
+        throw new Error("No container")
+    }
+    const queryResponseUsers = useQuery(["users"], async () =>
+        fetchUsersData({ queryKey: "users" })
+    )
+    const userData: User[] = queryResponseUsers?.data?.data ?? []
     const [currentPage, setCurrentPage] = useState(1)
     const initialUsers = 20
     const [userSearchParams, setUserSearchParams] = useSearchParams()
@@ -35,10 +42,13 @@ export default function AdminUsers() {
             return sortUser(sortFilter, a, b)
         })
         .filter((user) => {
-            return user.email.toLowerCase().includes(filter.toLowerCase())
+            return user?.email?.toLowerCase().includes(filter.toLowerCase())
         })
 
         .map((user) => {
+            const createdAt = user?.createdAt
+                ? new Date(user.createdAt)
+                : new Date()
             return (
                 <div className="admin-user-container" key={user._id}>
                     <section className="admin-userdata-container">
@@ -54,22 +64,22 @@ export default function AdminUsers() {
                         </h4>
                         <p tabIndex={0}>
                             Käyttäjä luotu:{" "}
-                            {new Date(user?.createdAt)?.toLocaleDateString(
-                                "fi-FI"
-                            )}
+                            {createdAt.toLocaleDateString("fi-FI")}
                         </p>
-                        <p tabIndex={0}>
-                            Viimeksi kirjautunut:{" "}
-                            {new Date(user?.lastlogins[0])?.toLocaleDateString(
-                                "fi-FI"
-                            )}
-                        </p>
+                        {user?.lastlogins && (
+                            <p tabIndex={0}>
+                                Viimeksi kirjautunut:{" "}
+                                {new Date(
+                                    user?.lastlogins[0]
+                                )?.toLocaleDateString("fi-FI")}
+                            </p>
+                        )}
                         <p>
                             <NavLink
                                 to={`../recipes?email=${user.email}`}
                                 className="navlink-to"
                             >
-                                Omia reseptejä: {user.recipes.length}
+                                Omia reseptejä: {user?.recipes?.length}
                             </NavLink>
                         </p>
                         <p>
@@ -86,9 +96,9 @@ export default function AdminUsers() {
                             className="admin-delete-user"
                             onClick={() => {
                                 setUserToDelete({
-                                    email: user.email,
-                                    _id: user._id,
-                                    role: user.role,
+                                    email: user.email as string,
+                                    _id: user._id as string,
+                                    role: user.role as string,
                                 })
                                 setShowDeleteModal(true)
                             }}
@@ -103,7 +113,8 @@ export default function AdminUsers() {
                                 const res = await handleRoleChangeFromAdmin(
                                     event.target.value,
                                     user._id,
-                                    user.role
+                                    user.role,
+                                    adminAmount
                                 )
 
                                 if (res.ok) {
@@ -183,7 +194,7 @@ export default function AdminUsers() {
                     <option value="commentsAsc">Kommentit: nouseva</option>
                     <option value="commentsDesc">Kommentit: laskeva</option>
                 </select>
-                <p tabIndex={0}>Tuloksia: {slicedUsers.length}</p>
+                <p tabIndex={0}>Tuloksia: {userData.length}</p>
             </div>
 
             <div id="admin-users-wrapper">{slicedUsers}</div>
@@ -207,14 +218,14 @@ export default function AdminUsers() {
                                 document
                             }
                         }}
-                        onClose={(event) => {
+                        onClose={(event: BaseSyntheticEvent) => {
                             if (event.target.className !== "delete-modal") {
                                 event.preventDefault()
                                 setShowDeleteModal(false)
                             }
                         }}
                     />,
-                    document.getElementById("container")
+                    container
                 )}
         </section>
     )

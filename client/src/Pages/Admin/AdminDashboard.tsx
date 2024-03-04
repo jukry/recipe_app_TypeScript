@@ -5,14 +5,22 @@ import fetchUsersData from "../../Hooks/fetchUsersData"
 import fetchComments from "../../Hooks/fetchComments"
 import "./styles/adminDashboard.css"
 import { NavLink } from "react-router-dom"
+import { IComment, IRecipeDetails, User } from "../../utils/APIResponseTypes"
 
 export default function AdminDashboard() {
-    const queryResponseRecipes = useQuery(["allrecipes"], fetchAllRecipeData)
-    const queryResponseUsers = useQuery(["users"], fetchUsersData)
-    const queryResponseComments = useQuery(["allcomments"], fetchComments)
-    const recipeData = queryResponseRecipes?.data?.message ?? []
-    const userData = queryResponseUsers?.data?.data ?? []
-    const commentData = queryResponseComments?.data?.data ?? []
+    const queryResponseRecipes = useQuery(["allrecipes"], async () =>
+        fetchAllRecipeData({ queryKey: "allrecipes" })
+    )
+    const queryResponseUsers = useQuery(["users"], async () =>
+        fetchUsersData({ queryKey: "comments" })
+    )
+    const queryResponseComments = useQuery(["comments"], async () =>
+        fetchComments({ queryKey: "comments" })
+    )
+    const recipeData: IRecipeDetails[] =
+        queryResponseRecipes?.data?.message ?? []
+    const userData: User[] = queryResponseUsers?.data?.data ?? []
+    const commentData: IComment[] = queryResponseComments?.data?.data ?? []
     return (
         <section id="admin-dashboard-container">
             <NavLink to="./recipes" id="recipes" className="data-wrapper">
