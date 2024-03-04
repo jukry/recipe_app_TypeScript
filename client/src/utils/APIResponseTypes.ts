@@ -3,12 +3,14 @@ import { ChangeEvent, Dispatch, MouseEvent, SetStateAction } from "react"
 
 export type User = {
     id?: string
+    _id?: string
     email?: string
     favrecipes?: string[]
     lastlogins?: string[]
     recipes?: string[]
     role?: string
     comments?: string[]
+    createdAt?: Date
 }
 
 export interface IRecipeDetails {
@@ -106,6 +108,10 @@ export interface IComment {
     createdAt: Date
     _id: string
     recipe: string
+    user?: {
+        _id: string
+        email: string
+    }
 }
 
 export type CommentMutation = UseMutationResult<
