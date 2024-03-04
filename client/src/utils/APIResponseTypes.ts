@@ -36,8 +36,10 @@ export interface IRecipe {
     comments: string[]
     user: {
         email: string
-        id: string
+        id?: string
+        _id?: string
     }
+    createdAt?: Date
 }
 
 export interface INewRecipe {
