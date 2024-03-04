@@ -1,8 +1,8 @@
-const fetchAllRecipeData = async ({ queryKey }) => {
+const fetchUsersData = async ({ queryKey }: { queryKey: string }) => {
     const apiResponse = await fetch(
         process.env.NODE_ENV === "production"
-            ? `${import.meta.env.VITE_RECIPE_ENDPOINT}/all`
-            : `${import.meta.env.VITE_RECIPE_ENDPOINT_DEV}/all`,
+            ? import.meta.env.VITE_USERS_ENDPOINT
+            : import.meta.env.VITE_USERS_ENDPOINT_DEV,
         {
             method: "GET",
             credentials: "include",
@@ -14,4 +14,4 @@ const fetchAllRecipeData = async ({ queryKey }) => {
     return apiResponse.json()
 }
 
-export default fetchAllRecipeData
+export default fetchUsersData
