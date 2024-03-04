@@ -41,14 +41,12 @@ function RecipeDetails() {
                 React.SetStateAction<{ content: string; username: string }>
             >
         }) => {
-            console.log(comment, id, userId, user?.email)
             const res = await postComment(
                 comment,
                 id,
                 userId,
                 user?.email as string
             )
-            console.log(res)
             if (!res.ok) {
                 throw new Error(res.statusText)
             }
@@ -64,7 +62,6 @@ function RecipeDetails() {
             if (!commentBox || !usernameBox) {
                 return null
             }
-            console.log(res)
             commentBox.value = ""
             usernameBox.value = ""
             setComment({
