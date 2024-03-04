@@ -1,16 +1,23 @@
 import { useQuery } from "@tanstack/react-query"
 import fetchAllRecipeData from "../../Hooks/fetchAllRecipeData"
-import React, { useState } from "react"
+import React, { BaseSyntheticEvent, useState } from "react"
 import Paginate from "../../Components/Paginate"
 import "./styles/adminRecipes.css"
 import { NavLink, useSearchParams } from "react-router-dom"
 import { handleRecipeDeleteFromAdmin, sortRecipes } from "../../utils/utils"
 import DeleteModal from "../../Components/DeleteModal"
 import { createPortal } from "react-dom"
+import { IRecipe } from "../../utils/APIResponseTypes"
 
 export default function AdminRecipes() {
-    const queryResponseRecipes = useQuery(["allrecipes"], fetchAllRecipeData)
-    const recipeData = queryResponseRecipes?.data?.message ?? []
+    const container: HTMLElement | null = document.getElementById("container")
+    if (!container) {
+        throw new Error("No container")
+    }
+    const queryResponseRecipes = useQuery(["allrecipes"], async () =>
+        fetchAllRecipeData({ queryKey: "allrecipes" })
+    )
+    const recipeData: IRecipe[] = queryResponseRecipes?.data?.message ?? []
     const [currentPage, setCurrentPage] = useState(1)
     const initialRecipes = 20
     const [recipesSearchParams, setRecipesSearchParams] = useSearchParams()
@@ -27,7 +34,7 @@ export default function AdminRecipes() {
         _id: "",
         userId: "",
     })
-
+    console.log(recipeData)
     const recipes = recipeData
         .sort((a, b) => {
             return sortRecipes(sortFilter, a, b)
@@ -43,6 +50,9 @@ export default function AdminRecipes() {
                 .includes(recipeEmailFilter.toLowerCase())
         })
         .map((recipe) => {
+            const createdAt = recipe?.createdAt
+                ? new Date(recipe.createdAt)
+                : new Date()
             return (
                 <div className="admin-recipe-container" key={recipe._id}>
                     <section className="admin-recipedata-container">
@@ -54,9 +64,7 @@ export default function AdminRecipes() {
                         <p tabIndex={0}>Resepti id: {recipe._id}</p>
                         <p tabIndex={0}>
                             Resepti luotu:{" "}
-                            {new Date(recipe.createdAt).toLocaleDateString(
-                                "fi-FI"
-                            )}
+                            {new Date(createdAt).toLocaleDateString("fi-FI")}
                         </p>
                         <p>
                             <NavLink
@@ -72,8 +80,8 @@ export default function AdminRecipes() {
                         onClick={() => {
                             setRecipeToDelete({
                                 name: recipe.name,
-                                _id: recipe._id,
-                                userId: recipe.user._id,
+                                _id: recipe._id as string,
+                                userId: recipe.user._id as string,
                             })
                             setShowDeleteModal(true)
                         }}
@@ -176,14 +184,14 @@ export default function AdminRecipes() {
                                 document
                             }
                         }}
-                        onClose={(event) => {
+                        onClose={(event: BaseSyntheticEvent) => {
                             if (event.target.className !== "delete-modal") {
                                 event.preventDefault()
                                 setShowDeleteModal(false)
                             }
                         }}
                     />,
-                    document.getElementById("container")
+                    container
                 )}
         </section>
     )
