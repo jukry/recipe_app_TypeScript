@@ -1,5 +1,5 @@
 import "./App.css"
-import HomeLayout from "./Layouts/HomeLayout"
+import HomeLayout from "./Layouts/HomeLayout.tsx"
 import Search from "./Components/Search"
 import {
     Route,
