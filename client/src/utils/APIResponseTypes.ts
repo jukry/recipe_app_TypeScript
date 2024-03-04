@@ -3,12 +3,14 @@ import { ChangeEvent, Dispatch, MouseEvent, SetStateAction } from "react"
 
 export type User = {
     id?: string
+    _id?: string
     email?: string
     favrecipes?: string[]
     lastlogins?: string[]
     recipes?: string[]
     role?: string
     comments?: string[]
+    createdAt?: Date
 }
 
 export interface IRecipeDetails {
@@ -34,8 +36,10 @@ export interface IRecipe {
     comments: string[]
     user: {
         email: string
-        id: string
+        id?: string
+        _id?: string
     }
+    createdAt?: Date
 }
 
 export interface INewRecipe {
@@ -86,7 +90,7 @@ export interface IUserContext {
     setAdminMode?: Dispatch<SetStateAction<boolean>>
 }
 
-type UserContextAction = {
+export type UserContextAction = {
     type: string
     payload?: User | boolean
 }
@@ -106,6 +110,10 @@ export interface IComment {
     createdAt: Date
     _id: string
     recipe: string
+    user?: {
+        _id: string
+        email: string
+    }
 }
 
 export type CommentMutation = UseMutationResult<

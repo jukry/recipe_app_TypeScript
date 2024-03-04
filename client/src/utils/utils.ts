@@ -1,7 +1,8 @@
 import { BaseSyntheticEvent } from "react"
 import { redirect } from "react-router-dom"
+import { IRecipe, User, UserContextAction } from "./APIResponseTypes"
 
-export async function getUserData({ request }) {
+export async function getUserData({ request }: { request: Request }) {
     const pathname = new URL(request.url).pathname
     try {
         const data = await fetch(
@@ -28,12 +29,19 @@ export async function getUserData({ request }) {
             )
         }
         return body
-    } catch (error) {
-        throw new Error(error)
+    } catch (error: unknown) {
+        throw error
     }
 }
 
-export async function handleFavorite(data) {
+export async function handleFavorite(
+    data: [
+        BaseSyntheticEvent,
+        string | undefined,
+        React.Dispatch<React.SetStateAction<UserContextAction>> | undefined,
+        User | undefined
+    ]
+) {
     const event = data[0]
     const id = data[1]
     const dispatch = data[2]
@@ -60,6 +68,7 @@ export async function handleFavorite(data) {
         const body = await deleteFav()
         const message = await body.json()
         const newFavRecipes = message.Message
+        if (!dispatch) return null
         dispatch({
             type: "UPDATEFAV",
             payload: { ...user, favrecipes: newFavRecipes },
@@ -85,13 +94,15 @@ export async function handleFavorite(data) {
         const body = await addFav()
         const message = await body.json()
         const newFavRecipes = message.Message
+        if (!dispatch) return null
+
         dispatch({
             type: "UPDATEFAV",
             payload: { ...user, favrecipes: newFavRecipes },
         })
     }
 }
-export async function changePassword(formData) {
+export async function changePassword(formData: FormData) {
     return await fetch(
         process.env.NODE_ENV === "production"
             ? `${import.meta.env.VITE_USERDATA_ENDPOINT}/newpassword`
@@ -159,7 +170,15 @@ export function commentTime(timeDelta: number) {
         : `${Math.floor(minutes / 60 / 24 / 30 / 12)} vuotta sitten` //x years ago
 }
 
-export async function postComment(commentData, id, userId, email) {
+export async function postComment(
+    commentData: {
+        content: string
+        username: string
+    },
+    id: string,
+    userId: string,
+    email: string
+) {
     return await fetch(
         process.env.NODE_ENV === "production"
             ? `${import.meta.env.VITE_COMMENTS_ENDPOINT}`
@@ -180,7 +199,7 @@ export async function postComment(commentData, id, userId, email) {
         }
     )
 }
-export async function changeEmail(formData) {
+export async function changeEmail(formData: FormData) {
     return await fetch(
         process.env.NODE_ENV === "production"
             ? `${import.meta.env.VITE_USERDATA_ENDPOINT}/changeemail`
@@ -198,7 +217,11 @@ export async function changeEmail(formData) {
         }
     )
 }
-export const handleDeleteFromAdmin = async (id, role, adminAmount) => {
+export const handleDeleteFromAdmin = async (
+    id: string,
+    role: string,
+    adminAmount: number
+) => {
     return await fetch(
         process.env.NODE_ENV === "production"
             ? `${import.meta.env.VITE_USERDATA_ENDPOINT}/${id}`
@@ -219,10 +242,10 @@ export const handleDeleteFromAdmin = async (id, role, adminAmount) => {
     )
 }
 export const handleRoleChangeFromAdmin = async (
-    newRole,
-    id,
-    role,
-    adminAmount
+    newRole: string,
+    id: string,
+    role: string,
+    adminAmount: number
 ) => {
     return await fetch(
         process.env.NODE_ENV === "production"
@@ -245,7 +268,10 @@ export const handleRoleChangeFromAdmin = async (
     )
 }
 
-export const handleRecipeDeleteFromAdmin = async (id, userId) => {
+export const handleRecipeDeleteFromAdmin = async (
+    id: string,
+    userId: string
+) => {
     return await fetch(
         process.env.NODE_ENV === "production"
             ? `${import.meta.env.VITE_RECIPE_ENDPOINT}/admin/${id}`
@@ -265,11 +291,11 @@ export const handleRecipeDeleteFromAdmin = async (id, userId) => {
     )
 }
 
-export const sortRecipes = (sortFilter, a, b) => {
+export const sortRecipes = (sortFilter: string, a: IRecipe, b: IRecipe) => {
     switch (sortFilter) {
         case "dateDesc": {
-            const dateA = new Date(a.createdAt)
-            const dateB = new Date(b.createdAt)
+            const dateA = a.createdAt as Date
+            const dateB = b.createdAt as Date
             if (dateA < dateB) {
                 return 1
             }
@@ -279,8 +305,8 @@ export const sortRecipes = (sortFilter, a, b) => {
             return 0
         }
         case "dateAsc": {
-            const dateA = new Date(a.createdAt)
-            const dateB = new Date(b.createdAt)
+            const dateA = a.createdAt as Date
+            const dateB = b.createdAt as Date
             if (dateA < dateB) {
                 return -1
             }
@@ -290,8 +316,8 @@ export const sortRecipes = (sortFilter, a, b) => {
             return 0
         }
         case "commentsAsc": {
-            const commentsA = a.comments.length
-            const commentsB = b.comments.length
+            const commentsA = a?.comments?.length as number
+            const commentsB = b?.comments?.length as number
             if (commentsA < commentsB) {
                 return -1
             }
@@ -301,8 +327,8 @@ export const sortRecipes = (sortFilter, a, b) => {
             return 0
         }
         case "commentsDesc": {
-            const commentsA = a.comments.length
-            const commentsB = b.comments.length
+            const commentsA = a?.comments?.length as number
+            const commentsB = b?.comments?.length as number
             if (commentsA < commentsB) {
                 return 1
             }
@@ -312,14 +338,14 @@ export const sortRecipes = (sortFilter, a, b) => {
             return 0
         }
         default:
-            break
+            return 0
     }
 }
-export const sortUser = (sortFilter, a, b) => {
+export const sortUser = (sortFilter: string, a: User, b: User) => {
     switch (sortFilter) {
         case "emailDesc": {
-            const emailA = a.email.toLowerCase()
-            const emailB = b.email.toLowerCase()
+            const emailA = a?.email?.toLowerCase() as string
+            const emailB = b?.email?.toLowerCase() as string
             if (emailA < emailB) {
                 return 1
             }
@@ -329,8 +355,8 @@ export const sortUser = (sortFilter, a, b) => {
             return 0
         }
         case "recipesAsc": {
-            const recipesA = a.recipes.length
-            const recipesB = b.recipes.length
+            const recipesA = a?.recipes?.length as number
+            const recipesB = b?.recipes?.length as number
             if (recipesA < recipesB) {
                 return -1
             }
@@ -340,8 +366,8 @@ export const sortUser = (sortFilter, a, b) => {
             return 0
         }
         case "recipesDesc": {
-            const recipesA = a.recipes.length
-            const recipesB = b.recipes.length
+            const recipesA = a?.recipes?.length as number
+            const recipesB = b?.recipes?.length as number
             if (recipesA < recipesB) {
                 return 1
             }
@@ -351,8 +377,8 @@ export const sortUser = (sortFilter, a, b) => {
             return 0
         }
         case "commentsAsc": {
-            const commentsA = a.comments.length
-            const commentsB = b.comments.length
+            const commentsA = a?.comments?.length as number
+            const commentsB = b?.comments?.length as number
             if (commentsA < commentsB) {
                 return -1
             }
@@ -362,8 +388,8 @@ export const sortUser = (sortFilter, a, b) => {
             return 0
         }
         case "commentsDesc": {
-            const commentsA = a.comments.length
-            const commentsB = b.comments.length
+            const commentsA = a?.comments?.length as number
+            const commentsB = b?.comments?.length as number
             if (commentsA < commentsB) {
                 return 1
             }
@@ -373,8 +399,8 @@ export const sortUser = (sortFilter, a, b) => {
             return 0
         }
         case "createdAsc": {
-            const createdA = a.createdAt
-            const createdB = b.createdAt
+            const createdA = a.createdAt as Date
+            const createdB = b.createdAt as Date
             if (createdA < createdB) {
                 return -1
             }
@@ -384,8 +410,8 @@ export const sortUser = (sortFilter, a, b) => {
             return 0
         }
         case "createdDesc": {
-            const createdA = a.createdAt
-            const createdB = b.createdAt
+            const createdA = a.createdAt as Date
+            const createdB = b.createdAt as Date
             if (createdA < createdB) {
                 return 1
             }
@@ -395,7 +421,7 @@ export const sortUser = (sortFilter, a, b) => {
             return 0
         }
         default:
-            break
+            return 0
     }
 }
 

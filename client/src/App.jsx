@@ -1,5 +1,5 @@
 import "./App.css"
-import HomeLayout from "./Layouts/HomeLayout"
+import HomeLayout from "./Layouts/HomeLayout.tsx"
 import Search from "./Components/Search"
 import {
     Route,
@@ -32,9 +32,9 @@ const AdminProtectedRoutes = lazy(() =>
     import("./Components/AdminProtectedRoutes")
 )
 const AdminDashboard = lazy(() => import("./Pages/Admin/AdminDashboard"))
-const AdminUsers = lazy(() => import("./Pages/Admin/AdminUsers"))
+const AdminUsers = lazy(() => import("./Pages/Admin/AdminUsers.tsx"))
 const AdminRecipes = lazy(() => import("./Pages/Admin/AdminRecipes"))
-const AdminComments = lazy(() => import("./Pages/Admin/AdminComments"))
+const AdminComments = lazy(() => import("./Pages/Admin/AdminComments.tsx"))
 
 import { loader as recipeDetailsLoader } from "./Components/loaders/recipeDetailsEditLoader"
 import { action as recipeDetailsAction } from "./Components/actions/recipeDetailsEditAction"

@@ -42,7 +42,12 @@ function RecipeDetails() {
             >
         }) => {
             console.log(comment, id, userId, user?.email)
-            const res = await postComment(comment, id, userId, user?.email)
+            const res = await postComment(
+                comment,
+                id,
+                userId,
+                user?.email as string
+            )
             console.log(res)
             if (!res.ok) {
                 throw new Error(res.statusText)

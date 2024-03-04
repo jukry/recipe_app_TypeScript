@@ -1,10 +1,9 @@
-const fetchUsersData = async ({ queryKey }) => {
+const fetchComments = async ({ queryKey }: { queryKey: string }) => {
     const apiResponse = await fetch(
         process.env.NODE_ENV === "production"
-            ? import.meta.env.VITE_USERS_ENDPOINT
-            : import.meta.env.VITE_USERS_ENDPOINT_DEV,
+            ? `${import.meta.env.VITE_COMMENTS_ENDPOINT}`
+            : `${import.meta.env.VITE_COMMENTS_ENDPOINT_DEV}`,
         {
-            method: "GET",
             credentials: "include",
         }
     )
@@ -14,4 +13,4 @@ const fetchUsersData = async ({ queryKey }) => {
     return apiResponse.json()
 }
 
-export default fetchUsersData
+export default fetchComments

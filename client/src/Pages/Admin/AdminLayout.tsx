@@ -2,8 +2,9 @@ import React, { useContext } from "react"
 import { UserContext } from "../../Context/UserContext"
 import { NavLink, Navigate, Outlet } from "react-router-dom"
 import "./styles/adminLayout.css"
+import { IUserContext } from "../../utils/APIResponseTypes"
 export default function AdminLayout() {
-    const { adminMode } = useContext(UserContext)
+    const { adminMode } = useContext<IUserContext>(UserContext)
 
     if (!adminMode) {
         return <Navigate to="/account" />
@@ -16,7 +17,9 @@ export default function AdminLayout() {
         <div id="admin-layout-container">
             <nav id="admin-nav">
                 <NavLink
-                    style={({ isActive }) => (isActive ? activeStyle : null)}
+                    style={({ isActive }) =>
+                        isActive ? activeStyle : undefined
+                    }
                     to="."
                     end
                 >
@@ -24,19 +27,25 @@ export default function AdminLayout() {
                 </NavLink>
                 <NavLink
                     to="recipes"
-                    style={({ isActive }) => (isActive ? activeStyle : null)}
+                    style={({ isActive }) =>
+                        isActive ? activeStyle : undefined
+                    }
                 >
                     Näytä kaikki reseptit
                 </NavLink>
                 <NavLink
                     to="users"
-                    style={({ isActive }) => (isActive ? activeStyle : null)}
+                    style={({ isActive }) =>
+                        isActive ? activeStyle : undefined
+                    }
                 >
                     Näytä kaikki käyttäjät
                 </NavLink>
                 <NavLink
                     to="comments"
-                    style={({ isActive }) => (isActive ? activeStyle : null)}
+                    style={({ isActive }) =>
+                        isActive ? activeStyle : undefined
+                    }
                 >
                     Näytä kaikki kommentit
                 </NavLink>

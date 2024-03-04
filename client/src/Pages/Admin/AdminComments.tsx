@@ -1,14 +1,17 @@
 import { useQuery } from "@tanstack/react-query"
-import React, { useState } from "react"
+import React, { BaseSyntheticEvent, useState } from "react"
 import fetchComments from "../../Hooks/fetchComments"
 import { commentTime } from "../../utils/utils"
 import "./styles/adminComments.css"
 import Paginate from "../../Components/Paginate"
 import { useSearchParams } from "react-router-dom"
+import { IComment } from "../../utils/APIResponseTypes"
 
 export default function AdminComments() {
-    const queryResponseComments = useQuery(["allcomments"], fetchComments)
-    const comments = queryResponseComments?.data?.data || []
+    const queryResponseComments = useQuery(["comments"], async () =>
+        fetchComments({ queryKey: "comments" })
+    )
+    const comments: IComment[] = queryResponseComments?.data?.data || []
     const initialComments = 20
     const [currentPage, setCurrentPage] = useState(1)
     const [dateFilter, setDateFilter] = useState({
@@ -23,7 +26,7 @@ export default function AdminComments() {
         commentSearchParams.get("recipeId") || ""
     )
 
-    const handleDelete = async (e, id) => {
+    const handleDelete = async (id: string) => {
         const res = await fetch(
             process.env.NODE_ENV === "production"
                 ? `${import.meta.env.VITE_COMMENTS_ENDPOINT}/${id}`
@@ -46,8 +49,11 @@ export default function AdminComments() {
     const commentList = comments?.filter((comment) => {
         return (
             (!dateFilter.startDate ||
-                comment.createdAt >= dateFilter?.startDate) &&
-            (!dateFilter.endDate || comment.createdAt <= dateFilter?.endDate)
+                new Date(comment.createdAt).getTime() >=
+                    new Date(dateFilter?.startDate).getTime()) &&
+            (!dateFilter.endDate ||
+                new Date(comment.createdAt).getTime() <=
+                    new Date(dateFilter?.endDate).getTime())
         )
     })
     const maxPages = Math.ceil(commentList.length / initialComments)
@@ -66,8 +72,8 @@ export default function AdminComments() {
             initialComments * currentPage
         )
         .map((comment) => {
-            let timeDelta = Date.now() - new Date(comment.createdAt) // delta in milliseconds
-
+            const commentCreatedAt = new Date(comment.createdAt).getTime()
+            let timeDelta = new Date().getTime() - commentCreatedAt
             const getCommentTime = commentTime(timeDelta)
             {
                 return (
@@ -93,7 +99,7 @@ export default function AdminComments() {
                                     {getCommentTime}
                                 </p>
                             </div>
-                            <p tabIndex={0}>Käyttäjä: {comment.user.email}</p>
+                            <p tabIndex={0}>Käyttäjä: {comment?.user?.email}</p>
 
                             <p tabIndex={0} className="admin-comment-content">
                                 {comment.content}
@@ -101,9 +107,7 @@ export default function AdminComments() {
                         </div>
                         <button
                             className="admin-delete-comment"
-                            onClick={(event) =>
-                                handleDelete(event, comment._id)
-                            }
+                            onClick={() => handleDelete(comment._id)}
                         >
                             Poista kommentti
                         </button>
@@ -111,7 +115,7 @@ export default function AdminComments() {
                 )
             }
         })
-    const handleDateFilter = (e) => {
+    const handleDateFilter = (e: BaseSyntheticEvent) => {
         e.preventDefault()
         const filterTime = e.target.value
         if (e.target.id === "start-date-filter") {
@@ -226,7 +230,7 @@ export default function AdminComments() {
                         })
                     }}
                 />
-                <p tabIndex={0}>Tuloksia: {slicedList.length}</p>
+                <p tabIndex={0}>Tuloksia: {commentList.length}</p>
             </div>
             {comments?.length > 0 ? (
                 <div id="admin-comments-container">{slicedList}</div>
