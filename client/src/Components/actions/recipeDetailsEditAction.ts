@@ -1,4 +1,4 @@
-export async function action({ request }) {
+export async function action({ request }: { request: Request }) {
     const id = request.url.split("edit/")[1]
     const formData = Object.fromEntries(await request.formData())
     async function sendUpdatedRecipe() {
