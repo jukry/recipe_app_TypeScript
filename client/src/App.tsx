@@ -1,5 +1,5 @@
 import "./App.css"
-import HomeLayout from "./Layouts/HomeLayout.tsx"
+import HomeLayout from "./Layouts/HomeLayout"
 import Search from "./Components/Search"
 import {
     Route,
@@ -11,15 +11,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Suspense, lazy } from "react"
 import Loader from "./Components/Loader"
 import AccountDashboard from "./Pages/Account/AccountDashboard"
-const RecipeDetails = lazy(() => import("./Components/RecipeDetails.tsx"))
+import RecipeDetails from "./Components/RecipeDetails"
 const ProtectedRoutes = lazy(() => import("./Components/ProtectedRoutes"))
 const AccountLayout = lazy(() => import("./Pages/Account/AccountLayout"))
-const RecipeDetailsEdit = lazy(() =>
-    import("./Components/RecipeDetailsEdit.tsx")
-)
-const FavoriteRecipes = lazy(() =>
-    import("./Pages/Account/FavoriteRecipes.tsx")
-)
+const RecipeDetailsEdit = lazy(() => import("./Components/RecipeDetailsEdit"))
+const FavoriteRecipes = lazy(() => import("./Pages/Account/FavoriteRecipes"))
 const UserRecipes = lazy(() => import("./Pages/Account/UserRecipes"))
 const AddNewRecipe = lazy(() => import("./Pages/Account/AddNewRecipe"))
 const UserSettings = lazy(() => import("./Pages/Account/UserSettings"))
@@ -28,18 +24,18 @@ const Login = lazy(() => import("./Pages/Login"))
 const NotFound = lazy(() => import("./Components/NotFound"))
 const Forbidden = lazy(() => import("./Components/Forbidden"))
 const AdminLayout = lazy(() => import("./Pages/Admin/AdminLayout"))
-const AdminProtectedRoutes = lazy(() =>
-    import("./Components/AdminProtectedRoutes")
+const AdminProtectedRoutes = lazy(
+    () => import("./Components/AdminProtectedRoutes")
 )
 const AdminDashboard = lazy(() => import("./Pages/Admin/AdminDashboard"))
-const AdminUsers = lazy(() => import("./Pages/Admin/AdminUsers.tsx"))
+const AdminUsers = lazy(() => import("./Pages/Admin/AdminUsers"))
 const AdminRecipes = lazy(() => import("./Pages/Admin/AdminRecipes"))
-const AdminComments = lazy(() => import("./Pages/Admin/AdminComments.tsx"))
+const AdminComments = lazy(() => import("./Pages/Admin/AdminComments"))
 
-import { loader as recipeDetailsLoader } from "./Components/loaders/recipeDetailsEditLoader"
-import { action as recipeDetailsAction } from "./Components/actions/recipeDetailsEditAction"
-import { loader as favRecipesLoader } from "./Components/loaders/favRecipesLoader"
-import { action as registerAction } from "./Pages/actions/registerAction"
+import { loader as recipeDetailsLoader } from "./Components/loaders/recipeDetailsEditLoader.js"
+import { action as recipeDetailsAction } from "./Components/actions/recipeDetailsEditAction.js"
+import { loader as favRecipesLoader } from "./Components/loaders/favRecipesLoader.js"
+import { action as registerAction } from "./Pages/actions/registerAction.js"
 
 const queryClient = new QueryClient({
     defaultOptions: {
