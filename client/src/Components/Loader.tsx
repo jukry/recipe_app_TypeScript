@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import "./Styles/loader.css"
 
-export default function ({ text }: { text: string }) {
+export default function ({ text }: { text?: string }) {
     const [message, setMessage] = useState(text)
     //this is just used to show user a message if server is in idle. used only with a free deployed server that that goes to idle mode if there are no connections in 15 minutes
     useEffect(() => {
