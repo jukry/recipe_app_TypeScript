@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom"
 
-export async function action({ request }) {
+export async function action({ request }: { request: Request }) {
     const formData = await request.formData()
     async function registerUser() {
         return await fetch(
