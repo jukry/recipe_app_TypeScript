@@ -14,6 +14,8 @@ import {
     IRecipeDetails,
     IUserContext,
 } from "../utils/APIResponseTypes"
+import NotFound from "./NotFound"
+import Loader from "./Loader"
 
 function RecipeDetails() {
     const params = useParams()
@@ -74,7 +76,9 @@ function RecipeDetails() {
 
     const comments = queryResponseComments?.data ?? []
     document.title = data.name
-    return data !== undefined || data !== null ? (
+    return queryResponse.isLoading ? (
+        <Loader />
+    ) : queryResponse.data !== undefined ? (
         <div className="recipe-wrapper">
             <BackButton />
             <section className="recipe-hero">
@@ -139,7 +143,7 @@ function RecipeDetails() {
             <RecipeComments comments={comments} handleSubmit={mutation} />
         </div>
     ) : (
-        location.replace("/notfound")
+        <NotFound />
     )
 }
 export default RecipeDetails
