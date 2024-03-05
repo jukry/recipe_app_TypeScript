@@ -45,13 +45,14 @@ const getRandomRecipe = async (req, res) => {
 
 const getRecipeById = async (req, res) => {
     const { id } = req.params
-    const recipeFound = await Recipe.findById(id).select(
-        "name description ingredients instructions comments images tags"
-    )
-    if (!recipeFound) {
-        return res.status(404).json({ Message: "No such recipe" })
-    }
     try {
+        const recipeFound = await Recipe.findById(id).select(
+            "name description ingredients instructions comments images tags"
+        )
+        if (!recipeFound) {
+            return res.status(404).json({ Message: "No such recipe" })
+        }
+
         return res.status(200).json({ message: recipeFound })
     } catch (error) {
         return res.status(400).json({ message: error })
