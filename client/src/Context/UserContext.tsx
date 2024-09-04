@@ -20,6 +20,9 @@ export const userReducer = (
             return { user: action.payload as User }
         case "LOGIN":
             return { user: action.payload as User }
+        case "LOADING": {
+            return { ...state, isLoading: action.payload as boolean }
+        }
         case "LOGOUT":
             return { user: {}, isLoggedIn: false }
         case "UPDATEUSER":
@@ -41,13 +44,12 @@ export const UserContextProvider = ({
     children: ReactElement
 }) => {
     const [state, dispatch] = useReducer(userReducer, initialState)
-    const [isLoading, setIsLoading] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [adminMode, setAdminMode] = useState(
         window.localStorage.getItem("amode") === "true" || false
     )
     useEffect(() => {
-        setIsLoading(true)
+        dispatch({ type: "LOADING", payload: true })
         async function getUserData() {
             const res = await fetch(
                 process.env.NODE_ENV === "production"
@@ -61,10 +63,10 @@ export const UserContextProvider = ({
             const userData = await res.json()
             if (userData.id) {
                 setIsLoggedIn(true)
-                setIsLoading(false)
+                dispatch({ type: "LOADING", payload: false })
                 dispatch({ type: "LOGIN", payload: userData })
             }
-            setIsLoading(false)
+            dispatch({ type: "LOADING", payload: false })
         }
         getUserData()
     }, [])
@@ -78,8 +80,6 @@ export const UserContextProvider = ({
             value={{
                 isLoggedIn,
                 setIsLoggedIn,
-                isLoading,
-                setIsLoading,
                 ...state,
                 dispatch,
                 adminMode,

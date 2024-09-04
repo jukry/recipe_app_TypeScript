@@ -3,11 +3,10 @@ import { UserContext } from "../Context/UserContext"
 import { IUserContext } from "../utils/APIResponseTypes"
 
 export const useLogin = () => {
-    const { dispatch, setIsLoggedIn, setIsLoading } =
-        useContext<IUserContext>(UserContext)
+    const { dispatch, setIsLoggedIn } = useContext<IUserContext>(UserContext)
     const login = async (email: string, password: string) => {
-        if (!setIsLoggedIn || !setIsLoading || !dispatch) return null
-        setIsLoading(true)
+        if (!setIsLoggedIn || !dispatch) return null
+        dispatch({ type: "LOADING", payload: true })
         const res = await fetch(
             process.env.NODE_ENV === "production"
                 ? import.meta.env.VITE_AUTH_ENDPOINT
@@ -42,7 +41,7 @@ export const useLogin = () => {
             )
             const userData = await userDataResponse.json()
             dispatch({ type: "LOGIN", payload: userData })
-            setIsLoading(false)
+            dispatch({ type: "LOADING", payload: false })
             setIsLoggedIn(true)
             return res
         }

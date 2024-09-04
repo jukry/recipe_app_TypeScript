@@ -16,8 +16,7 @@ import { handleCapsLockDetection } from "../utils/utils"
 import { IUserContext } from "../utils/APIResponseTypes"
 
 export default function Login() {
-    const { user, isLoading, setIsLoading } =
-        useContext<IUserContext>(UserContext)
+    const { user, isLoading, dispatch } = useContext<IUserContext>(UserContext)
     const { login } = useLogin()
     const navigate = useNavigate()
     const [userData, setUserData] = useState({
@@ -41,12 +40,12 @@ export default function Login() {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         const res = await login(userData.email, userData.password)
-        if (!res || !setIsLoading || !inputRef.current) {
+        if (!res || !dispatch || !inputRef.current) {
             return null
         }
         if (!res.ok) {
             setLoginStatus(res.status)
-            setIsLoading(false)
+            dispatch({ type: "LOADING", payload: false })
             inputRef.current.focus()
             return loginStatus
         }
