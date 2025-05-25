@@ -72,7 +72,7 @@ function AddNewRecipe() {
         const recipeRes = await fetch(
             process.env.NODE_ENV === "production"
                 ? import.meta.env.VITE_RECIPE_ENDPOINT
-                : import.meta.env.VITE_RECIPE_ENDPOINT_DEV,
+                : import.meta.env.VITE_RECIPE_ENDPOINT_DEV_SPRING,
             {
                 method: "POST",
                 mode: "cors",
